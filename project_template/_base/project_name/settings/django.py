@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # 3rd party apps
 
     # our apps
+    '{{ project_name }}.apps.common.apps.CommonConfig',
     '{{ project_name }}.apps.account.apps.AccountConfig',
 
 ] + env.list('DEV_INSTALLED_APPS', default=[])

@@ -4,22 +4,29 @@ Basically django template for project creation that don't need django to start a
 
 ## How to use
 
+### Create new project
+
   1. open terminal
-  1. copy ```curl http://be.skeletons.djangostars.com/startproject | sh```
+  1. copy ```curl https://be.skeletons.djangostars.com/startproject | sh```
   1. paste
   1. hit enter
+  1. answer the questions
 
-This command will ask you about needed python version, name of project and template and create project skeleton
+### Create new application
+
+Project created with help of this skeleton has overwritten `startapp` command that will create application with given name. Template will be choisen automatically based on your `settings.INSTALLED_APPS`.
+
 
 ## Template features
 
 ### Base teamplate
 
-  * **Django** project formatted according to Django Stars Code Style requirements
+  * **Django** project formatted according to [Django Stars Code Style](https://codestyle.djangostars.com/) requirements
   * **django-environ** to keep all configuration in environment
   * **psycopg2** as default database driver
   * **django-extensions/ipython/ipdb** for debug purposes
   * **pytest** with **pylava** for testing
+  * redefined **startapp** command to create app according to [Django Stars Code Style](https://codestyle.djangostars.com/) requirements
 
 ### Django REST Framework
 

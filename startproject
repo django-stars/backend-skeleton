@@ -7,7 +7,7 @@ COLOR_LABEL='\033[1;33m'
 COLOR_SUBLABEL='\033[0;33m'
 COLOR_NC='\033[0m'
 
-HOST="http://localhost:5000/"
+HOST="https://be.skeletons.djangostars.com/"
 
 DJANGO_VERSION="2.1"
 DOC_VERSION="2.1"
@@ -153,8 +153,8 @@ case ${TMPL} in
         ;;
 esac
 
-if [ "$(command -v pipenv)" ]; then
-    pipenv install --dev
+if [ -n $(command -v pipenv) ]; then
+    pipenv --python ${PYVER} install --dev
     CONSOLE_MSG_FINISH=${MSG_FINISH}
 else
     printf -v CONSOLE_MSG_FINISH "%s\n\n>>>> ATTENTION <<<<\nrun ${COLOR_ERROR}pipenv install --dev${COLOR_NC} to create virtualenv and install needed packages" "${MSG_FINISH}"
