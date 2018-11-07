@@ -13,7 +13,6 @@ class Command(startapp.Command):
 
     def handle(self, **options):
         app_name = options.pop('name')
-        target = options.pop('directory')
 
         directory = os.path.join(settings.BASE_DIR, 'apps', app_name)
         if os.path.exists(directory):
@@ -22,9 +21,10 @@ class Command(startapp.Command):
         os.mkdir(directory)
 
         options['template'] = self.get_template()
+        options['directory'] = directory
 
         try:
-            super(Command, self).handle(name=app_name, directory=directory, **options)
+            super(Command, self).handle(name=app_name, **options)
         except CommandError as ex:
             shutil.rmtree(directory)
             raise ex
