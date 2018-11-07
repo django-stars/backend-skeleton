@@ -22,6 +22,7 @@ class Command(startapp.Command):
 
         options['template'] = self.get_template()
         options['directory'] = directory
+        options['project_name'] = settings.PROJECT_NAME
 
         try:
             super(Command, self).handle(name=app_name, **options)
