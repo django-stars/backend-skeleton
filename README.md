@@ -7,7 +7,7 @@ Basically django template for project creation that don't need django to start a
 ### Create new project
 
   1. open terminal
-  1. copy ```curl https://be.skeletons.djangostars.com/startproject | sh```
+  1. copy ```curl https://be.skeletons.djangostars.com/startproject | bash```
   1. paste
   1. hit enter
   1. answer the questions
