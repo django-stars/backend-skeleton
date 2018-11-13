@@ -115,9 +115,9 @@ tar xzvf ${TMP}/djangostars_project_template__${TMPL}.tar.gz
 rm -rf ${TMP}
 
 ### Replace variables in files with real values ################################
-find . -type f | xargs sed -i "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g"
+find . -type f | xargs sed -i "" -e "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g"
 mv project_name ${NAME}
-sed -i "s/{{ python_version }}/${PYVER}/" Pipfile
+sed -i "" "s/{{ python_version }}/${PYVER}/" Pipfile
 
 clear
 
