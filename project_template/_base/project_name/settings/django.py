@@ -33,6 +33,7 @@ DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
+SECRET_KEY = env.str('SECRET_KEY')
 
 # Application definition
 
@@ -110,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', default=True)
 SESSION_COOKIE_NAME = 'curiosity'
 CSRF_COOKIE_NAME = 'opportunity'
 

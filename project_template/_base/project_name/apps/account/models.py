@@ -1,8 +1,9 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
-from .managers import UserManager
+from . import managers
 
 
 class User(PermissionsMixin, AbstractBaseUser):
@@ -34,7 +35,9 @@ class User(PermissionsMixin, AbstractBaseUser):
         ),
     )
 
-    objects = UserManager()
+    date_joined = models.DateTimeField(default=timezone.now)
+
+    objects = managers.UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

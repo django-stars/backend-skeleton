@@ -29,22 +29,22 @@ function dlg_python_version () {
     local VERSION_OPTIONS=("3.7" "3.7.x"
                      "3.6" "3.6.x"
                      "2.7" "2.7.x")
-    local VERSION_CHOICE=$(dialog --clear \
+    local VERSION_CHOICE
+    VERSION_CHOICE=$(dialog --clear \
                             --title "${DIALOG_TITLE}" \
                             --menu "Which python version do you need?" \
                             15 40 4 "${VERSION_OPTIONS[@]}" \
                             2>&1 > /dev/tty)
-    # clear
 
     echo ${VERSION_CHOICE}
 }
 
 function dlg_project_name () {
-    local NAME=$(dialog --clear \
+    local NAME
+    NAME=$(dialog --clear \
                         --title "${DIALOG_TITLE}" \
                         --inputbox "Project name" 15 40 "" \
                         2>&1 > /dev/tty)
-    # clear
 
     echo ${NAME}
 }
@@ -54,12 +54,12 @@ function dlg_project_template () {
                   "django" "pure Django"
                   "django_drf" "Django + DRF"
                   "django_celery" "Django + Celery")
-    local TMPL_CHOICE=$(dialog --clear \
+    local TMPL_CHOICE
+    TMPL_CHOICE=$(dialog --clear \
                          --title "${DIALOG_TITLE}" \
                          --menu "What do you need for your project" \
                          15 60 4 "${TMPL_OPTIONS[@]}" \
                          2>&1 > /dev/tty)
-    # clear
 
     echo ${TMPL_CHOICE}
 }
@@ -115,7 +115,7 @@ tar xzvf ${TMP}/djangostars_project_template__${TMPL}.tar.gz
 rm -rf ${TMP}
 
 ### Replace variables in files with real values ################################
-find . -type f | xargs sed -i -e "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g"
+find . -type f | xargs sed -i "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g"
 mv project_name ${NAME}
 sed -i "s/{{ python_version }}/${PYVER}/" Pipfile
 
