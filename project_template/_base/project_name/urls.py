@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path
+from django.urls import path, include
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
+
+# enable serve static by django for local development
 if settings.DEBUG:  # noqa
     from django.conf.urls.static import static
 
@@ -33,3 +35,12 @@ if settings.DEBUG:  # noqa
         settings.STATIC_URL,
         document_root=settings.STATIC_ROOT
     )
+
+
+# enable debug_toolbar for local development (if installed)
+if settings.DEBUG and 'debug_toolbar' in settings.INSTALLED_APPS:
+    import debug_toolbar
+
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]
