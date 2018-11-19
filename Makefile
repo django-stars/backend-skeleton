@@ -133,7 +133,7 @@ tmpl_app__django_drf: clean_builder
 WEB_INDEX_CONTENT := $(shell pandoc README.md)
 
 web_index:
-	echo -e "$$SRC_WEB_INDEX"  > builds/index.html
+	echo "$$SRC_WEB_INDEX"  > builds/index.html
 
 
 ### Variables ##################################################################
