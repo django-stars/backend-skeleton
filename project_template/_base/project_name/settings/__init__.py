@@ -1,2 +1,3 @@
 from .django import *  # noqa
-from .account import *  # noqa
+from .contrib import *  # noqa
+from .{{ project_name }} import *  # noqa
