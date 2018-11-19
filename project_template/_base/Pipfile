@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 psycopg2-binary = "*"
 django-environ = "*"
+redis = "*"
 # end packages
 
 [dev-packages]

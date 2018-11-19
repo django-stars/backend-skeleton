@@ -147,7 +147,7 @@ case ${TMPL} in
     django_drf_celery)
         printf -v MSG_FINISH "\n%s\n  * Django REST Framework\n  * Celery\n" "${MSG_FINISH}"
         ;;
-    django_def)
+    django_drf)
         printf -v MSG_FINISH "\n%s\n  * Django REST Framwwork" "${MSG_FINISH}"
         ;;
     django_celery)
