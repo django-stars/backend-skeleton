@@ -22,7 +22,7 @@ class Command(startapp.Command):
 
         options['template'] = self.get_template()
         options['directory'] = directory
-        options['project_name'] = settings.PROJECT_NAME
+        options['project_name'] = settings.ROOT_URLCONF.split('.', 1)[0]
 
         try:
             super(Command, self).handle(name=app_name, **options)
