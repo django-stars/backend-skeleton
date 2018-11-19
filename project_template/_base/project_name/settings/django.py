@@ -27,11 +27,11 @@ def rel(*path):
 # See https://docs.djangoproject.com/en/{{ docs_version }}/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('{{ project_upper_name }}_DEBUG')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = env.list('{{ project_upper_name }}_ALLOWED_HOSTS', default=[])
 
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = env.str('{{ project_upper_name }}_SECRET_KEY')
 
 # Application definition
 
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     '{{ project_name }}.apps.common.apps.CommonConfig',
     '{{ project_name }}.apps.account.apps.AccountConfig',
 
-] + env.list('DEV_INSTALLED_APPS', default=[])
+] + env.list('{{ project_upper_name }}_DEV_INSTALLED_APPS', default=[])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-] + env.list('DEV_MIDDLEWARE', default=[])
+] + env.list('{{ project_upper_name }}_DEV_MIDDLEWARE', default=[])
 
 ROOT_URLCONF = '{{ project_name }}.urls'
 
@@ -87,7 +87,7 @@ WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 # https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
+    'default': env.db('{{ project_upper_name }}_DATABASE_URL'),
 }
 
 
@@ -111,9 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', default=True)
-SESSION_COOKIE_NAME = 'curiosity'
-CSRF_COOKIE_NAME = 'opportunity'
+SESSION_COOKIE_SECURE = env.bool('{{ project_upper_name }}_SESSION_COOKIE_SECURE', default=True)
+SESSION_COOKIE_NAME = 's'
+CSRF_COOKIE_NAME = 'c'
 
 
 # Internationalization

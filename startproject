@@ -99,6 +99,7 @@ while [[ $NAME_SETTED -ne 0 ]]; do
     fi
 done
 
+UPPER_NAME=$(echo "${NAME}" | tr a-z A-Z)
 
 # === ask for template
 TMPL=$( dlg_project_template )
@@ -115,7 +116,7 @@ tar xzvf ${TMP}/djangostars_project_template__${TMPL}.tar.gz
 rm -rf ${TMP}
 
 ### Replace variables in files with real values ################################
-find . -type f | xargs sed -i "" -e "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g"
+find . -type f | xargs sed -i "" -e "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g; s/{{ project_upper_name }}/${UPPER_NAME}/g"
 mv project_name/settings/project_name.py project_name/settings/${NAME}.py
 mv project_name ${NAME}
 sed -i "" "s/{{ python_version }}/${PYVER}/" Pipfile
