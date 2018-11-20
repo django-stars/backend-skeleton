@@ -1,7 +1,13 @@
 from django.contrib.auth.models import BaseUserManager
 
 
-class UserManager(BaseUserManager):
+from {{ project_name }}.apps.common import models as core_models
+
+
+class UserManager(core_models.CoreManager, BaseUserManager):
+    
+    def get_queryset(self):
+        return core_models.CoreQuerySet(self.model, using=self._db)
 
     def create_user(self, email, password=None):
         if not email:
