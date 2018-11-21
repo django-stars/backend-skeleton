@@ -1,6 +1,6 @@
 import pytest
 
-from {{ project_name }}.apps.common.utils import redis_key
+from {{ project_name }}.apps.common.utils.redis import redis_key
 
 
 @pytest.mark.parametrize('func_args,func_kwargs,expected_result', [

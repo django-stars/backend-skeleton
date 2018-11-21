@@ -54,36 +54,38 @@ class Enumeration:
 
     def __init__(self, enum_list):
 
-        def aux(t):
-            if len(t) == 3:
-                return t
-            elif len(t) == 2:
-                return t[0], t[1], t[1]
+        def aux(item):
+            if len(item) == 3:
+                return item
+            elif len(item) == 2:
+                return item[0], item[1], item[1]
             else:
                 assert False, 'Incorrect format for input data'
 
-        def check_for_unique(t):
-            indexes_count = len(set([i[0] for i in t]))
-            assert indexes_count == len(t)
-            if len(t) > 2:
-                human_readable_indexes_count = len(set([i[1] for i in t]))
-                assert human_readable_indexes_count == len(t)
+        def check_for_unique(items):
+            indexes_count = len(set([item[0] for item in items]))
+            assert indexes_count == len(items)
+            if len(items) > 2:
+                human_readable_indexes_count = len(set([item[1] for item in items]))
+                assert human_readable_indexes_count == len(items)
 
         check_for_unique(enum_list)
         self._full_enum_list = tuple(enum_list)
-        enum_list = [aux(i) for i in enum_list]
+        enum_list = [aux(item) for item in enum_list]
         self._enum_list = [(item[0], item[2]) for item in enum_list]
         self._enum_dict = {}
         for item in enum_list:
             self._enum_dict[item[1]] = (item[0], item[2])
 
     def __add__(self, other):
-        assert isinstance(other, Enumeration)
-        new_enum_list = self._full_enum_list + other._full_enum_list
-        return Enumeration(new_enum_list)
+        if not isinstance(other, Enumeration):
+            return NotImplemented
+        return Enumeration(self._full_enum_list + other._full_enum_list)
+    __radd__ = __add__
+    __iadd__ = __add__
 
-    def __contains__(self, v):
-        return v in self.keys_list
+    def __contains__(self, value):
+        return value in self.keys_list
 
     def __eq__(self, other):
         assert isinstance(other, Enumeration)
@@ -92,11 +94,11 @@ class Enumeration:
     def __getattr__(self, name):
         return self._enum_dict[name][0]
 
-    def __getitem__(self, v):
-        if isinstance(v, str):
-            return self._enum_dict[v][0]
-        elif isinstance(v, int):
-            return self._enum_list[v]
+    def __getitem__(self, key):
+        if isinstance(key, str):
+            return self._enum_dict[key][0]
+        elif isinstance(key, int):
+            return self._enum_list[key]
 
     def __iter__(self):
         return self._enum_list.__iter__()
@@ -113,12 +115,12 @@ class Enumeration:
         return tuple(self._enum_list)
 
     def exclude(self, *args):
-        keys = [k for k in self.keys_list if k not in args]
-        return Enumeration([t for t in self._full_enum_list if t[0] in keys])
+        keys = [key for key in self.keys_list if key not in args]
+        return Enumeration([item for item in self._full_enum_list if item[0] in keys])
 
-    def get_name_by_value(self, v):
-        return self.as_dict[v]
+    def get_name_by_value(self, value):
+        return self.as_dict[value]
 
     @property
     def keys_list(self) -> list:
-        return [el[0] for el in self._enum_list]
+        return [item[0] for item in self._enum_list]

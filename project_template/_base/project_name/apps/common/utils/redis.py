@@ -6,7 +6,7 @@ import redis
 
 
 @functools.lru_cache(maxsize=128)
-def redis_client():  # pragma: no cover
+def redis_client(redis_connection_url=settings.REDIS_URL):  # pragma: no cover
     """
     Redis client wrapped into LRU cache.
 
@@ -14,17 +14,12 @@ def redis_client():  # pragma: no cover
     >>> redis_client().set('foo', 'bar')
     >>> redis_client().get('foo')
     """
-    return redis.StrictRedis.from_url(settings.REDIS_URL)
+    return redis.StrictRedis.from_url(redis_connection_url)
 
 
-def redis_key(prefix, *args, delimiter=':') -> str:
+def redis_key(prefix: str, *args, delimiter=':') -> str:
     """
     Helper to build nested key names in Redis.
-
-    :param prefix: str, required param because namespace is important
-    :param args: any values
-    :param delimiter: str, default `:`
-    :return: str
 
     Example:
     >>> key = redis_key('user', 42, 'comments')

@@ -1,6 +1,6 @@
 import pytest
 
-from {{ project_name }}.apps.common.utils import Enumeration
+from {{ project_name }}.apps.common.utils.enumeration import Enumeration
 
 
 def test_init():
