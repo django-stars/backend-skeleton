@@ -119,7 +119,7 @@ rm -rf ${TMP}
 find . -type f | xargs sed -i "" -e "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g; s/{{ project_upper_name }}/${UPPER_NAME}/g"
 mv project_name/settings/project_name.py project_name/settings/${NAME}.py
 mv project_name ${NAME}
-sed -i "" "s/{{ python_version }}/${PYVER}/" Pipfile
+find . -type f -name Pipfile | xargs sed -i "" -e "s/{{ python_version }}/${PYVER}/"
 
 clear
 
