@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-SESSION_COOKIE_SECURE = env.bool('{{ project_upper_name }}_SESSION_COOKIE_SECURE', default=True)
+SESSION_COOKIE_SECURE = env.bool('{{ project_upper_name }}_SESSION_COOKIE_SECURE', default=False)
 SESSION_COOKIE_NAME = 's'
 CSRF_COOKIE_NAME = 'c'
 
