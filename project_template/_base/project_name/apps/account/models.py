@@ -3,10 +3,11 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from {{ project_name }}.apps.common.models import CoreModel
 from . import managers
 
 
-class User(PermissionsMixin, AbstractBaseUser):
+class User(PermissionsMixin, CoreModel, AbstractBaseUser):
     email = models.EmailField(verbose_name=_('Email'), unique=True)
     first_name = models.CharField(
         verbose_name=_('first name'),
