@@ -117,8 +117,8 @@ rm -rf ${TMP}
 
 ### Replace variables in files with real values ################################
 find . -type f | xargs sed -i "" -e "s/{{ project_name }}/${NAME}/g; s/{{ django_version }}/${DJANGO_VERSION}/g; s/{{ doc_version }}/${DOC_VERSION}/g; s/{{ project_upper_name }}/${UPPER_NAME}/g"
-mv project_name/settings/project_name.py project_name/settings/${NAME}.py
-mv project_name ${NAME}
+mv api/project_name/settings/project_name.py api/project_name/settings/${NAME}.py
+mv api/project_name api/${NAME}
 find . -type f -name Pipfile | xargs sed -i "" -e "s/{{ python_version }}/${PYVER}/"
 
 clear
@@ -156,6 +156,7 @@ case ${TMPL} in
 esac
 
 if [ -n $(command -v pipenv) ]; then
+    cd api
     pipenv --python ${PYVER} install --dev
     CONSOLE_MSG_FINISH=${MSG_FINISH}
 else
