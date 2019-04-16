@@ -54,16 +54,16 @@ tmpl_proj__add_django:
 
 tmpl_proj__add_celery:
 	echo  -e ${MSGSUBLABEL}add Celery to template...${NC}
-	cd project_template/_celery/; cp -R ./ ${TMP}; cd ../../
-	sed -i "/# end packages/i\Celery = \"*\"" ${TMP}/Pipfile
-	echo "$$SRC_CELERY_INIT" >> ${TMP}/project_name/__init__.py
-	echo "$$SRC_CELERY_RUN" >> ${TMP}/Makefile
+	cd project_template/_celery/; cp -R ./ ${TMP}/; cd ../../
+	sed -i "/# end packages/i\Celery = \"*\"" ${TMP}/api/Pipfile
+	echo "$$SRC_CELERY_INIT" >> ${TMP}/api/project_name/__init__.py
+	echo "$$SRC_CELERY_RUN" >> ${TMP}/api/Makefile
 
 tmpl_proj__add_drf:
 	echo  -e ${MSGSUBLABEL}add DRF to template...${NC}
 	cd project_template/_drf/; cp -R ./ ${TMP}/; cd ../../
-	sed -i "/# end packages/i\djangorestframework = \"*\"" ${TMP}/Pipfile
-	sed -i "/# 3rd party apps/a\    'rest_framework'," ${TMP}/project_name/settings/django.py
+	sed -i "/# end packages/i\djangorestframework = \"*\"" ${TMP}/api/Pipfile
+	sed -i "/# 3rd party apps/a\    'rest_framework'," ${TMP}/api/project_name/settings/django.py
 
 tmpl_proj__django: clean_builder
 	echo  -e ${MSGLABEL}Django Template...${NC}
