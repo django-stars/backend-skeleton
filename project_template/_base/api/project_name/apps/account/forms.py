@@ -4,7 +4,6 @@ from . import models
 
 
 class AdminUserChangeForm(forms.UserChangeForm):
-
     class Meta:
         model = models.User
-        fields = '__all__'
+        fields = "__all__"

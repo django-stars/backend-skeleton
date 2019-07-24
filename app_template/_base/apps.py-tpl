@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class {{ camel_case_app_name }}Config(AppConfig):
-    name = '{{ project_name }}.apps.{{ app_name }}'
+    name = "{{ project_name }}.apps.{{ app_name }}"
