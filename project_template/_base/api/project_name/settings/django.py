@@ -92,17 +92,13 @@ DATABASES = {"default": env.db("{{ project_upper_name }}_DATABASE_URL")}
 AUTH_USER_MODEL = "account.User"
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-SESSION_COOKIE_SECURE = env.bool(
-    "{{ project_upper_name }}_SESSION_COOKIE_SECURE", default=True
-)
+SESSION_COOKIE_SECURE = env.bool("{{ project_upper_name }}_SESSION_COOKIE_SECURE", default=True)
 SESSION_COOKIE_NAME = "s"
 CSRF_COOKIE_NAME = "c"
 

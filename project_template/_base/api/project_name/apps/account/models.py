@@ -9,24 +9,17 @@ from . import managers
 
 class User(PermissionsMixin, CoreModel, AbstractBaseUser):
     email = models.EmailField(verbose_name=_("Email"), unique=True)
-    first_name = models.CharField(
-        verbose_name=_("first name"), max_length=30, blank=True, null=True
-    )
-    last_name = models.CharField(
-        verbose_name=_("last name"), max_length=30, blank=True, null=True
-    )
+    first_name = models.CharField(verbose_name=_("first name"), max_length=30, blank=True, null=True)
+    last_name = models.CharField(verbose_name=_("last name"), max_length=30, blank=True, null=True)
 
     is_staff = models.BooleanField(
-        _("staff status"),
-        default=False,
-        help_text=_("Designates whether the user can log into this admin site."),
+        _("staff status"), default=False, help_text=_("Designates whether the user can log into this admin site.")
     )
     is_active = models.BooleanField(
         _("active"),
         default=True,
         help_text=_(
-            "Designates whether this user should be treated as active. "
-            "Unselect this instead of deleting accounts."
+            "Designates whether this user should be treated as active. " "Unselect this instead of deleting accounts."
         ),
     )
 
