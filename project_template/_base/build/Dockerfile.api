@@ -1,0 +1,18 @@
+FROM python:latest
+
+WORKDIR /api
+
+COPY api/ /api/
+COPY build/docker-entrypoint-api.sh /api/
+
+RUN ["chmod", "+x", "/api/docker-entrypoint-api.sh"]
+RUN ["pip", "install", "-r", "requirements/dev.txt"]
+
+ENTRYPOINT ["/api/docker-entrypoint-api.sh"]
+
+EXPOSE 8000
+
+RUN ["pwd"]
+RUN ["ls", "-l"]
+
+CMD ["gunicorn", "{{ project_name }}.wsgi", "-b", "0.0.0.0:8000"]
