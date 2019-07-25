@@ -3,8 +3,9 @@
 pip-tools
 black
 pytest-django
+pytest-cov
 pytest
-pylava
+pylama
 django-extensions
 Werkzeug
 ipython
