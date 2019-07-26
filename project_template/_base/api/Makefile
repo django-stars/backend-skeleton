@@ -2,10 +2,13 @@ PROJECTNAME=$(notdir $(shell pwd))
 
 
 run:
-	pipenv run python -x manage.py runserver_plus
+	python manage.py runserver_plus
 
 test:
-	pipenv run pytest -s -l --verbose --strict --pylava ${PROJECTNAME}
+	pytest -s -l --verbose --strict --pylava ${PROJECTNAME}
 
 migrate:
-	pipenv run python manage.py migrate
+	python manage.py migrate
+
+req-compile:
+	@for fl in $(shell ls requirements/); do pip-compile requirements/$${fl}; done

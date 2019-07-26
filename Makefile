@@ -45,6 +45,9 @@ clean_all:
 clean_build_files:
 	find ${TMP}/ -name "*~" -delete  # Emacs temp files
 
+compile-requirements:
+	@for fl in $(shell ls ${TMP}/api/requirements/); do pip-compile ${TMP}/api/requirements/$${fl}; done
+
 
 ### Project Template ###########################################################
 
@@ -55,20 +58,21 @@ tmpl_proj__add_django:
 tmpl_proj__add_celery:
 	echo  -e ${MSGSUBLABEL}add Celery to template...${NC}
 	cd project_template/_celery/; cp -R ./ ${TMP}/; cd ../../
-	sed -i "/# end packages/i\Celery = \"*\"" ${TMP}/api/Pipfile
+	echo "Celery" >> ${TMP}/api/requirements/common.in
 	echo "$$SRC_CELERY_INIT" >> ${TMP}/api/project_name/__init__.py
 	echo "$$SRC_CELERY_RUN" >> ${TMP}/api/Makefile
 
 tmpl_proj__add_drf:
 	echo  -e ${MSGSUBLABEL}add DRF to template...${NC}
 	cd project_template/_drf/; cp -R ./ ${TMP}/; cd ../../
-	sed -i "/# end packages/i\djangorestframework = \"*\"" ${TMP}/api/Pipfile
+	echo "djangorestframework" >> ${TMP}/api/requirements/common.in
 	sed -i "/# 3rd party apps/a\    'rest_framework'," ${TMP}/api/project_name/settings/django.py
 
 tmpl_proj__django: clean_builder
 	echo  -e ${MSGLABEL}Django Template...${NC}
 	$(MAKE) create_build_env
 	$(MAKE) tmpl_proj__add_django
+	$(MAKE) compile-requirements
 	cd ${TMP}/; tar czf ${CURRENTDIR}/builds/${TMPL_PROJECT_FILE_PREFIX}__django.tar.gz .; cd ${CURRENTDIR}
 	$(MAKE) clean_builder
 
@@ -77,6 +81,7 @@ tmpl_proj__django_celery: clean_builder
 	$(MAKE) create_build_env
 	$(MAKE) tmpl_proj__add_django
 	$(MAKE) tmpl_proj__add_celery
+	$(MAKE) compile-requirements
 	$(MAKE) clean_build_files
 	cd ${TMP}/; tar czf ${CURRENTDIR}/builds/${TMPL_PROJECT_FILE_PREFIX}__django_celery.tar.gz .; cd ${CURRENTDIR}
 	$(MAKE) clean_builder
@@ -86,6 +91,7 @@ tmpl_proj__django_drf: clean_builder
 	$(MAKE) create_build_env
 	$(MAKE) tmpl_proj__add_django
 	$(MAKE) tmpl_proj__add_drf
+	$(MAKE) compile-requirements
 	$(MAKE) clean_build_files
 	cd ${TMP}/; tar czf ${CURRENTDIR}/builds/${TMPL_PROJECT_FILE_PREFIX}__django_drf.tar.gz .; cd ${CURRENTDIR}
 	$(MAKE) clean_builder
@@ -96,6 +102,7 @@ tmpl_proj__django_drf_celery: clean_builder
 	$(MAKE) tmpl_proj__add_django
 	$(MAKE) tmpl_proj__add_drf
 	$(MAKE) tmpl_proj__add_celery
+	$(MAKE) compile-requirements
 	$(MAKE) clean_build_files
 	cd ${TMP}/; tar czf ${CURRENTDIR}/builds/${TMPL_PROJECT_FILE_PREFIX}__django_drf_celery.tar.gz .; cd ${CURRENTDIR}
 	$(MAKE) clean_builder
@@ -157,7 +164,7 @@ export SRC_CELERY_INIT
 define SRC_CELERY_RUN
 
 celery:
-	pipenv run celery -A $${PROJECTNAME} worker -l info --beat
+	celery -A $${PROJECTNAME} worker -l info --beat
 endef
 export SRC_CELERY_RUN
 

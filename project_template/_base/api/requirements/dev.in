@@ -1,0 +1,11 @@
+-r common.in
+
+pip-tools
+pytest-django
+pytest
+pylava
+django-extensions
+Werkzeug
+ipython
+ipdb
+django-debug-toolbar
