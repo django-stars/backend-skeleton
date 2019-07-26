@@ -37,6 +37,7 @@ jobs:
             cd api/
             pytest -s -l --verbose --strict \
               --pylama \
+              --bandit \
               --junitxml=../tests_artifacts_be/junit/results.xml \
               --cov={{ project_name }} --cov-report=term --cov-report=html:../tests_artifacts_be/cov_html --cov-report=xml:../tests_artifacts_be/coverage/results.xml \
               {{ project_name }}

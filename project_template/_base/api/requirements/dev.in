@@ -2,8 +2,10 @@
 
 pip-tools
 black
+bandit
 pytest-django
 pytest-cov
+pytest-bandit
 pytest
 pylama
 django-extensions
