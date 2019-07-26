@@ -156,8 +156,7 @@ define SRC_CELERY_INIT
 from .celery import app as celery_app
 
 
-__all__ = ('celery_app',)
-
+__all__ = ("celery_app",)
 endef
 export SRC_CELERY_INIT
 
