@@ -31,10 +31,18 @@ jobs:
           name: Python version
           command: python --version
       - run:
-          name: Run tests
+          name: Codestyle checking by Black
+          working_directory: api
+          when: always
           command: |
-            . venv/bin/activate
-            cd api/
+            . ../venv/bin/activate
+            black --check {{ project_name }}
+      - run:
+          name: Run tests
+          working_directory: api
+          when: always
+          command: |
+            . ../venv/bin/activate
             pytest -s -l --verbose --strict \
               --pylama \
               --bandit \

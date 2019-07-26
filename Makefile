@@ -66,7 +66,7 @@ tmpl_proj__add_drf:
 	echo  -e ${MSGSUBLABEL}add DRF to template...${NC}
 	cd project_template/_drf/; cp -R ./ ${TMP}/; cd ../../
 	echo "djangorestframework" >> ${TMP}/api/requirements/common.in
-	sed -i "/# 3rd party apps/a\    'rest_framework'," ${TMP}/api/project_name/settings/django.py
+	sed -i "/# 3rd party apps/a\    \"rest_framework\"," ${TMP}/api/project_name/settings/django.py
 
 tmpl_proj__django: clean_builder
 	echo  -e ${MSGLABEL}Django Template...${NC}
