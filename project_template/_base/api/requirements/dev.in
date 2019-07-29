@@ -2,9 +2,12 @@
 
 pip-tools
 black
+bandit
 pytest-django
+pytest-cov
+pytest-bandit
 pytest
-pylava
+pylama
 django-extensions
 Werkzeug
 ipython

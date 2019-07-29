@@ -1,0 +1,64 @@
+version: 2
+
+jobs:
+  api:
+    docker:
+      - image: circleci/python:stretch-browsers-legacy
+      - image: circleci/postgres:alpine-postgis-ram
+    working_directory: ~/app
+    environment:
+      - {{ project_upper_name }}_DEBUG=off
+      - {{ project_upper_name }}_DATABASE_URL=psql://root@localhost:5432/circle_test
+      - {{ project_upper_name }}_SECRET_KEY=1234567890
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "api/requirements/dev.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install python packages
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip3 install -r api/requirements/dev.txt
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "api/requirements/dev.txt" }}
+      - run:
+          name: Python version
+          command: python --version
+      - run:
+          name: Codestyle checking by Black
+          working_directory: api
+          when: always
+          command: |
+            . ../venv/bin/activate
+            black --check {{ project_name }}
+      - run:
+          name: Run tests
+          working_directory: api
+          when: always
+          command: |
+            . ../venv/bin/activate
+            pytest -s -l --verbose --strict \
+              --pylama \
+              --bandit \
+              --junitxml=../tests_artifacts_be/junit/results.xml \
+              --cov={{ project_name }} --cov-report=term --cov-report=html:../tests_artifacts_be/cov_html --cov-report=xml:../tests_artifacts_be/coverage/results.xml \
+              {{ project_name }}
+      - store_test_results:
+          path: ../tests_artifacts_be
+          destination: tests_artifacts
+      - store_artifacts:
+          path: ../tests_artifacts_be
+          destination: tests_artifacts
+
+workflows:
+  version: 2
+
+  {{ project_name }}:
+    jobs:
+      - api

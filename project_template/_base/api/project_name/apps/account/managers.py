@@ -1,6 +1,5 @@
 from django.contrib.auth.models import BaseUserManager
 
-
 from {{ project_name }}.apps.common import models as core_models
 
 
