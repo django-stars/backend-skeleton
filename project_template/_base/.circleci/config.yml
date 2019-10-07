@@ -1,9 +1,9 @@
 version: 2
 
 jobs:
-  api:
+  build:
     docker:
-      - image: circleci/python:stretch-browsers-legacy
+      - image: circleci/python:stretch-browsers
       - image: circleci/postgres:alpine-postgis-ram
     working_directory: ~/app
     environment:
@@ -55,10 +55,3 @@ jobs:
       - store_artifacts:
           path: ../tests_artifacts_be
           destination: tests_artifacts
-
-workflows:
-  version: 2
-
-  {{ project_name }}:
-    jobs:
-      - api
