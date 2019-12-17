@@ -1,0 +1,63 @@
+version: 2
+
+jobs:
+
+  test:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.7.5
+        environment:
+          AWESOME_SECRET_KEY: test-secret-key
+          AWESOME_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
+          AWESOME_USE_SENTRY: off
+          AWESOME_DEBUG: off
+          AWESOME_DATABASE_URL: postgresql://postgres@localhost/awesome_test_db
+          AWESOME_CELERY_BROKER: redis://localhost:6379/1
+          AWESOME_CELERY_TASK_ALWAYS_EAGER: on
+      - image: postgres:12.1
+        environment:
+          POSTGRES_DB: awesome_test_db
+      - image: redis:5.0.7
+    steps:
+      - checkout
+      - restore_cache:
+          key: python-deps-v1-{{ checksum "./requirements.txt" }}
+      - run:
+          name: Install Python dependencies
+          command: |
+            python3 -m venv venv
+            source ./venv/bin/activate
+            pip install -r ./requirements.txt
+      - save_cache:
+          key: python-deps-v1-{{ checksum "./requirements.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name: Wait for Redis
+          command: dockerize -wait tcp://localhost:6379 -timeout 1m
+      - run:
+          name: Wait for Postgres
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Run tests on hooks
+          command: source ./venv/bin/activate && inv test.hooks
+      - run:
+          name: Run tests on building project
+          command: |
+            source ./venv/bin/activate
+            cookiecutter --no-input --overwrite-if-exists --output-dir build .
+            python3 -m venv ~/project/build/.env
+            source ~/project/build/.env/bin/activate
+            cd ~/project/build/awesome
+            pip install fabric invoke pip-tools
+            fab pip.compile
+            fab pip.sync
+            fab test.black-apply
+            fab test.isort-apply
+            fab test.all
+
+workflows:
+  version: 2
+  test_flow:
+    jobs:
+      - test

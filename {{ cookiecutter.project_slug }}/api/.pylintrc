@@ -1,0 +1,20 @@
+[MASTER]
+load-plugins=pylint_django, pylint_celery
+
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+disable=missing-docstring,invalid-name,fixme
+
+[DESIGN]
+max-parents=13
+
+[TYPECHECK]
+generated-members=REQUEST,acl_users,aq_parent,"[a-zA-Z]+_set{1,2}",save,delete
+
+[SIMILARITIES]
+min-similarity-lines=4
+ignore-comments=yes
+ignore-docstrings=yes
+ignore-imports=yes

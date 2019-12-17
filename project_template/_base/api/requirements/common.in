@@ -1,4 +1,0 @@
-django
-psycopg2-binary
-django-environ
-gunicorn
