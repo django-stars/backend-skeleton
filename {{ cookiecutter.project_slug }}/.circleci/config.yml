@@ -1,0 +1,72 @@
+version: 2
+
+jobs:
+
+  test:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:{{ cookiecutter.python_version }}
+        environment:
+          {{ cookiecutter.project_slug | upper() }}_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
+          {{ cookiecutter.project_slug | upper() }}_SECRET_KEY: stub
+          {{ cookiecutter.project_slug | upper() }}_USE_SENTRY: off
+          {{ cookiecutter.project_slug | upper() }}_DEBUG: off
+          {{ cookiecutter.project_slug | upper() }}_DATABASE_URL: postgresql://postgres@localhost/{{ cookiecutter.project_slug }}_test_db
+          {{ cookiecutter.project_slug | upper() }}_CELERY_BROKER: redis://localhost:6379/1
+          {{ cookiecutter.project_slug | upper() }}_CELERY_TASK_ALWAYS_EAGER: on
+      - image: postgres:{{ cookiecutter.postgresql_version }}
+        environment:
+          POSTGRES_DB: {{ cookiecutter.project_slug }}_test_db
+      - image: redis:{{ cookiecutter.redis_version }}
+    steps:
+      - checkout
+      - restore_cache:
+          key: {% raw %}python-deps-v1-{{ checksum "api/requirements.txt" }}{% endraw %}
+      - run:
+          name: Install Python dependencies
+          command: |
+            python3 -m venv .env
+            . .env/bin/activate
+            pip install -r api/requirements.txt
+      - save_cache:
+          key: {% raw %}python-deps-v1-{{ checksum "api/requirements.txt" }}{% endraw %}
+          paths:
+            - ".env"
+      - run:
+          name: Check `black`
+          command: . .env/bin/activate && fab test.black
+      - run:
+          name: Check `isort`
+          command: . .env/bin/activate && fab test.isort
+      - run:
+          name: Check `pylama`
+          command: . .env/bin/activate && fab test.pylama
+      - run:
+          name: Check `bandit`
+          command: . .env/bin/activate && fab test.bandit
+      - run:
+          name: Check `safety`
+          command: . .env/bin/activate && fab test.safety
+      - run:
+          name: Check `pylint`
+          command: . .env/bin/activate && fab test.pylint
+      - run:
+          name: Wait for Redis
+          command: dockerize -wait tcp://localhost:6379 -timeout 1m
+      - run:
+          name: Wait for Postgres
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Run tests
+          command: |
+            . .env/bin/activate
+            ./api/manage.py collectstatic --no-input
+            fab test.run
+      - store_test_results:
+          path: ~/project/api/test-results
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - test

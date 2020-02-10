@@ -1,37 +1,45 @@
 # Django Stars Backend Skeleton
 
-Basically django template for project creation that don't need django to start a project.
+[Django](https://www.djangoproject.com/) project template based on [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/readme.html).
+
+## What's included
+
+* Settings via environment variables with [django-environ](https://django-environ.readthedocs.io/en/latest/).
+* [Celery](http://www.celeryproject.org/) configuration.
+* [Django REST Framework](https://www.django-rest-framework.org/) configuration + Swagger with [drf-yasg](https://drf-yasg.readthedocs.io/en/stable/).
+* Typical user CRUD APIs.
+* Routine tasks configuration with [fabric](http://www.fabfile.org/) & [invoke](https://www.pyinvoke.org/).
+* Simple [docker-compose](https://docs.docker.com/compose/) configuration for local development (incl. [Postgres](https://www.postgresql.org/), [Redis](https://redis.io/) & [MailHog](https://github.com/mailhog/MailHog) for testing emails).
+* Requirements management with [pip-tools](https://pypi.org/project/pip-tools/).
+* [pytest](https://docs.pytest.org/en/latest/) configuration.
+* Code formatting with [Black](https://black.readthedocs.io/en/stable/).
+* Imports sorting with [isort](https://isort.readthedocs.io/en/latest/).
+* Checking code with [bandit](https://bandit.readthedocs.io/en/latest/), [mccabe](https://pypi.org/project/mccabe/), [pycodestyle](http://pycodestyle.pycqa.org/en/latest/intro.html), [pyflakes](https://pypi.org/project/pyflakes/), [pylint](https://www.pylint.org/) and [radon](https://radon.readthedocs.io/en/latest/).
+* [Pre-commit](https://pre-commit.com/) hook for running test & linters on each commit.
+* [CircleCI](https://circleci.com/) configuration for running tests & linters on each pull request.
+* Integration with [Sentry](https://sentry.io/).
 
 ## How to use
 
-### Create new project
+Create python virtual environment. We recommend to use [pyenv](https://github.com/pyenv/pyenv) & [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv):
 
-  1. open terminal
-  1. copy ```curl https://be.skeletons.djangostars.com/startproject | bash```
-  1. paste
-  1. hit enter
-  1. answer the questions
+```bash
+pyenv install 3.7.5
+pyenv virtualenv 3.7.5 my_project
+pyenv activate my_project
+```
 
-### Create new application
+Install cookiecutter:
 
-Project created with help of this skeleton has overwritten `startapp` command that will create application with given name. Template will be choisen automatically based on your `settings.INSTALLED_APPS`.
+```bash
+pip install cookiecutter
+```
 
+Step into directory you want to create project and generate project with cookiecutter:
 
-## Template features
+```bash
+cd /path/to/directory
+cookiecutter https://github.com/django-stars/backend-skeleton
+```
 
-### Base teamplate
-
-  * **Django** project formatted according to [Django Stars Code Style](https://codestyle.djangostars.com/) requirements
-  * **django-environ** to keep all configuration in environment
-  * **psycopg2** as default database driver
-  * **django-extensions/ipython/ipdb** for debug purposes
-  * **pytest** with **pylava** for testing
-  * redefined **startapp** command to create app according to [Django Stars Code Style](https://codestyle.djangostars.com/) requirements
-
-### Django REST Framework
-
-add [DRF](http://django-rest-framework.org) to base template
-
-### Celery
-
-add [Celery](http://www.celeryproject.org/) to base template
+Answer the questions.
