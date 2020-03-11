@@ -29,10 +29,10 @@ pyenv virtualenv 3.7.5 my_project
 pyenv activate my_project
 ```
 
-Install cookiecutter:
+Install cookiecutter and packaging:
 
 ```bash
-pip install cookiecutter
+pip install cookiecutter packaging
 ```
 
 Step into directory you want to create project and generate project with cookiecutter:
