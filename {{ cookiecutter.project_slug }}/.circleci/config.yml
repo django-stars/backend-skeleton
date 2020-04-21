@@ -21,15 +21,15 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: {% raw %}python-deps-v1-{{ checksum "api/requirements.txt" }}{% endraw %}
+          key: {% raw %}python-deps-v1-{{ checksum "api/requirements-dev.txt" }}{% endraw %}
       - run:
           name: Install Python dependencies
           command: |
             python3 -m venv .env
             . .env/bin/activate
-            pip install -r api/requirements.txt
+            pip install -r api/requirements-dev.txt
       - save_cache:
-          key: {% raw %}python-deps-v1-{{ checksum "api/requirements.txt" }}{% endraw %}
+          key: {% raw %}python-deps-v1-{{ checksum "api/requirements-dev.txt" }}{% endraw %}
           paths:
             - ".env"
       - run:

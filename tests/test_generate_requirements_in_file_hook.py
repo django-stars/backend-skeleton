@@ -64,34 +64,72 @@ def test_get_dev_packages(mocker):
     ]
 
 
-def test_render_requirements_file(mocker):
+def test_render_requirements_build_file(mocker):
     hook = GenerateRequirementsInFileHook()
     project_packages_mock = ["project-package-1=<mocked>", "project-package-2=<mocked>"]
-    dev_packages_mock = ["dev-package-1=<mocked>", "dev-package-2=<mocked>"]
     mocker.patch.object(hook, "_get_project_packages", return_value=project_packages_mock)
-    mocker.patch.object(hook, "_get_dev_packages", return_value=dev_packages_mock)
 
-    content = hook._render_requirements_file()
+    content = hook._render_requirements_build_file()
 
     assert content == [
-        "# Project requirements\n\n",
         "project-package-1=<mocked>\n",
         "project-package-2=<mocked>\n",
-        "\n\n",
-        "# Dev & test requirements\n\n",
+    ]
+
+
+def test_render_requirements_dev_file(mocker):
+    hook = GenerateRequirementsInFileHook()
+    dev_packages_mock = ["dev-package-1=<mocked>", "dev-package-2=<mocked>"]
+    mocker.patch.object(hook, "_get_dev_packages", return_value=dev_packages_mock)
+
+    content = hook._render_requirements_dev_file()
+
+    assert content == [
+        "-r requirements-build.in\n\n",
         "dev-package-1=<mocked>\n",
         "dev-package-2=<mocked>\n",
     ]
 
 
+def test_write_requirements_build_file(mocker):
+    hook = GenerateRequirementsInFileHook()
+    mocker.patch("os.getcwd", return_value="/path/to/project")
+    open_mock = mocker.patch('builtins.open', mocker.mock_open())
+
+    hook._write_requirements_build_file(["mocked", "content"])
+
+    open_mock.assert_called_once_with("/path/to/project/api/requirements-build.in", "w+")
+    handle_open_mock = open_mock()
+    handle_open_mock.writelines.assert_called_once_with(["mocked", "content"])
+
+
+def test_write_requirements_dev_file(mocker):
+    hook = GenerateRequirementsInFileHook()
+    mocker.patch("os.getcwd", return_value="/path/to/project")
+    open_mock = mocker.patch('builtins.open', mocker.mock_open())
+
+    hook._write_requirements_dev_file(["mocked", "content"])
+
+    open_mock.assert_called_once_with("/path/to/project/api/requirements-dev.in", "w+")
+    handle_open_mock = open_mock()
+    handle_open_mock.writelines.assert_called_once_with(["mocked", "content"])
+
+
 def test_run(mocker):
     hook = GenerateRequirementsInFileHook()
     mocker.patch("os.getcwd", return_value="/path/to/project")
-    mocker.patch.object(hook, "_render_requirements_file", return_value=["requirements_file_mocked_content"])
-    open_mock = mocker.patch('builtins.open', mocker.mock_open())
+    mocked_render_requirements_build_file = mocker.patch.object(
+        hook, "_render_requirements_build_file", return_value=["build", "content"]
+    )
+    mocked_render_requirements_dev_file = mocker.patch.object(
+        hook, "_render_requirements_dev_file", return_value=["dev", "content"]
+    )
+    mocked_write_requirements_build_file = mocker.patch.object(hook, "_write_requirements_build_file")
+    mocked_write_requirements_dev_file = mocker.patch.object(hook, "_write_requirements_dev_file")
 
     hook.run()
 
-    open_mock.assert_called_once_with("/path/to/project/api/requirements.in", "w+")
-    handle_open_mock = open_mock()
-    handle_open_mock.writelines.assert_called_once_with(["requirements_file_mocked_content"])
+    mocked_render_requirements_build_file.assert_called_once()
+    mocked_write_requirements_build_file.assert_called_once_with(["build", "content"])
+    mocked_render_requirements_dev_file.assert_called_once()
+    mocked_write_requirements_dev_file.assert_called_once_with(["dev", "content"])
