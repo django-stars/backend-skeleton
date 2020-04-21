@@ -13,7 +13,6 @@ def test_get_project_packages(mocker):
         "Django==<mocked>",
         "django-environ==<mocked>",
         "django-filter==<mocked>",
-        "djangorestframework-jwt==<mocked>",
         "djangorestframework==<mocked>",
         "drf-yasg==<mocked>",
         "gunicorn==<mocked>",
