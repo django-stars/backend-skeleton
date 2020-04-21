@@ -3,6 +3,7 @@ services:
   database:
     environment:
       POSTGRES_DB: {{ cookiecutter.project_slug }}_db
+      POSTGRES_PASSWORD: {{ cookiecutter.database_password }}
     image: postgres:{{ cookiecutter.postgresql_version }}
     ports:
       - 127.0.0.1:5432:5432/tcp

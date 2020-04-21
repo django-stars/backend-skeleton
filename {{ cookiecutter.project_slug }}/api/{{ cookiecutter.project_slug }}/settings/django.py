@@ -67,7 +67,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "{{ cookiecutter.project_slug }}.wsgi.application"
 
-DATABASES = {"default": env.db("{{ cookiecutter.project_slug | upper() }}_DATABASE_URL", default="psql://postgres@database:5432/{{ cookiecutter.project_slug }}_db")}
+DATABASES = {"default": env.db("{{ cookiecutter.project_slug | upper() }}_DATABASE_URL", default="psql://postgres:{{ cookiecutter.database_password }}@database:5432/{{ cookiecutter.project_slug }}_db")}
 
 AUTH_USER_MODEL = "accounts.UserAccount"
 AUTH_PASSWORD_VALIDATORS = [
