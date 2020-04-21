@@ -5,19 +5,20 @@ jobs:
   test:
     working_directory: ~/project
     docker:
-      - image: circleci/python:3.7.5
+      - image: circleci/python:3.8.2
         environment:
           AWESOME_SECRET_KEY: test-secret-key
           AWESOME_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
           AWESOME_USE_SENTRY: off
           AWESOME_DEBUG: off
-          AWESOME_DATABASE_URL: postgresql://postgres@localhost/awesome_test_db
+          AWESOME_DATABASE_URL: postgresql://postgres:awesome_password@localhost/awesome_test_db
           AWESOME_CELERY_BROKER: redis://localhost:6379/1
           AWESOME_CELERY_TASK_ALWAYS_EAGER: on
-      - image: postgres:12.1
+      - image: postgres:12.2
         environment:
           POSTGRES_DB: awesome_test_db
-      - image: redis:5.0.7
+          POSTGRES_PASSWORD: awesome_password
+      - image: redis:5.0.9
     steps:
       - checkout
       - restore_cache:
