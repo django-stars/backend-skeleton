@@ -92,24 +92,37 @@ class GenerateRequirementsInFileHook(AbstractHook):
         packages.sort()
         return packages
 
-    def _render_requirements_file(self):
-        print("Adding project requirements into requirements.in ...")
-        content = ["# Project requirements\n\n"]
+    def _render_requirements_build_file(self):
+        print("Adding project requirements into requirements-build.in ...")
+        content = []
         project_packages = self._get_project_packages()
         content.extend([f"{package}\n" for package in project_packages])
-        content.append("\n\n")
-        print("Adding dev & test requirements into requirements.in ...")
-        content.append("# Dev & test requirements\n\n")
+        return content
+
+    def _render_requirements_dev_file(self):
+        content = ["-r requirements-build.in\n\n"]
+        print("Adding dev & test requirements into requirements-dev.in ...")
         dev_packages = self._get_dev_packages()
         content.extend([f"{package}\n" for package in dev_packages])
         return content
 
-    def run(self):
-        cwd = os.getcwd()
-        requirements_in_file_path = os.path.join(cwd, "api", "requirements.in")
-        content = self._render_requirements_file()
-        with open(requirements_in_file_path, "w+") as f:
+    @staticmethod
+    def _write_requirements_build_file(content):
+        path = os.path.join(os.getcwd(), "api", "requirements-build.in")
+        with open(path, "w+") as f:
             f.writelines(content)
+
+    @staticmethod
+    def _write_requirements_dev_file(content):
+        path = os.path.join(os.getcwd(), "api", "requirements-dev.in")
+        with open(path, "w+") as f:
+            f.writelines(content)
+
+    def run(self):
+        requirements_build_file_content = self._render_requirements_build_file()
+        self._write_requirements_build_file(requirements_build_file_content)
+        requirements_dev_file_content = self._render_requirements_dev_file()
+        self._write_requirements_dev_file(requirements_dev_file_content)
 
 
 class PostGenerateProjectFacade:

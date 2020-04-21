@@ -56,7 +56,7 @@ repos:
       - id: python-safety-dependencies-check
         entry: safety
         args: [check]
-        files: ./api/requirements.txt
+        files: ./api/requirements-build.txt
   - repo: https://github.com/codespell-project/codespell
     rev: v1.16.0
     hooks:
