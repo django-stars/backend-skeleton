@@ -24,7 +24,6 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "django-environ",
             "django-filter",
             "djangorestframework",
-            "djangorestframework-jwt",
             "drf-yasg",
             "gunicorn",
             "psycopg2-binary",
