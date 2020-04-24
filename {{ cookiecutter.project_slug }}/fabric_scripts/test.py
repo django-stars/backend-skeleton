@@ -27,7 +27,7 @@ def test_run(ctx, module=None):
 @task()
 def test_bandit(ctx):
     with ctx.cd(project_path()):
-        ctx.run("bandit -r . --skip B101 --exclude './.env'", pty=True, replace_env=False)
+        ctx.run("bandit -r .", pty=True, replace_env=False)
 
 
 @task()
@@ -45,13 +45,13 @@ def test_black_apply(ctx):
 @task()
 def test_isort_check(ctx):
     with ctx.cd(project_path()):
-        ctx.run("isort --settings-path=.isort.cfg --check --skip .env", pty=True, replace_env=False)
+        ctx.run("isort --check --skip .env", pty=True, replace_env=False)
 
 
 @task()
 def test_isort_apply(ctx):
     with ctx.cd(project_path()):
-        ctx.run("isort --settings-path=.isort.cfg --apply --skip .env", pty=True, replace_env=False)
+        ctx.run("isort --apply --skip .env", pty=True, replace_env=False)
 
 
 @task()

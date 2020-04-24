@@ -27,7 +27,6 @@ repos:
     rev: v4.3.21
     hooks:
       - id: isort
-        args: ['--settings-path=.isort.cfg']
   - repo: https://github.com/gvanderest/pylama-pre-commit
     rev: 0.1.2
     hooks:
