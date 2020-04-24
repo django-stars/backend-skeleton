@@ -1,0 +1,3 @@
+[bandit]
+exclude: /node_modules/
+skips: B101
