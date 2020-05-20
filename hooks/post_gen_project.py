@@ -61,7 +61,7 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "radon",
             "safety",
         )
-        self._dev_requirements_with_versions_do_not_need_to_be_pinned = ("black==19.3b0",)
+        self._dev_requirements_with_versions_do_not_need_to_be_pinned = ("black==19.10b0",)
 
     @staticmethod
     def _get_package_data(package):  # pragma: no cover

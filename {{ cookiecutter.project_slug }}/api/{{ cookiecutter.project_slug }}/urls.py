@@ -8,7 +8,7 @@ API_PREFIX = "api"
 DOCS_PREFIX = "docs"
 
 admin_urlpatterns = [
-    path(f"admin/", admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
 
 api_v1_urlpatterns = [
