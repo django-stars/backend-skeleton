@@ -34,7 +34,7 @@ def test_get_dev_packages(mocker):
         "Pygments==<mocked>",
         "Werkzeug==<mocked>",
         "bandit==<mocked>",
-        "black==19.3b0",
+        "black==19.10b0",
         "coverage==<mocked>",
         "django-debug-toolbar==<mocked>",
         "django-extensions==<mocked>",
