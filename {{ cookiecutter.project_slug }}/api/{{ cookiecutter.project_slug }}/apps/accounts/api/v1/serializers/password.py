@@ -15,7 +15,7 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(max_length=128, write_only=True, style={"input_type": "password"})
 
     def __init__(self, *args, **kwargs):
-        super(ChangePasswordSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.request = self.context.get("request")
         self.user = getattr(self.request, "user", None)
         self.password_service = PasswordService()
@@ -50,7 +50,7 @@ class ConfirmResetPasswordSerializer(serializers.Serializer):
     signature = serializers.CharField(max_length=71, write_only=True)
 
     def __init__(self, *args, **kwargs):
-        super(ConfirmResetPasswordSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.password_service = PasswordService()
 
     def validate_password(self, password):
@@ -80,7 +80,7 @@ class ResetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=128, write_only=True)
 
     def __init__(self, *args, **kwargs):
-        super(ResetPasswordSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.password_service = PasswordService()
 
     def save(self, **kwargs):

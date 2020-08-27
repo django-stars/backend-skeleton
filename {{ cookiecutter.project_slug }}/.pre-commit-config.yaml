@@ -24,7 +24,7 @@ repos:
         args: [.]
         pass_filenames: false
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v4.3.21
+    rev: v5.4.2
     hooks:
       - id: isort
   - repo: https://github.com/gvanderest/pylama-pre-commit

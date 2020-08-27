@@ -9,8 +9,8 @@ def test_get_project_packages(mocker):
     packages = hook._get_project_packages()
 
     assert packages == [
-        "Celery==<mocked>",
-        "Django==<mocked>",
+        "Celery==4.4.6",
+        "Django==3.0.9",
         "django-environ==<mocked>",
         "django-filter==<mocked>",
         "djangorestframework==<mocked>",

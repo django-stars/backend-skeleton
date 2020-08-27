@@ -19,7 +19,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields = ("email", "first_name", "last_name", "password")
 
     def __init__(self, *args, **kwargs):
-        super(RegistrationSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.password_service = PasswordService()
 
     def validate_email(self, email):

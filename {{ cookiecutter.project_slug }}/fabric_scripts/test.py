@@ -45,13 +45,13 @@ def test_black_apply(ctx):
 @task()
 def test_isort_check(ctx):
     with ctx.cd(project_path()):
-        ctx.run("isort --check --skip .env", pty=True, replace_env=False)
+        ctx.run("isort --check --skip .env .", pty=True, replace_env=False)
 
 
 @task()
 def test_isort_apply(ctx):
     with ctx.cd(project_path()):
-        ctx.run("isort --apply --skip .env", pty=True, replace_env=False)
+        ctx.run("isort --skip .env .", pty=True, replace_env=False)
 
 
 @task()

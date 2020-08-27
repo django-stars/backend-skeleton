@@ -20,7 +20,7 @@ class ChangePasswordAPIView(CreateAPIView):
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
     def post(self, request, *args, **kwargs):  # pragma: no cover
-        super(ChangePasswordAPIView, self).post(request, *args, **kwargs)
+        super().post(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -30,7 +30,7 @@ class ResetPasswordAPIView(CreateAPIView):
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
     def post(self, request, *args, **kwargs):  # pragma: no cover
-        super(ResetPasswordAPIView, self).post(request, *args, **kwargs)
+        super().post(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -40,5 +40,5 @@ class ConfirmResetPasswordAPIView(CreateAPIView):
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
     def post(self, request, *args, **kwargs):  # pragma: no cover
-        super(ConfirmResetPasswordAPIView, self).post(request, *args, **kwargs)
+        super().post(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)

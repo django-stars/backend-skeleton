@@ -24,8 +24,8 @@
 Create python virtual environment. We recommend to use [pyenv](https://github.com/pyenv/pyenv) & [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv):
 
 ```bash
-pyenv install 3.8.2
-pyenv virtualenv 3.8.2 my_project
+pyenv install 3.8.5
+pyenv virtualenv 3.8.5 my_project
 pyenv activate my_project
 ```
 

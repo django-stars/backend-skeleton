@@ -11,12 +11,13 @@ jobs:
           {{ cookiecutter.project_slug | upper() }}_SECRET_KEY: stub
           {{ cookiecutter.project_slug | upper() }}_USE_SENTRY: off
           {{ cookiecutter.project_slug | upper() }}_DEBUG: off
-          {{ cookiecutter.project_slug | upper() }}_DATABASE_URL: postgresql://postgres@localhost/{{ cookiecutter.project_slug }}_test_db
+          {{ cookiecutter.project_slug | upper() }}_DATABASE_URL: postgresql://postgres:test_db_password@localhost/{{ cookiecutter.project_slug }}_test_db
           {{ cookiecutter.project_slug | upper() }}_CELERY_BROKER: redis://localhost:6379/1
           {{ cookiecutter.project_slug | upper() }}_CELERY_TASK_ALWAYS_EAGER: on
       - image: postgres:{{ cookiecutter.postgresql_version }}
         environment:
           POSTGRES_DB: {{ cookiecutter.project_slug }}_test_db
+          POSTGRES_PASSWORD: test_db_password
       - image: redis:{{ cookiecutter.redis_version }}
     steps:
       - checkout
@@ -27,6 +28,7 @@ jobs:
           command: |
             python3 -m venv .env
             . .env/bin/activate
+            pip install -U pip
             pip install -r api/requirements-dev.txt
       - save_cache:
           key: {% raw %}python-deps-v1-{{ checksum "api/requirements-dev.txt" }}{% endraw %}
