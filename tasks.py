@@ -62,7 +62,7 @@ def test_project(ctx):
     )
     with ctx.cd(project_path):
         ctx.run(f"python3 -m venv {virtual_env_path}", pty=True, replace_env=True)
-        ctx.run(f"{virtual_env_path}/bin/pip install fabric invoke pip-tools", pty=True, replace_env=True)
+        ctx.run(f"{virtual_env_path}/bin/pip install -U pip fabric invoke pip-tools", pty=True, replace_env=True)
         ctx.run(f"""source {virtual_env_path}/bin/activate && \
 {virtual_env_path}/bin/fab pip.compile && \
 {virtual_env_path}/bin/fab pip.sync && \

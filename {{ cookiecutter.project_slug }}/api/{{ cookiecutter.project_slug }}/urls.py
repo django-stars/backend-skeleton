@@ -60,7 +60,7 @@ if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
 
 # enable serve static by django for local develop
 if settings.DEBUG:  # pragma: no cover
-    from django.conf.urls.static import static
+    from django.conf.urls.static import static  # pylint: disable=ungrouped-imports
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
@@ -75,7 +75,7 @@ if settings.DEBUG and "debug_toolbar" in settings.INSTALLED_APPS:
 
 # enable Sentry check (by raising 500 on demand)
 if not settings.DEBUG:
-    from django.views.generic.base import View
+    from django.views.generic.base import View  # pylint: disable=ungrouped-imports
 
     class ServerErrorTestView(View):
         def dispatch(self, request, *args, **kwargs):
