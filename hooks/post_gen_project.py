@@ -19,6 +19,8 @@ class GenerateRequirementsInFileHook(AbstractHook):
 
     def __init__(self):
         self._project_requirements_with_versions_need_to_be_pinned = (
+            "Celery",
+            "Django",
             "django-environ",
             "django-filter",
             "djangorestframework",
@@ -28,7 +30,7 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "redis",
             "sentry-sdk",
         )
-        self._project_requirements_with_versions_do_not_need_to_be_pinned = ("Celery==4.4.6", "Django==3.0.9", "pytz")
+        self._project_requirements_with_versions_do_not_need_to_be_pinned = ("pytz", )
         self._dev_requirements_with_versions_need_to_be_pinned = (
             "Pygments",
             "Werkzeug",
