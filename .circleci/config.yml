@@ -5,7 +5,10 @@ jobs:
   test:
     working_directory: ~/project
     docker:
-      - image: circleci/python:3.8.5
+      - image: circleci/python:3.8.6
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASS
         environment:
           AWESOME_SECRET_KEY: test-secret-key
           AWESOME_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
@@ -15,10 +18,16 @@ jobs:
           AWESOME_CELERY_BROKER: redis://localhost:6379/1
           AWESOME_CELERY_TASK_ALWAYS_EAGER: on
       - image: postgres:12.4
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASS
         environment:
           POSTGRES_DB: awesome_test_db
           POSTGRES_PASSWORD: awesome_password
       - image: redis:6.0.6
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASS
     steps:
       - checkout
       - restore_cache:
