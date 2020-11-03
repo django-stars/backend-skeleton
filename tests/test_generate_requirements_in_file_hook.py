@@ -9,8 +9,8 @@ def test_get_project_packages(mocker):
     packages = hook._get_project_packages()
 
     assert packages == [
-        "Celery==4.4.6",
-        "Django==3.0.9",
+        "Celery==<mocked>",
+        "Django==<mocked>",
         "django-environ==<mocked>",
         "django-filter==<mocked>",
         "djangorestframework==<mocked>",
@@ -51,11 +51,8 @@ def test_get_dev_packages(mocker):
         "pylint-celery==<mocked>",
         "pylint-django==<mocked>",
         "pylint==<mocked>",
-        "pytest-bandit==<mocked>",
-        "pytest-black==<mocked>",
         "pytest-cov==<mocked>",
         "pytest-django==<mocked>",
-        "pytest-isort==<mocked>",
         "pytest-mock==<mocked>",
         "pytest==<mocked>",
         "radon==<mocked>",
