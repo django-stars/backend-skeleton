@@ -6,6 +6,9 @@ jobs:
     working_directory: ~/project
     docker:
       - image: circleci/python:{{ cookiecutter.python_version }}
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASS
         environment:
           {{ cookiecutter.project_slug | upper() }}_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
           {{ cookiecutter.project_slug | upper() }}_SECRET_KEY: stub
@@ -15,10 +18,16 @@ jobs:
           {{ cookiecutter.project_slug | upper() }}_CELERY_BROKER: redis://localhost:6379/1
           {{ cookiecutter.project_slug | upper() }}_CELERY_TASK_ALWAYS_EAGER: on
       - image: postgres:{{ cookiecutter.postgresql_version }}
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASS
         environment:
           POSTGRES_DB: {{ cookiecutter.project_slug }}_test_db
           POSTGRES_PASSWORD: test_db_password
       - image: redis:{{ cookiecutter.redis_version }}
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASS
     steps:
       - checkout
       - restore_cache:
