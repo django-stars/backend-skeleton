@@ -5,7 +5,7 @@ jobs:
   test:
     working_directory: ~/project
     docker:
-      - image: circleci/python:3.8.6
+      - image: circleci/python:3.9.5
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASS
@@ -17,14 +17,14 @@ jobs:
           AWESOME_DATABASE_URL: postgresql://postgres:awesome_password@localhost/awesome_test_db
           AWESOME_CELERY_BROKER: redis://localhost:6379/1
           AWESOME_CELERY_TASK_ALWAYS_EAGER: on
-      - image: postgres:12.4
+      - image: postgres:13.3
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASS
         environment:
           POSTGRES_DB: awesome_test_db
           POSTGRES_PASSWORD: awesome_password
-      - image: redis:6.0.6
+      - image: redis:6.2.4
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASS

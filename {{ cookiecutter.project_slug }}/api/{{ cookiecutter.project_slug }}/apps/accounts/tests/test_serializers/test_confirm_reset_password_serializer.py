@@ -17,7 +17,7 @@ def test_validate_password_success(mocker):
     result = serializer.validate_password(NEW_PASSWORD)
 
     assert result == NEW_PASSWORD
-    assert mocked_validate_password.called_once_with(NEW_PASSWORD)
+    mocked_validate_password.assert_called_once_with(NEW_PASSWORD)
 
 
 def test_validate_password_failure(mocker):
@@ -29,7 +29,7 @@ def test_validate_password_failure(mocker):
     with pytest.raises(ValidationError):
         serializer.validate_password(NEW_PASSWORD)
 
-    assert mocked_validate_password.called_once_with(NEW_PASSWORD)
+    mocked_validate_password.assert_called_once_with(NEW_PASSWORD)
 
 
 def test_save_success(mocker):
@@ -40,7 +40,7 @@ def test_save_success(mocker):
     serializer.is_valid()
     serializer.save()
 
-    assert mocked_reset_password.called_once_with(RESET_PASSWORD_SIGNATURE, NEW_PASSWORD)
+    mocked_reset_password.assert_called_once_with(RESET_PASSWORD_SIGNATURE, NEW_PASSWORD)
 
 
 def test_save_failure(mocker):
@@ -54,4 +54,4 @@ def test_save_failure(mocker):
     with pytest.raises(ValidationError):
         serializer.save()
 
-    assert mocked_reset_password.called_once_with(RESET_PASSWORD_SIGNATURE, NEW_PASSWORD)
+    mocked_reset_password.assert_called_once_with(RESET_PASSWORD_SIGNATURE, NEW_PASSWORD)
