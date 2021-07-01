@@ -49,7 +49,7 @@ fab clean-pyc
 Run tests:
 
 ```bash
-fab test.run
+fab test
 ```
 
 Check Python formatting with [black](https://black.readthedocs.io/en/stable/):

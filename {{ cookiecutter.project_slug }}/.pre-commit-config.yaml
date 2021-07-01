@@ -2,7 +2,7 @@ default_language_version:
   python: python
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.2.1
+    rev: v4.0.1
     hooks:
       - id: check-added-large-files
         args: ['--maxkb=10000']
@@ -18,13 +18,13 @@ repos:
       - id: pretty-format-json
         args: ['--autofix', '--indent 2', ]
   - repo: https://github.com/ambv/black
-    rev: 19.10b0
+    rev: 21.6b0
     hooks:
       - id: black
         args: [.]
         pass_filenames: false
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.4.2
+    rev: v5.9.1
     hooks:
       - id: isort
   - repo: https://github.com/gvanderest/pylama-pre-commit
@@ -43,20 +43,28 @@ repos:
       - id: bandit
         args: ['--skip', 'B101']
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.4.1
+    rev: v1.9.0
     hooks:
       - id: python-check-blanket-noqa
       - id: python-no-log-warn
       - id: python-use-type-annotations
       - id: rst-backticks
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-    rev: v1.1.0
+    rev: v1.2.1
     hooks:
       - id: python-safety-dependencies-check
         entry: safety
         args: [check]
         files: ./api/requirements-build.txt
   - repo: https://github.com/codespell-project/codespell
-    rev: v1.16.0
+    rev: v2.1.0
     hooks:
       - id: codespell
+  - repo: local
+    hooks:
+      - id: migrations-check
+        language: system
+        name: Check for uncreated migrations.
+        entry: sh -c "./api/manage.py makemigrations --check --dry-run"
+        files: models/*.*\.py$
+        stages: [commit]

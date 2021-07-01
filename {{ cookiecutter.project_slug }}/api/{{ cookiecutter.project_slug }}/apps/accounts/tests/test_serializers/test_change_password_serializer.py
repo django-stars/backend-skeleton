@@ -30,7 +30,7 @@ def test_validate_old_password_success(change_password_serializer_request, mocke
     result = serializer.validate_old_password(OLD_PASSWORD)
 
     assert result == OLD_PASSWORD
-    assert mocked_check_password.called_once_with(OLD_PASSWORD)
+    mocked_check_password.assert_called_once_with(change_password_serializer_request.user, OLD_PASSWORD)
 
 
 @pytest.mark.django_db
@@ -41,7 +41,7 @@ def test_validate_new_password_success(change_password_serializer_request, mocke
     result = serializer.validate_new_password(NEW_PASSWORD)
 
     assert result == NEW_PASSWORD
-    assert mocked_validate_password.called_once_with(NEW_PASSWORD)
+    mocked_validate_password.assert_called_once_with(NEW_PASSWORD, user=change_password_serializer_request.user)
 
 
 @pytest.mark.django_db
@@ -57,7 +57,7 @@ def test_validate_old_password_failure(change_password_serializer_request, mocke
         serializer.validate_old_password(OLD_PASSWORD)
 
     assert "test_validate_old_password_failure" in str(exc.value)
-    assert mocked_check_password.called_once_with(OLD_PASSWORD)
+    mocked_check_password.assert_called_once_with(change_password_serializer_request.user, OLD_PASSWORD)
 
 
 @pytest.mark.django_db
@@ -73,7 +73,7 @@ def test_validate_new_password_failure(change_password_serializer_request, mocke
         serializer.validate_new_password(OLD_PASSWORD)
 
     assert "test_validate_new_password_failure" in str(exc.value)
-    assert mocked_validate_password.called_once_with(OLD_PASSWORD)
+    mocked_validate_password.assert_called_once_with(OLD_PASSWORD, user=change_password_serializer_request.user)
 
 
 @pytest.mark.django_db
@@ -89,4 +89,4 @@ def test_save(user_account, mocker):
     serializer.is_valid()
     serializer.save()
 
-    assert mocked_change_password.called_once_with("BAR")
+    mocked_change_password.assert_called_once_with(None, NEW_PASSWORD)

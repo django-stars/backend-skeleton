@@ -3,14 +3,15 @@ services:
   database:
     environment:
       POSTGRES_DB: awesome_db
-    image: postgres:12.1
+      POSTGRES_PASSWORD: awesome_password_1
+    image: postgres:13.3
     ports:
       - 127.0.0.1:5432:5432/tcp
     restart: always
     volumes:
       - pg_data:/var/lib/postgresql/data:rw
   redis:
-    image: redis:5.0.7
+    image: redis:6.2.4
     ports:
       - 127.0.0.1:6379:6379/tcp
     restart: always
