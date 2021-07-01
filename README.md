@@ -24,8 +24,8 @@
 Create python virtual environment. We recommend to use [pyenv](https://github.com/pyenv/pyenv) & [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv):
 
 ```bash
-pyenv install 3.8.6
-pyenv virtualenv 3.8.6 my_project
+pyenv install 3.9.5
+pyenv virtualenv 3.9.5 my_project
 pyenv activate my_project
 ```
 
@@ -42,4 +42,44 @@ cd /path/to/directory
 cookiecutter https://github.com/django-stars/backend-skeleton
 ```
 
-Answer the questions.
+Answer the questions in wizard.
+
+## Steps after project setup
+
+Install tools required to build a dependencies list:
+
+```bash
+pip install -U fabric invoke pip pip-tools
+```
+
+Compile dependencies list:
+
+```bash
+fab pip.compile
+```
+
+Install dependencies:
+
+```bash
+fab pip.sync
+```
+
+Run backing services:
+
+```bash
+fab compose.up -d
+```
+
+Copy `.env` file from example file and set your settings:
+
+```bash
+cp ./api/.env.example ./api/.env
+```
+
+Run migrations:
+
+```bash
+./api/manage.py migrate
+```
+
+Start building your awesome project!

@@ -55,7 +55,7 @@ def test_project(ctx):
             "AWESOME_EMAIL_BACKEND=django.core.mail.backends.dummy.EmailBackend",
             "AWESOME_USE_SENTRY=off",
             "AWESOME_DEBUG=off",
-            "AWESOME_DATABASE_URL=postgresql://postgres@localhost/awesome_test_db",
+            "AWESOME_DATABASE_URL=postgresql://postgres:awesome_password_1@localhost/awesome_test_db",
             "AWESOME_CELERY_BROKER=redis://localhost:6379/1",
             "AWESOME_CELERY_TASK_ALWAYS_EAGER=on",
         )

@@ -59,11 +59,16 @@ def test_pylama(ctx):
     with ctx.cd(project_path("api")):
         ctx.run("pylama", pty=True, replace_env=False)
 
-
 @task()
 def test_pylint(ctx):
     with ctx.cd(project_path("api")):
-        ctx.run("pylint --ignore=tests {{ cookiecutter.project_slug }}", pty=True, replace_env=False)
+        pylint_command_args = [
+            "pylint",
+            "--django-settings-module={{ cookiecutter.project_slug }}.settings",
+            "--ignore=tests",
+            "{{ cookiecutter.project_slug }}",
+        ]
+        ctx.run(" ".join(pylint_command_args), pty=True, replace_env=False)
 
 
 @task()
@@ -83,7 +88,7 @@ def test_all(ctx):
 
 
 test_collection = Collection("test")
-test_collection.add_task(test_run, name="run")
+test_collection.add_task(test_run, name="run", default=True)
 test_collection.add_task(test_all, name="all")
 test_collection.add_task(test_black_check, name="black")
 test_collection.add_task(test_black_apply, name="black-apply")

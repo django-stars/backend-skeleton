@@ -9,4 +9,4 @@ def test_save(mocker):
     serializer.is_valid()
     serializer.save()
 
-    assert mocked_send_reset_password_link.called_once_with(email)
+    mocked_send_reset_password_link.assert_called_once_with(email)

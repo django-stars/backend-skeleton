@@ -33,8 +33,8 @@ INSTALLED_APPS = [
     "django_filters",
     "drf_yasg",
     # our apps
-    "{{ cookiecutter.project_slug }}.apps.common.apps.CommonConfig",
-    "{{ cookiecutter.project_slug }}.apps.accounts.apps.AccountConfig",
+    "{{ cookiecutter.project_slug }}.apps.common",
+    "{{ cookiecutter.project_slug }}.apps.accounts",
 ] + env.list("{{ cookiecutter.project_slug | upper() }}_DEV_INSTALLED_APPS", default=[])
 
 MIDDLEWARE = [
