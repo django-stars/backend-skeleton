@@ -59,6 +59,7 @@ def test_pylama(ctx):
     with ctx.cd(project_path("api")):
         ctx.run("pylama", pty=True, replace_env=False)
 
+
 @task()
 def test_pylint(ctx):
     with ctx.cd(project_path("api")):

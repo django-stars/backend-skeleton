@@ -9,14 +9,12 @@ from packaging import version as packaging_version
 
 
 class AbstractHook(ABC):  # pragma: no cover
-
     @abstractmethod
     def run(self):
         pass
 
 
 class GenerateRequirementsInFileHook(AbstractHook):
-
     def __init__(self):
         self._project_requirements_with_versions_need_to_be_pinned = (
             "Celery",
@@ -30,7 +28,7 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "redis",
             "sentry-sdk",
         )
-        self._project_requirements_with_versions_do_not_need_to_be_pinned = ("pytz", )
+        self._project_requirements_with_versions_do_not_need_to_be_pinned = ("pytz",)
         self._dev_requirements_with_versions_need_to_be_pinned = (
             "Pygments",
             "Werkzeug",
@@ -58,17 +56,24 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "radon",
             "safety",
         )
-        self._dev_requirements_with_versions_do_not_need_to_be_pinned = ("black==21.6b0",)
+        self._dev_requirements_with_versions_do_not_need_to_be_pinned = (
+            "black==21.6b0",
+        )
 
     @staticmethod
     def _get_package_data(package):  # pragma: no cover
-        return json.loads(request.urlopen(f"https://pypi.python.org/pypi/{package}/json").read().decode("utf-8"))
+        return json.loads(
+            request.urlopen(f"https://pypi.python.org/pypi/{package}/json")
+            .read()
+            .decode("utf-8")
+        )
 
     def _get_latest_stable_version(self, package):
         data = self._get_package_data(package)
         version = max(
             [
-                distutils_version.LooseVersion(release) for release in data["releases"]
+                distutils_version.LooseVersion(release)
+                for release in data["releases"]
                 if not packaging_version.parse(release).is_prerelease
             ]
         )
@@ -76,14 +81,24 @@ class GenerateRequirementsInFileHook(AbstractHook):
 
     def _get_project_packages(self):
         packages = list(
-            map(self._get_latest_stable_version, self._project_requirements_with_versions_need_to_be_pinned)
+            map(
+                self._get_latest_stable_version,
+                self._project_requirements_with_versions_need_to_be_pinned,
+            )
         )
-        packages.extend(self._project_requirements_with_versions_do_not_need_to_be_pinned)
+        packages.extend(
+            self._project_requirements_with_versions_do_not_need_to_be_pinned
+        )
         packages.sort()
         return packages
 
     def _get_dev_packages(self):
-        packages = list(map(self._get_latest_stable_version, self._dev_requirements_with_versions_need_to_be_pinned))
+        packages = list(
+            map(
+                self._get_latest_stable_version,
+                self._dev_requirements_with_versions_need_to_be_pinned,
+            )
+        )
         packages.extend(self._dev_requirements_with_versions_do_not_need_to_be_pinned)
         packages.sort()
         return packages
@@ -122,7 +137,6 @@ class GenerateRequirementsInFileHook(AbstractHook):
 
 
 class PostGenerateProjectFacade:
-
     def __init__(self):
         self._hook_1 = GenerateRequirementsInFileHook()
 

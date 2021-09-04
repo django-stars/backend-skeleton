@@ -12,7 +12,9 @@ def path(*args):
 @task()
 def compose_up(ctx, daemon=False):
     with ctx.cd(path("contrib", "docker")):
-        command = "docker-compose --file docker-compose-local.yml --project-name=awesome up"
+        command = (
+            "docker-compose --file docker-compose-local.yml --project-name=awesome up"
+        )
         if daemon:
             command = f"{command} -d"
         ctx.run(command, pty=True, replace_env=False)
@@ -21,7 +23,9 @@ def compose_up(ctx, daemon=False):
 @task()
 def compose_down(ctx, volumes=False):
     with ctx.cd(path("contrib", "docker")):
-        command = "docker-compose --file docker-compose-local.yml --project-name=awesome down"
+        command = (
+            "docker-compose --file docker-compose-local.yml --project-name=awesome down"
+        )
         if volumes:
             command = f"{command} -v"
         ctx.run(command, pty=True, replace_env=False)
@@ -46,7 +50,11 @@ def test_hooks(ctx):
 @task()
 def test_project(ctx):
     rmtree("build", ignore_errors=True)
-    ctx.run("cookiecutter --no-input --overwrite-if-exists --output-dir build .", pty=True, replace_env=False)
+    ctx.run(
+        "cookiecutter --no-input --overwrite-if-exists --output-dir build .",
+        pty=True,
+        replace_env=False,
+    )
     project_path = path("build", "awesome", "api")
     virtual_env_path = path("build", ".env")
     env_variables = " ".join(
@@ -62,13 +70,21 @@ def test_project(ctx):
     )
     with ctx.cd(project_path):
         ctx.run(f"python3 -m venv {virtual_env_path}", pty=True, replace_env=True)
-        ctx.run(f"{virtual_env_path}/bin/pip install -U pip fabric invoke pip-tools", pty=True, replace_env=True)
-        ctx.run(f"""source {virtual_env_path}/bin/activate && \
+        ctx.run(
+            f"{virtual_env_path}/bin/pip install -U pip fabric invoke pip-tools",
+            pty=True,
+            replace_env=True,
+        )
+        ctx.run(
+            f"""source {virtual_env_path}/bin/activate && \
 {virtual_env_path}/bin/fab pip.compile && \
 {virtual_env_path}/bin/fab pip.sync && \
 {env_variables} {virtual_env_path}/bin/fab test.black-apply && \
 {env_variables} {virtual_env_path}/bin/fab test.isort-apply && \
-{env_variables} {virtual_env_path}/bin/fab test.all""", pty=True, replace_env=True)
+{env_variables} {virtual_env_path}/bin/fab test.all""",
+            pty=True,
+            replace_env=True,
+        )
 
 
 compose_collection = Collection("compose")
@@ -80,4 +96,8 @@ pip_collection.add_task(pip_sync, name="sync")
 test_collection = Collection("test")
 test_collection.add_task(test_hooks, name="hooks")
 test_collection.add_task(test_project, name="project")
-namespace = Collection(compose_collection, pip_collection, test_collection, )
+namespace = Collection(
+    compose_collection,
+    pip_collection,
+    test_collection,
+)

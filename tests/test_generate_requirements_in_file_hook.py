@@ -4,7 +4,9 @@ from hooks.post_gen_project import GenerateRequirementsInFileHook
 def test_get_project_packages(mocker):
     hook = GenerateRequirementsInFileHook()
     mocked_get_latest_stable_version = lambda x: f"{x}==<mocked>"
-    mocker.patch.object(hook, "_get_latest_stable_version", mocked_get_latest_stable_version)
+    mocker.patch.object(
+        hook, "_get_latest_stable_version", mocked_get_latest_stable_version
+    )
 
     packages = hook._get_project_packages()
 
@@ -26,7 +28,9 @@ def test_get_project_packages(mocker):
 def test_get_dev_packages(mocker):
     hook = GenerateRequirementsInFileHook()
     mocked_get_latest_stable_version = lambda x: f"{x}==<mocked>"
-    mocker.patch.object(hook, "_get_latest_stable_version", mocked_get_latest_stable_version)
+    mocker.patch.object(
+        hook, "_get_latest_stable_version", mocked_get_latest_stable_version
+    )
 
     packages = hook._get_dev_packages()
 
@@ -63,7 +67,9 @@ def test_get_dev_packages(mocker):
 def test_render_requirements_build_file(mocker):
     hook = GenerateRequirementsInFileHook()
     project_packages_mock = ["project-package-1=<mocked>", "project-package-2=<mocked>"]
-    mocker.patch.object(hook, "_get_project_packages", return_value=project_packages_mock)
+    mocker.patch.object(
+        hook, "_get_project_packages", return_value=project_packages_mock
+    )
 
     content = hook._render_requirements_build_file()
 
@@ -90,11 +96,13 @@ def test_render_requirements_dev_file(mocker):
 def test_write_requirements_build_file(mocker):
     hook = GenerateRequirementsInFileHook()
     mocker.patch("os.getcwd", return_value="/path/to/project")
-    open_mock = mocker.patch('builtins.open', mocker.mock_open())
+    open_mock = mocker.patch("builtins.open", mocker.mock_open())
 
     hook._write_requirements_build_file(["mocked", "content"])
 
-    open_mock.assert_called_once_with("/path/to/project/api/requirements-build.in", "w+")
+    open_mock.assert_called_once_with(
+        "/path/to/project/api/requirements-build.in", "w+"
+    )
     handle_open_mock = open_mock()
     handle_open_mock.writelines.assert_called_once_with(["mocked", "content"])
 
@@ -102,7 +110,7 @@ def test_write_requirements_build_file(mocker):
 def test_write_requirements_dev_file(mocker):
     hook = GenerateRequirementsInFileHook()
     mocker.patch("os.getcwd", return_value="/path/to/project")
-    open_mock = mocker.patch('builtins.open', mocker.mock_open())
+    open_mock = mocker.patch("builtins.open", mocker.mock_open())
 
     hook._write_requirements_dev_file(["mocked", "content"])
 
@@ -120,8 +128,12 @@ def test_run(mocker):
     mocked_render_requirements_dev_file = mocker.patch.object(
         hook, "_render_requirements_dev_file", return_value=["dev", "content"]
     )
-    mocked_write_requirements_build_file = mocker.patch.object(hook, "_write_requirements_build_file")
-    mocked_write_requirements_dev_file = mocker.patch.object(hook, "_write_requirements_dev_file")
+    mocked_write_requirements_build_file = mocker.patch.object(
+        hook, "_write_requirements_build_file"
+    )
+    mocked_write_requirements_dev_file = mocker.patch.object(
+        hook, "_write_requirements_dev_file"
+    )
 
     hook.run()
 

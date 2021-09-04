@@ -7,7 +7,9 @@ from ._common import config
 @task()
 def git_delete_stale(ctx):
     git_branches_to_keep = "|".join(config["available_environments"])
-    ctx.run(f'git branch --merged | egrep -v "(^\\*|{git_branches_to_keep})" | xargs git branch -d')
+    ctx.run(
+        f'git branch --merged | egrep -v "(^\\*|{git_branches_to_keep})" | xargs git branch -d'
+    )
 
 
 @task()

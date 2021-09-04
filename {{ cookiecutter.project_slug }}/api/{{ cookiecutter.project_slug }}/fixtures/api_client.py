@@ -20,28 +20,88 @@ class _CustomAPIClient(APIClient):
         `data should` properly encoded to JSON.
     """
 
-    def post(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
+    def post(
+        self,
+        path,
+        data=None,
+        format=None,
+        content_type="application/json",
+        follow=False,
+        **extra
+    ):
         if isinstance(data, (dict, list)):
             data = json.dumps(data)
-        response = super().post(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
+        response = super().post(
+            path,
+            data=data,
+            format=format,
+            content_type=content_type,
+            follow=follow,
+            **extra
+        )
         return response
 
-    def put(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
+    def put(
+        self,
+        path,
+        data=None,
+        format=None,
+        content_type="application/json",
+        follow=False,
+        **extra
+    ):
         if isinstance(data, (dict, list)):
             data = json.dumps(data)
-        response = super().put(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
+        response = super().put(
+            path,
+            data=data,
+            format=format,
+            content_type=content_type,
+            follow=follow,
+            **extra
+        )
         return response
 
-    def patch(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
+    def patch(
+        self,
+        path,
+        data=None,
+        format=None,
+        content_type="application/json",
+        follow=False,
+        **extra
+    ):
         if isinstance(data, (dict, list)):
             data = json.dumps(data)
-        response = super().patch(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
+        response = super().patch(
+            path,
+            data=data,
+            format=format,
+            content_type=content_type,
+            follow=follow,
+            **extra
+        )
         return response
 
-    def delete(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
+    def delete(
+        self,
+        path,
+        data=None,
+        format=None,
+        content_type="application/json",
+        follow=False,
+        **extra
+    ):
         if isinstance(data, (dict, list)):
             data = json.dumps(data)
-        response = super().delete(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
+        response = super().delete(
+            path,
+            data=data,
+            format=format,
+            content_type=content_type,
+            follow=follow,
+            **extra
+        )
         return response
 
 
