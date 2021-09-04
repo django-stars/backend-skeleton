@@ -8,9 +8,6 @@ from {{ cookiecutter.project_slug }}.apps.common.models import CoreModel
 
 
 class UserManager(core_models.CoreManager, BaseUserManager):
-    def get_queryset(self):
-        return core_models.CoreQuerySet(self.model, using=self._db)
-
     def create_user(self, email, password=None):
         if not email:
             raise ValueError("Users must give an email address")
