@@ -1,0 +1,70 @@
+name: Backend Skeleton
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+  schedule:
+    - cron:  '0 14 * * MON'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      AWESOME_SECRET_KEY: test-secret-key
+      AWESOME_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
+      AWESOME_USE_SENTRY: off
+      AWESOME_DEBUG: off
+      AWESOME_DATABASE_URL: postgresql://postgres:awesome_password@postgres/awesome_test_db
+      AWESOME_CELERY_BROKER: redis://redis:6379/1
+      AWESOME_CELERY_TASK_ALWAYS_EAGER: on
+    container:
+      image: python:3.9.5
+    defaults:
+      run:
+        shell: bash
+    services:
+      redis:
+        image: redis:6.2.4
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      postgres:
+        image: postgres:13.3
+        env:
+          POSTGRES_DB: awesome_test_db
+          POSTGRES_PASSWORD: awesome_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Python dependencies
+        run: |
+          python3 -m venv venv
+          source ./venv/bin/activate
+          pip install -U pip
+          pip install -r ./requirements.txt
+      - name: Run tests on hooks
+        run: |
+          source ./venv/bin/activate
+          inv test.hooks
+      - name: Run tests on building project
+        run: |
+          source ./venv/bin/activate
+          cookiecutter --no-input --overwrite-if-exists --output-dir build .
+          python3 -m venv build/.env
+          source build/.env/bin/activate
+          cd build/awesome
+          pip install -U pip
+          pip install fabric invoke pip-tools
+          fab pip.compile
+          fab pip.sync
+          fab test.black-apply
+          fab test.isort-apply
+          fab test.all
