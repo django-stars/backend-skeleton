@@ -3,14 +3,14 @@ from datetime import timedelta
 from .environment import env
 
 
-{{ cookiecutter.project_slug | upper() }}_FEATURES = env.list("{{ cookiecutter.project_slug | upper() }}_FEATURES", default=[])
+{{ cookiecutter.project_slug | upper() }}_FEATURES = env.list("{{ cookiecutter.env_prefix }}FEATURES", default=[])
 
-{{ cookiecutter.project_slug | upper() }}_EMAIL_FROM = env.str("{{ cookiecutter.project_slug | upper() }}_EMAIL_FROM", default="no-reply@example.com")
+{{ cookiecutter.project_slug | upper() }}_EMAIL_FROM = env.str("{{ cookiecutter.env_prefix }}EMAIL_FROM", default="no-reply@example.com")
 
-{{ cookiecutter.project_slug | upper() }}_AUTH_COOKIE_NAME = env.str("{{ cookiecutter.project_slug | upper() }}_AUTH_COOKIE_NAME", default="a")
+{{ cookiecutter.project_slug | upper() }}_AUTH_COOKIE_NAME = env.str("{{ cookiecutter.env_prefix }}AUTH_COOKIE_NAME", default="a")
 
 # Reset password link lifetime interval (in seconds). By default: 1 hour.
-{{ cookiecutter.project_slug | upper() }}_RESET_PASSWORD_EXPIRATION_DELTA = timedelta(seconds=env.int("{{ cookiecutter.project_slug | upper() }}_RESET_PASSWORD_EXPIRATION_DELTA", default=3600))
+{{ cookiecutter.project_slug | upper() }}_RESET_PASSWORD_EXPIRATION_DELTA = timedelta(seconds=env.int("{{ cookiecutter.env_prefix }}RESET_PASSWORD_EXPIRATION_DELTA", default=3600))
 
 if "LOG_SQL" in {{ cookiecutter.project_slug | upper() }}_FEATURES:  # pragma: no cover
     LOGGING = {

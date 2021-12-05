@@ -10,13 +10,13 @@ jobs:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASS
         environment:
-          {{ cookiecutter.project_slug | upper() }}_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
-          {{ cookiecutter.project_slug | upper() }}_SECRET_KEY: stub
-          {{ cookiecutter.project_slug | upper() }}_USE_SENTRY: off
-          {{ cookiecutter.project_slug | upper() }}_DEBUG: off
-          {{ cookiecutter.project_slug | upper() }}_DATABASE_URL: postgresql://postgres:test_db_password@localhost/{{ cookiecutter.project_slug }}_test_db
-          {{ cookiecutter.project_slug | upper() }}_CELERY_BROKER: redis://localhost:6379/1
-          {{ cookiecutter.project_slug | upper() }}_CELERY_TASK_ALWAYS_EAGER: on
+          {{ cookiecutter.env_prefix }}EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
+          {{ cookiecutter.env_prefix }}SECRET_KEY: stub
+          {{ cookiecutter.env_prefix }}USE_SENTRY: off
+          {{ cookiecutter.env_prefix }}DEBUG: off
+          {{ cookiecutter.env_prefix }}DATABASE_URL: postgresql://postgres:test_db_password@localhost/{{ cookiecutter.project_slug }}_test_db
+          {{ cookiecutter.env_prefix }}CELERY_BROKER: redis://localhost:6379/1
+          {{ cookiecutter.env_prefix }}CELERY_TASK_ALWAYS_EAGER: on
       - image: postgres:{{ cookiecutter.postgresql_version }}
         auth:
           username: $DOCKERHUB_USER
