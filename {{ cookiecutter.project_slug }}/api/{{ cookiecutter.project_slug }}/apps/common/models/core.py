@@ -12,15 +12,8 @@ class CoreQuerySet(models.QuerySet):
         return self.filter(is_active=False)
 
 
-class CoreManager(models.Manager):
-    def get_queryset(self):  # pragma: no cover
-        return CoreQuerySet(self.model, using=self._db)
-
-    def active(self):
-        return self.get_queryset().active()
-
-    def inactive(self):
-        return self.get_queryset().inactive()
+class CoreManager(models.Manager.from_queryset(CoreQuerySet)):  # pylint: disable=too-few-public-methods
+    pass
 
 
 class CoreModel(models.Model):
