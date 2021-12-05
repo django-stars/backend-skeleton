@@ -2,8 +2,8 @@
   "project_name": "awesome",
   "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
   "domain_name": "example.com",
-  "python_version": "3.9.5",
+  "python_version": "3.9.9",
   "database_password": "awesome_password_1",
-  "postgresql_version": "13.3",
-  "redis_version": "6.2.4"
+  "postgresql_version": "14.1",
+  "redis_version": "6.2.6"
 }
