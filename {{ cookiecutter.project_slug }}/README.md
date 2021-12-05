@@ -56,7 +56,7 @@ Generate `SECRET_KEY`:
 and write it to `./api/.env`:
 
 ```
-{{ cookiecutter.project_slug | upper() }}_SECRET_KEY=<your-generated-key>
+{{ cookiecutter.env_prefix }}SECRET_KEY=<your-generated-key>
 ```
 
 Run backing services (require Docker):

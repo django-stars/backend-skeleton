@@ -186,3 +186,6 @@ $RECYCLE.BIN/
 !./public/media/.gitkeep
 !./public/static/.gitkeep
 api/test-results
+
+# VS Code
+/.history
