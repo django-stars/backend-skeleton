@@ -1,13 +1,13 @@
-import os
+from pathlib import Path
 
 from .environment import env
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def rel(*path):
-    return os.path.join(BASE_DIR, *path)
+    return BASE_DIR.joinpath(*path)
 
 
 DEBUG = env.bool("{{ cookiecutter.env_prefix }}DEBUG", default=False)
@@ -52,7 +52,7 @@ ROOT_URLCONF = "{{ cookiecutter.project_slug }}.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [rel("templates/")],
+        "DIRS": [rel("templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -92,14 +92,13 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-LOCALE_PATHS = (rel("..", "..", "api", "locale"),)
+LOCALE_PATHS = [rel("..", "..", "api", "locale")]
 
 STATIC_URL = env.str("{{ cookiecutter.env_prefix }}STATIC_URL", default="/s/")
 STATIC_ROOT = env.str("{{ cookiecutter.env_prefix }}STATIC_ROOT", default=rel("..", "..", "public", "static"))
 
 MEDIA_URL = env.str("{{ cookiecutter.env_prefix }}MEDIA_URL", default="/m/")
 MEDIA_ROOT = env.str("{{ cookiecutter.env_prefix }}MEDIA_ROOT", rel("..", "..", "public", "media"))
-FILE_UPLOAD_PERMISSIONS = 0o644
 
 EMAIL_BACKEND = env.str("{{ cookiecutter.env_prefix }}EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
 if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend":  # pragma: no cover
@@ -115,3 +114,5 @@ USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 APPEND_SLASH = False
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
