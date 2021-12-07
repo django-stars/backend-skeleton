@@ -137,9 +137,9 @@ def test_get_short_name(user_account, email):
     "first_name,last_name,email,expected",
     [
         ("Jane", "Doe", "jane@example.com", "Jane Doe <jane@example.com>"),
-        (None, None, "jane@example.com", "jane@example.com"),
-        (None, "Doe", "jane@example.com", "jane@example.com"),
-        ("Jane", None, "jane@example.com", "jane@example.com"),
+        ("", "", "jane@example.com", "jane@example.com"),
+        ("", "Doe", "jane@example.com", "jane@example.com"),
+        ("Jane", "", "jane@example.com", "jane@example.com"),
     ],
 )
 @pytest.mark.django_db
@@ -153,7 +153,7 @@ def test_get_full_name(user_account, first_name, last_name, email, expected):
     assert user.get_full_name() == expected
 
 
-@pytest.mark.parametrize("first_name,last_name,expected", [("Jane", "Doe", "Jane Doe"), (None, None, "Dear client")])
+@pytest.mark.parametrize("first_name,last_name,expected", [("Jane", "Doe", "Jane Doe"), ("", "", "Dear client")])
 @pytest.mark.django_db
 def test_notification_salutation(user_account, first_name, last_name, expected):
     user = user_account(first_name=first_name, last_name=last_name)

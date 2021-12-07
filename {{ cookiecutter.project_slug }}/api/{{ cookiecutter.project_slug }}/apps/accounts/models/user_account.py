@@ -29,9 +29,9 @@ class UserManager(core_models.CoreManager, BaseUserManager):
 
 class UserAccount(PermissionsMixin, CoreModel, AbstractBaseUser):
 
-    email = models.EmailField(verbose_name=gettext_lazy("Email"), max_length=128, unique=True)
-    first_name = models.CharField(verbose_name=gettext_lazy("first name"), max_length=30, blank=True, null=True)
-    last_name = models.CharField(verbose_name=gettext_lazy("last name"), max_length=30, blank=True, null=True)
+    email = models.EmailField(verbose_name=gettext_lazy("email address"), unique=True)
+    first_name = models.CharField(verbose_name=gettext_lazy("first name"), max_length=150, blank=True)
+    last_name = models.CharField(verbose_name=gettext_lazy("last name"), max_length=150, blank=True)
     is_staff = models.BooleanField(
         gettext_lazy("staff status"),
         default=False,

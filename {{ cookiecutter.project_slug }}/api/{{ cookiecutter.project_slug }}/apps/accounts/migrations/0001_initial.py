@@ -30,9 +30,9 @@ class Migration(migrations.Migration):
                 ("uuid", models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ("created", models.DateTimeField(auto_now_add=True, db_index=True, verbose_name="created")),
                 ("updated", models.DateTimeField(auto_now=True, verbose_name="updated")),
-                ("email", models.EmailField(max_length=128, unique=True, verbose_name="Email")),
-                ("first_name", models.CharField(blank=True, max_length=30, null=True, verbose_name="first name")),
-                ("last_name", models.CharField(blank=True, max_length=30, null=True, verbose_name="last name")),
+                ("email", models.EmailField(max_length=254, unique=True, verbose_name="email address")),
+                ("first_name", models.CharField(blank=True, max_length=150, verbose_name="first name")),
+                ("last_name", models.CharField(blank=True, max_length=150, verbose_name="last name")),
                 (
                     "is_staff",
                     models.BooleanField(
