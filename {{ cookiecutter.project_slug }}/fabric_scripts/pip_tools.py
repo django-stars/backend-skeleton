@@ -7,8 +7,14 @@ from ._common import project_path
 @task()
 def pip_compile(ctx):
     with ctx.cd(project_path("api")):
-        command_build = "pip-compile --upgrade --generate-hashes -o ./requirements-build.txt ./requirements-build.in"
-        command_dev = "pip-compile --upgrade --generate-hashes -o ./requirements-dev.txt ./requirements-dev.in"
+        # TODO: Remove "-allow-unsafe" flag in future versions of pip-tools (when will be enabled by default)
+        #   https://github.com/jazzband/pip-tools/#deprecations
+        command_build = (
+            "pip-compile --upgrade -allow-unsafe --generate-hashes -o ./requirements-build.txt ./requirements-build.in"
+        )
+        command_dev = (
+            "pip-compile --upgrade -allow-unsafe --generate-hashes -o ./requirements-dev.txt ./requirements-dev.in"
+        )
         ctx.run(command_build, pty=True, replace_env=False)
         ctx.run(command_dev, pty=True, replace_env=False)
 
