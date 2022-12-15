@@ -1,16 +1,11 @@
-import string
-
 from django.core.management.base import BaseCommand
-from django.utils.crypto import get_random_string
+from django.core.management.utils import get_random_secret_key
 
 
 class Command(BaseCommand):
-    def add_arguments(self, parser):
-        parser.add_argument("length", type=int)
+    help = "Generates a secret key."
+    requires_system_checks = []
 
     def handle(self, *args, **options):
-        print(
-            get_random_string(
-                length=options["length"], allowed_chars=string.ascii_letters + string.digits + string.punctuation
-            )
-        )
+        secret_key = get_random_secret_key()
+        self.stdout.write(self.style.SUCCESS(secret_key))
