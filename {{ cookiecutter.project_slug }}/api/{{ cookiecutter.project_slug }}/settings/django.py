@@ -67,7 +67,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "{{ cookiecutter.project_slug }}.wsgi.application"
 
-DATABASES = {"default": env.db("{{ cookiecutter.env_prefix }}DATABASE_URL", default="psql://postgres:{{ cookiecutter.database_password }}@database:5432/{{ cookiecutter.project_slug }}_db")}
+DATABASES = {
+    "default": env.db(
+        "{{ cookiecutter.env_prefix }}DATABASE_URL",
+        default="psql://postgres:{{ cookiecutter.database_password }}@database:5432/{{ cookiecutter.project_slug }}_db",
+    ),
+}
 
 AUTH_USER_MODEL = "accounts.UserAccount"
 AUTH_PASSWORD_VALIDATORS = [
@@ -100,7 +105,10 @@ STATIC_ROOT = env.str("{{ cookiecutter.env_prefix }}STATIC_ROOT", default=rel(".
 MEDIA_URL = env.str("{{ cookiecutter.env_prefix }}MEDIA_URL", default="/m/")
 MEDIA_ROOT = env.str("{{ cookiecutter.env_prefix }}MEDIA_ROOT", rel("..", "..", "public", "media"))
 
-EMAIL_BACKEND = env.str("{{ cookiecutter.env_prefix }}EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_BACKEND = env.str(
+    "{{ cookiecutter.env_prefix }}EMAIL_BACKEND",
+    default="django.core.mail.backends.smtp.EmailBackend",
+)
 if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend":  # pragma: no cover
     EMAIL_HOST = env.str("{{ cookiecutter.env_prefix }}EMAIL_HOST")
     EMAIL_PORT = env.str("{{ cookiecutter.env_prefix }}EMAIL_PORT")

@@ -1,9 +1,9 @@
-version: 2
+version: 2.1
 
 jobs:
 
   test:
-    working_directory: ~/project
+    working_directory: ~/project/api
     docker:
       - image: circleci/python:{{ cookiecutter.python_version }}
         auth:
@@ -31,36 +31,33 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: {% raw %}python-deps-v1-{{ checksum "api/requirements-dev.txt" }}{% endraw %}
+          key: &python-deps-cache {% raw %}python-deps-{{ checksum "requirements-dev.txt" }}{% endraw %}
       - run:
           name: Install Python dependencies
           command: |
             python3 -m venv .env
             . .env/bin/activate
-            pip install -U pip
-            pip install -r api/requirements-dev.txt
+            pip install -U pip pip-tools
+            make pip-sync-dev
       - save_cache:
-          key: {% raw %}python-deps-v1-{{ checksum "api/requirements-dev.txt" }}{% endraw %}
+          key: *python-deps-cache
           paths:
             - ".env"
       - run:
           name: Check `black`
-          command: . .env/bin/activate && fab test.black
+          command: make black-check
       - run:
           name: Check `isort`
-          command: . .env/bin/activate && fab test.isort
+          command: make isort-check
       - run:
           name: Check `pylama`
-          command: . .env/bin/activate && fab test.pylama
+          command: make pylama-check
       - run:
           name: Check `bandit`
-          command: . .env/bin/activate && fab test.bandit
+          command: make bandit-check
       - run:
           name: Check `safety`
-          command: . .env/bin/activate && fab test.safety
-      - run:
-          name: Check `pylint`
-          command: . .env/bin/activate && fab test.pylint
+          command: make safety-check
       - run:
           name: Wait for Redis
           command: dockerize -wait tcp://localhost:6379 -timeout 1m
@@ -69,15 +66,12 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Check for uncreated migrations
-          command: |
-            . .env/bin/activate
-            ./api/manage.py makemigrations --check --dry-run
+          command: make migrations-check
       - run:
           name: Run tests
           command: |
-            . .env/bin/activate
-            ./api/manage.py collectstatic --no-input
-            fab test.run
+            python manage.py collectstatic --no-input
+            pytest
       - store_test_results:
           path: ~/project/api/test-results
 

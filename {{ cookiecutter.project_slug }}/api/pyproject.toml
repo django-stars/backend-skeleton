@@ -1,0 +1,70 @@
+[project]
+name = "{{ cookiecutter.project_name }}"
+version = "0.0.1"
+dependencies = [
+    "Celery==5.2.*",
+    "Django==4.1.*",
+    "django-environ",
+    "django-filter",
+    "django_extensions",
+    "djangorestframework==3.14.*",
+    "drf-yasg",
+    "psycopg2-binary",
+    "redis>=3.0.0",
+    "sentry-sdk",
+]
+
+[project.optional-dependencies]
+dev = [
+    "Werkzeug",
+    "bandit",
+    "black",
+    "django-debug-toolbar",
+    "ipdb",
+    "ipython",
+    "isort",
+    "model-bakery",
+    "pre-commit",
+    "pylama",
+    "pytest-cov",
+    "pytest-django",
+    "pytest-mock",
+    "radon",
+    "safety",
+    "toml",
+]
+
+[tool.black]
+line-length = 120
+target-version = ["py310", "py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 120
+lines_between_types = 1
+lines_after_imports = 2
+known_django = ["django"]
+known_rest = ["rest_framework"]
+known_first_party = ["{{ cookiecutter.project_name }}"]
+sections= ["FUTURE", "STDLIB", "DJANGO", "REST", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+[tool.bandit]
+exclude_dirs = [".pytest_cache", "htmlcov", "test-results", "static", "templates"]
+skips = ["B101", "B601"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "{{ cookiecutter.project_name }}.settings"
+python_files = "tests.py test_*.py *_test"
+addopts = "--nomigrations --cov={{ cookiecutter.project_name }} --cov-report html --cov-report xml"
+
+[tool.pylama]
+format = "pycodestyle"
+skip = "*/migrations/*,*/tests/*"
+linters = "pycodestyle,pyflakes,mccabe,radon"
+
+[[tool.pylama.files]]
+path = "*/__init__.py"
+ignore = "W0401,W0611"
+
+[tool.pylama.linter.pycodestyle]
+max_line_length = 120

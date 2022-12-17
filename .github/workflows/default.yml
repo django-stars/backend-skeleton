@@ -19,7 +19,7 @@ jobs:
       AWESOME_CELERY_BROKER: redis://redis:6379/1
       AWESOME_CELERY_TASK_ALWAYS_EAGER: on
     container:
-      image: python:3.9.5
+      image: python:3.10
     defaults:
       run:
         shell: bash
@@ -32,7 +32,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       postgres:
-        image: postgres:13.3
+        image: postgres:15.0
         env:
           POSTGRES_DB: awesome_test_db
           POSTGRES_PASSWORD: awesome_password
@@ -44,27 +44,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Python dependencies
+
+      - name: Create test project
         run: |
-          python3 -m venv venv
-          source ./venv/bin/activate
-          pip install -U pip
-          pip install -r ./requirements.txt
-      - name: Run tests on hooks
-        run: |
-          source ./venv/bin/activate
-          inv test.hooks
-      - name: Run tests on building project
-        run: |
-          source ./venv/bin/activate
+          pip install cookiecutter --no-cache-dir
           cookiecutter --no-input --overwrite-if-exists --output-dir build .
-          python3 -m venv build/.env
-          source build/.env/bin/activate
-          cd build/awesome
-          pip install pip~=21.3 # TODO: Unpin version when pip-tools gets support >=22.0 (pip install -U pip)
-          pip install fabric invoke pip-tools
-          fab pip.compile
-          fab pip.sync
-          fab test.black-apply
-          fab test.isort-apply
-          fab test.all
+
+      - name: Install test project requirements
+        working-directory: build/awesome/api
+        run: |
+          pip install pip-tools --no-cache-dir
+          make pip-sync-dev
+
+      - name: Run test project code quality checks
+        working-directory: build/awesome/api
+        run: |
+          make black-check
+          make isort-check
+          make pylama-check
+
+      - name: Run test project security checks
+        working-directory: build/awesome/api
+        run: |
+          make bandit-check
+          make safety-check
+
+      - name: Run test project tests
+        working-directory: build/awesome/api
+        run: pytest

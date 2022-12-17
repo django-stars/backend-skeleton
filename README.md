@@ -8,7 +8,6 @@
 * [Celery](http://www.celeryproject.org/) configuration.
 * [Django REST Framework](https://www.django-rest-framework.org/) configuration + Swagger with [drf-yasg](https://drf-yasg.readthedocs.io/).
 * Typical user CRUD APIs.
-* Routine tasks configuration with [fabric](http://www.fabfile.org/) & [invoke](https://www.pyinvoke.org/).
 * Simple [docker-compose](https://docs.docker.com/compose/) configuration for local development (incl. [Postgres](https://www.postgresql.org/), [Redis](https://redis.io/) & [MailHog](https://github.com/mailhog/MailHog) for testing emails).
 * Requirements management with [pip-tools](https://pypi.org/project/pip-tools/).
 * [pytest](https://docs.pytest.org/) configuration.
@@ -29,10 +28,10 @@ pyenv virtualenv 3.9.5 my_project
 pyenv activate my_project
 ```
 
-Install cookiecutter and packaging:
+Install cookiecutter:
 
 ```bash
-pip install cookiecutter packaging
+pip install cookiecutter
 ```
 
 Step into directory you want to create project and generate project with cookiecutter:
@@ -49,7 +48,7 @@ Answer the questions in wizard.
 Install tools required to build a dependencies list:
 
 ```bash
-pip install -U fabric invoke pip pip-tools
+pip install pip-tools
 ```
 
 Compile dependencies list:
