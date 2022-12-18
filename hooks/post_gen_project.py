@@ -35,6 +35,7 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "Pygments",
             "Werkzeug",
             "bandit",
+            "black",
             "coverage",
             "django-debug-toolbar",
             "django-extensions",
@@ -58,7 +59,7 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "radon",
             "safety",
         )
-        self._dev_requirements_with_versions_do_not_need_to_be_pinned = ("black==21.6b0",)
+        self._dev_requirements_with_versions_do_not_need_to_be_pinned = ()
 
     @staticmethod
     def _get_package_data(package):  # pragma: no cover
