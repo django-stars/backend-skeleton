@@ -37,9 +37,9 @@ class CoreModel(models.Model):
     def activate(self):
         if not self.is_active:
             self.is_active = True
-            self.save(update_fields=["is_active", "updated"] if self.pk else None)
+            self.save(update_fields=["is_active", "updated"] if not self._state.adding else None)
 
     def deactivate(self):
         if self.is_active:
             self.is_active = False
-            self.save(update_fields=["is_active", "updated"] if self.pk else None)
+            self.save(update_fields=["is_active", "updated"] if not self._state.adding else None)
