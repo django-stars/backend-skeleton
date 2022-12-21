@@ -19,7 +19,7 @@ ALLOWED_HOSTS = env.list("{{ cookiecutter.env_prefix }}ALLOWED_HOSTS", default=[
 SECRET_KEY = env.str("{{ cookiecutter.env_prefix }}SECRET_KEY")
 
 INSTALLED_APPS = [
-    # django apps
+    # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -27,12 +27,12 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # 3rd party apps
-    "rest_framework",
+    # Third-party apps
     "django_extensions",
     "django_filters",
     "drf_yasg",
-    # our apps
+    "rest_framework",
+    # First-party apps
     "{{ cookiecutter.project_slug }}.apps.common",
     "{{ cookiecutter.project_slug }}.apps.accounts",
 ] + env.list("{{ cookiecutter.env_prefix }}DEV_INSTALLED_APPS", default=[])
@@ -67,40 +67,63 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "{{ cookiecutter.project_slug }}.wsgi.application"
 
-DATABASES = {"default": env.db("{{ cookiecutter.env_prefix }}DATABASE_URL", default="psql://postgres:{{ cookiecutter.database_password }}@database:5432/{{ cookiecutter.project_slug }}_db")}
+DATABASES = {
+    "default": env.db(
+        "{{ cookiecutter.env_prefix }}DATABASE_URL",
+        default="psql://postgres:{{ cookiecutter.database_password }}@database:5432/{{ cookiecutter.project_slug }}_db",
+    ),
+}
 
 AUTH_USER_MODEL = "accounts.UserAccount"
+
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
-SECURE_BROWSER_XSS_FILTER = env.bool("{{ cookiecutter.env_prefix }}SECURE_BROWSER_XSS_FILTER", default=True)
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool("{{ cookiecutter.env_prefix }}SECURE_CONTENT_TYPE_NOSNIFF", default=True)
+SECURE_HSTS_SECONDS = env.int("{{ cookiecutter.env_prefix }}SECURE_HSTS_SECONDS", default=31536000)  # 1 year
+
 SESSION_COOKIE_HTTPONLY = env.bool("{{ cookiecutter.env_prefix }}SESSION_COOKIE_HTTPONLY", default=True)
 SESSION_COOKIE_SECURE = env.bool("{{ cookiecutter.env_prefix }}SESSION_COOKIE_SECURE", default=True)
-CSRF_COOKIE_SECURE = env.bool("{{ cookiecutter.env_prefix }}CSRF_COOKIE_SECURE", default=True)
-X_FRAME_OPTIONS = env.str("{{ cookiecutter.env_prefix }}X_FRAME_OPTIONS", default="SAMEORIGIN")
-SECURE_HSTS_SECONDS = env.int("{{ cookiecutter.env_prefix }}SECURE_HSTS_SECONDS", default=31536000)  # 1 year
 SESSION_COOKIE_NAME = "s"
+
+CSRF_COOKIE_SECURE = env.bool("{{ cookiecutter.env_prefix }}CSRF_COOKIE_SECURE", default=True)
 CSRF_COOKIE_NAME = "c"
 
+X_FRAME_OPTIONS = env.str("{{ cookiecutter.env_prefix }}X_FRAME_OPTIONS", default="SAMEORIGIN")
+
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+
+TIME_ZONE = env.str("{{ cookiecutter.env_prefix }}TIME_ZONE", default="UTC")
+
 USE_I18N = True
-USE_L10N = True
+
 USE_TZ = True
+
 LOCALE_PATHS = [rel("..", "..", "api", "locale")]
 
-STATIC_URL = env.str("{{ cookiecutter.env_prefix }}STATIC_URL", default="/s/")
+STATIC_URL = env.str("{{ cookiecutter.env_prefix }}STATIC_URL", default="s/")
 STATIC_ROOT = env.str("{{ cookiecutter.env_prefix }}STATIC_ROOT", default=rel("..", "..", "public", "static"))
 
-MEDIA_URL = env.str("{{ cookiecutter.env_prefix }}MEDIA_URL", default="/m/")
+MEDIA_URL = env.str("{{ cookiecutter.env_prefix }}MEDIA_URL", default="m/")
 MEDIA_ROOT = env.str("{{ cookiecutter.env_prefix }}MEDIA_ROOT", rel("..", "..", "public", "media"))
 
-EMAIL_BACKEND = env.str("{{ cookiecutter.env_prefix }}EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_BACKEND = env.str(
+    "{{ cookiecutter.env_prefix }}EMAIL_BACKEND",
+    default="django.core.mail.backends.smtp.EmailBackend",
+)
+
 if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend":  # pragma: no cover
     EMAIL_HOST = env.str("{{ cookiecutter.env_prefix }}EMAIL_HOST")
     EMAIL_PORT = env.str("{{ cookiecutter.env_prefix }}EMAIL_PORT")
@@ -111,6 +134,7 @@ if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend":  # pragma: no
 SITE_ID = env.int("{{ cookiecutter.env_prefix }}SITE_ID", default=1)
 
 USE_X_FORWARDED_HOST = True
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 APPEND_SLASH = False

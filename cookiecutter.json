@@ -3,8 +3,8 @@
   "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
   "env_prefix": "{{ cookiecutter.project_slug | upper() }}_",
   "domain_name": "example.com",
-  "python_version": "3.9.9",
+  "python_version": "3.10",
   "database_password": "awesome_password_1",
-  "postgresql_version": "14.1",
-  "redis_version": "6.2.6"
+  "postgresql_version": "15.0",
+  "redis_version": "7.0"
 }

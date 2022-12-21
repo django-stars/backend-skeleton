@@ -1,15 +1,12 @@
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.staticfiles.urls import static
 from django.urls import include, path, re_path
 
 
 PLATFORM_PREFIX = "_platform"
 API_PREFIX = "api"
 DOCS_PREFIX = "docs"
-
-admin_urlpatterns = [
-    path("admin/", admin.site.urls),
-]
 
 api_v1_urlpatterns = [
     path(
@@ -18,7 +15,11 @@ api_v1_urlpatterns = [
     )
 ]
 
-urlpatterns = admin_urlpatterns + api_v1_urlpatterns
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    *api_v1_urlpatterns,
+    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+]
 
 # enable Swagger
 if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
@@ -34,7 +35,7 @@ if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
             description="{{ cookiecutter.project_name }} API v1 description",
         ),
         public=True,
-        permission_classes=(permissions.AllowAny,),
+        permission_classes=[permissions.AllowAny],
         patterns=api_v1_urlpatterns,
     )
 
@@ -57,14 +58,6 @@ if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
     ]
 
     urlpatterns += swagger_urlpatterns
-
-# enable serve static by django for local develop
-if settings.DEBUG:  # pragma: no cover
-    from django.conf.urls.static import static  # pylint: disable=ungrouped-imports
-
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
 
 # enable debug_toolbar for local develop (if installed)
 if settings.DEBUG and "debug_toolbar" in settings.INSTALLED_APPS:
