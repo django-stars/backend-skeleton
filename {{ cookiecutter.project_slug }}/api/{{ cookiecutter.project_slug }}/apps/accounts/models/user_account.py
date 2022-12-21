@@ -3,11 +3,10 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy
 
-from {{ cookiecutter.project_slug }}.apps.common import models as core_models
-from {{ cookiecutter.project_slug }}.apps.common.models import CoreModel
+from {{ cookiecutter.project_slug }}.apps.common.models import CoreManager, CoreModel
 
 
-class UserManager(core_models.CoreManager, BaseUserManager):
+class UserManager(CoreManager, BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
             raise ValueError("Users must give an email address")
