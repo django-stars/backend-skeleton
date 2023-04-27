@@ -14,7 +14,7 @@ class Command(StartappCommand):
                 os.makedirs(app_directory, exist_ok=True)
             except FileExistsError:
                 raise CommandError(f"'{app_directory}' already exists")  # pylint: disable=raise-missing-from
-            else:
-                options["directory"] = app_directory
+
+            options["directory"] = app_directory
 
         super().handle(**options)

@@ -1,6 +1,6 @@
-from rest_framework.exceptions import ValidationError
-
 import pytest
+
+from rest_framework.exceptions import ValidationError
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.registration import RegistrationSerializer
 from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError

@@ -23,10 +23,9 @@ urlpatterns = [
 
 # enable Swagger
 if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
-    from rest_framework import permissions
-
     from drf_yasg import openapi
     from drf_yasg.views import get_schema_view
+    from rest_framework import permissions
 
     api_v1_schema_view = get_schema_view(
         openapi.Info(

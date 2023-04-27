@@ -1,5 +1,4 @@
 from django.utils.translation import gettext
-
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 

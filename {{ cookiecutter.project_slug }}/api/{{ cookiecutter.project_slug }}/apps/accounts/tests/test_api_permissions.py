@@ -1,6 +1,6 @@
-from django.contrib.auth.models import AnonymousUser
-
 import pytest
+
+from django.contrib.auth.models import AnonymousUser
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.permissions import IsNotAuthenticated
 

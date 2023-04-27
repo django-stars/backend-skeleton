@@ -5,11 +5,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
 from django.utils.translation import gettext
 
-from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import (
-    InvalidPasswordError,
-    InvalidResetPasswordSignatureError,
-    WrongPasswordError,
-)
+from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError, InvalidResetPasswordSignatureError, WrongPasswordError
 from {{ cookiecutter.project_slug }}.apps.accounts.models import UserAccount
 
 
@@ -56,8 +52,8 @@ class PasswordService:
             user = UserAccount.objects.active().get(pk=user_pk)
         except (SignatureExpired, BadSignature, UserAccount.DoesNotExist) as e:
             raise InvalidResetPasswordSignatureError(gettext("Invalid confirmation code or user does not exist")) from e
-        else:
-            cls.change_password(user, new_password)
+
+        cls.change_password(user, new_password)
 
     @staticmethod
     def _send_notification(user_pk: str, context: dict):

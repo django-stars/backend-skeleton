@@ -2,9 +2,9 @@
 
 import json
 
-from rest_framework.test import APIClient
-
 import pytest
+
+from rest_framework.test import APIClient
 
 
 __all__ = ["api_client", "unauthorized_api_client"]

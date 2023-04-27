@@ -1,0 +1,100 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "{{ cookiecutter.project_slug }}.settings"
+python_files = ["tests.py", "test_*.py", "*_test"]
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.env
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | node_modules
+)/
+'''
+
+[tool.bandit]
+skips = ['B101',]
+
+[tool.isort]
+profile = 'black'
+line_length = 120
+multi_line_output = 3
+lines_between_types = 1
+lines_after_imports = 2
+
+[tool.pylint.main]
+ignore = ['tests', 'fixtures']
+load-plugins = ['pylint_django', 'pylint_celery']
+django-settings-module = '{{ cookiecutter.project_slug }}.settings'
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.'messages control']
+disable = ['missing-docstring', 'invalid-name', 'fixme']
+
+[tool.pylint.design]
+max-parents = 13
+
+[tool.pylint.typecheck]
+generated-members = 'REQUEST,acl_users,aq_parent,"[a-zA-Z]+_set{1,2}",save,delete'
+
+[tool.pylint.similarities]
+min-similarity-lines = 4
+ignore-comments = true
+ignore-docstrings = true
+ignore-imports = true
+
+[tool.pylama]
+format = "pycodestyle"
+skip = "*/.tox/*,*/.env/*,*/migrations/*,splinter-tests/*,*/tests/*"
+linters = "pycodestyle,pyflakes,mccabe,radon"
+
+[tool.pylama.linter.pycodestyle]
+max_line_length = 120
+
+[[tool.pylama.files]]
+path = "*/__init__.py"
+ignore = "W0401,W0611"
+select = "R"
+
+[tool.coverage.run]
+omit = [
+    "*migrations*",
+    "*tests*",
+    "/usr/*",
+    "*/env/*",
+    "*/urls.py",
+    "{{ cookiecutter.project_slug }}/fixtures/*",
+    "{{ cookiecutter.project_slug }}/apps/accounts/api/authentication.py",
+    "{{ cookiecutter.project_slug }}/apps/common/management/commands/generate_secretkey.py",
+    "{{ cookiecutter.project_slug }}/apps/common/management/commands/startapp.py",
+    "{{ cookiecutter.project_slug }}/apps/common/utils/redis.py",
+    "{{ cookiecutter.project_slug }}/loggers.py",
+    "{{ cookiecutter.project_slug }}/wsgi.py",
+    "*/admin.py",
+]
+[tool.coverage.report]
+exclude_lines =[
+    "noqa",
+    "pragma: no cover",
+    "def __unicode__",
+    "def __repr__",
+    "def __str__",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "assert",
+]
+show_missing = true
+
