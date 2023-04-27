@@ -1,6 +1,7 @@
 default_language_version:
   python: python
 repos:
+  # General
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
@@ -17,54 +18,36 @@ repos:
       - id: debug-statements
       - id: pretty-format-json
         args: ['--autofix', '--indent 2', ]
-  - repo: https://github.com/ambv/black
-    rev: 21.6b0
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.1.0
+    hooks:
+      - id: codespell
+
+  # API
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
     hooks:
       - id: black
-        args: [.]
+        args: [ "--config=./api/pyproject.toml", . ]
         pass_filenames: false
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.9.1
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: 'v0.0.262'
     hooks:
-      - id: isort
-  - repo: https://github.com/gvanderest/pylama-pre-commit
-    rev: 0.1.2
-    hooks:
-      - id: pylama
-        additional_dependencies:
-          - mccabe
-          - pycodestyle
-          - pyflakes
-          - radon
-        args: ['-o', './api/pylama.ini']
-  - repo: https://github.com/PyCQA/bandit
-    rev: master
-    hooks:
-      - id: bandit
-        args: ['--skip', 'B101']
-  - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.9.0
-    hooks:
-      - id: python-check-blanket-noqa
-      - id: python-no-log-warn
-      - id: python-use-type-annotations
-      - id: rst-backticks
+      - id: ruff
+        args: ['--fix', '--exit-non-zero-on-fix']
+
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-    rev: v1.2.1
+    rev: v1.3.1
     hooks:
       - id: python-safety-dependencies-check
         entry: safety
         args: [check]
         files: ./api/requirements-build.txt
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.1.0
-    hooks:
-      - id: codespell
   - repo: local
     hooks:
       - id: migrations-check
         language: system
         name: Check for uncreated migrations.
-        entry: sh -c "./api/manage.py makemigrations --check --dry-run"
+        entry: sh -c "cd ./api/ && make check-migrations"
         files: models/*.*\.py$
         stages: [commit]

@@ -35,10 +35,10 @@ class ChangePasswordSerializer(serializers.Serializer):
         return new_password
 
     def create(self, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
     def update(self, instance, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not # noqa: S101
 
     def save(self, **kwargs):
         self.password_service.change_password(self.user, self.validated_data["new_password"])
@@ -69,10 +69,10 @@ class ConfirmResetPasswordSerializer(serializers.Serializer):
             raise ValidationError({"signature": e.message}) from e
 
     def create(self, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
     def update(self, instance, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
 
 class ResetPasswordSerializer(serializers.Serializer):
@@ -88,7 +88,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         self.password_service.send_reset_password_link(email)
 
     def create(self, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
     def update(self, instance, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101

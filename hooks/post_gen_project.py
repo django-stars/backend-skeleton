@@ -36,33 +36,26 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "Werkzeug",
             "bandit",
             "black",
-            "coverage",
+            "coverage[toml]",
             "django-debug-toolbar",
             "django-extensions",
-            "docker-compose",
-            "fabric",
-            "invoke",
             "ipdb",
             "ipython",
-            "isort",
             "model-bakery",
             "pip-tools",
             "pre-commit",
-            "pylama",
-            "pylint",
-            "pylint-celery",
-            "pylint-django",
-            "pytest-cov",
             "pytest-django",
             "pytest-mock",
             "pytest",
-            "radon",
             "safety",
+            "ruff",
         )
         self._dev_requirements_with_versions_do_not_need_to_be_pinned = ()
 
     @staticmethod
     def _get_package_data(package):  # pragma: no cover
+        # cut package extra
+        package = package.split("[")[0]
         return json.loads(request.urlopen(f"https://pypi.python.org/pypi/{package}/json").read().decode("utf-8"))
 
     def _get_latest_stable_version(self, package):

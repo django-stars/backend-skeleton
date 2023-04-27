@@ -1,0 +1,81 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "{{ cookiecutter.project_slug }}.settings"
+python_files = ["tests.py", "test_*.py", "*_test"]
+
+
+[tool.black]
+line-length = 120
+target-version = ["py{{ cookiecutter.python_version.lower()|replace('.', '') }}",]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.env
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | node_modules
+)/
+'''
+
+
+[tool.ruff]
+# Enable pycodestyle (`E`), Pyflakes (`F`), Isort (`I`), Bandit (`S`) and flake8 Django (`DJ`) codes.
+select = ["E", "F", "I", "S", "DJ"]
+ignore = []
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+# Same as Black.
+line-length = 120
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Python 3.10.
+target-version = "py{{ cookiecutter.python_version.lower()|replace('.', '') }}"
+
+[tool.ruff.mccabe]
+# Unlike Flake8, default to a complexity level of 10.
+max-complexity = 10
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+"conftest.py" = ["F403"]
+"test_*.py" = ["S", "PLR2004", "PLR0913"]
+"ironcans/fixtures/*" = ["PLR2004", "PLR0913"]
+
+[tool.ruff.isort]
+lines-between-types = 1
+lines-after-imports = 2
