@@ -1,6 +1,6 @@
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "{{ cookiecutter.project_slug }}.settings"
-python_files = ["tests.py", "test_*.py", "*_test"]
+python_files = ["tests.py", "test_*.py", "*_test.py"]
 
 [tool.black]
 line-length = 120
