@@ -1,7 +1,8 @@
 import pytest
 
-from django.test import RequestFactory
 from rest_framework.exceptions import ValidationError
+
+from django.test import RequestFactory
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.password import ChangePasswordSerializer
 from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError, WrongPasswordError

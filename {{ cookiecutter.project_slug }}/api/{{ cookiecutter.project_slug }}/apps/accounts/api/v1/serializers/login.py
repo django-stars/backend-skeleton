@@ -1,7 +1,8 @@
-from django.contrib.auth import authenticate as django_authenticate
-from django.utils.translation import gettext
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+
+from django.contrib.auth import authenticate as django_authenticate
+from django.utils.translation import gettext
 
 
 class LoginSerializer(serializers.Serializer):

@@ -1,10 +1,11 @@
 import pytest
 
-from django.urls import reverse
-from django.utils.translation import gettext
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+
+from django.urls import reverse
+from django.utils.translation import gettext
 
 
 LOGIN_SERIALIZER_PATH = "{{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.login.LoginSerializer"
