@@ -40,8 +40,6 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "django-debug-toolbar",
             "django-extensions",
             "docker-compose",
-            "fabric",
-            "invoke",
             "ipdb",
             "ipython",
             "isort",
@@ -57,7 +55,7 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "pytest-mock",
             "pytest",
             "radon",
-            "safety",
+            "safety==2.3.4",  # use `packaging<22.0,>=21.0` which is not compatible with other packages.
         )
 
         self._dev_requirements_with_versions_do_not_need_to_be_pinned = ()
@@ -69,6 +67,10 @@ class GenerateRequirementsInFileHook(AbstractHook):
         return json.loads(request.urlopen(f"https://pypi.python.org/pypi/{package}/json").read().decode("utf-8"))
 
     def _get_latest_stable_version(self, package):
+        if "==" in package:
+            """It means that package has already version pinned."""
+            return package
+
         data = self._get_package_data(package)
 
         version = max(

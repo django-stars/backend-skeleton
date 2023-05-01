@@ -1,5 +1,8 @@
 .ONESHELL:
 
+api-test:
+	cd api/ && make test
+
 api-check-migrations:
 	cd api/ && make check-migrations
 

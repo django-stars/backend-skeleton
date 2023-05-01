@@ -61,10 +61,8 @@ jobs:
           python3 -m venv build/.env
           source build/.env/bin/activate
           cd build/awesome
-          pip install pip~=21.3 # TODO: Unpin version when pip-tools gets support >=22.0 (pip install -U pip)
-          pip install fabric invoke pip-tools
-          fab pip.compile
-          fab pip.sync
-          fab test.black-apply
-          fab test.isort-apply
-          fab test.all
+          pip install -U pip
+          pip install pip-tools
+          make api-pip-compile
+          make api-pip-sync
+          make api-test

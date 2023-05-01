@@ -39,8 +39,6 @@ def test_get_dev_packages(mocker):
         "django-debug-toolbar==<mocked>",
         "django-extensions==<mocked>",
         "docker-compose==<mocked>",
-        "fabric==<mocked>",
-        "invoke==<mocked>",
         "ipdb==<mocked>",
         "ipython==<mocked>",
         "isort==<mocked>",
@@ -56,7 +54,7 @@ def test_get_dev_packages(mocker):
         "pytest-mock==<mocked>",
         "pytest==<mocked>",
         "radon==<mocked>",
-        "safety==<mocked>",
+        "safety==2.3.4==<mocked>",
     ]
 
 

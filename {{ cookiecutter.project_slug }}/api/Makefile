@@ -1,5 +1,8 @@
 .ONESHELL:
 
+test:
+	pytest --no-migrations
+
 check-migrations:
 	python manage.py makemigrations --check --dry-run
 
