@@ -1,7 +1,7 @@
-from django.utils.translation import gettext
-
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+
+from django.utils.translation import gettext
 
 from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError
 from {{ cookiecutter.project_slug }}.apps.accounts.models import UserAccount

@@ -1,8 +1,8 @@
-from django.urls import reverse
+import pytest
 
 from rest_framework import status
 
-import pytest
+from django.urls import reverse
 
 
 @pytest.mark.django_db

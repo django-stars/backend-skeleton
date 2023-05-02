@@ -1,8 +1,8 @@
 import functools
 
-from django.conf import settings
-
 import redis
+
+from django.conf import settings
 
 
 @functools.lru_cache(maxsize=128)

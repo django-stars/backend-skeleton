@@ -29,16 +29,16 @@ pyenv virtualenv {{ cookiecutter.python_version }} {{ cookiecutter.project_slug 
 pyenv activate {{ cookiecutter.project_slug }}
 ```
 
-Update `pip` & `setuptools`, install `fabric`, `invoke` & `pip-tools`:
+Update `pip` & `setuptools`, and install `pip-tools`:
 
 ```bash
-pip install -U fabric invoke pip pip-tools setuptools
+pip install -U pip pip-tools setuptools
 ```
 
 Install Python requirements:
 
 ```bash
-fab pip.sync
+make api-pip-sync
 ```
 
 Copy initial settings for Django project:
@@ -62,7 +62,7 @@ and write it to `./api/.env`:
 Run backing services (require Docker):
 
 ```bash
-fab compose.up -d
+make compose-up
 ```
 
 Run migrations:
@@ -74,5 +74,6 @@ Run migrations:
 Run Django server:
 
 ```bash
-fab run
+./api/manage.py runserver_plus 0.0.0.0:8000
 ```
+

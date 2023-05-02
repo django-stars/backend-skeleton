@@ -5,7 +5,6 @@ from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.user_profi
 
 
 class UserProfileAPIView(RetrieveUpdateAPIView):
-
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 

@@ -1,10 +1,9 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.password import (
     ChangePasswordSerializer,
@@ -14,7 +13,6 @@ from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.password i
 
 
 class ChangePasswordAPIView(CreateAPIView):
-
     serializer_class = ChangePasswordSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -25,7 +23,6 @@ class ChangePasswordAPIView(CreateAPIView):
 
 
 class ResetPasswordAPIView(CreateAPIView):
-
     serializer_class = ResetPasswordSerializer
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
@@ -35,7 +32,6 @@ class ResetPasswordAPIView(CreateAPIView):
 
 
 class ConfirmResetPasswordAPIView(CreateAPIView):
-
     serializer_class = ConfirmResetPasswordSerializer
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})

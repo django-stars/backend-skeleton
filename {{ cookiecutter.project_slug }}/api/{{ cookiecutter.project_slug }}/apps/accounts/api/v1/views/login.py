@@ -1,9 +1,8 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
-
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.permissions import IsNotAuthenticated
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.login import LoginSerializer
@@ -11,7 +10,6 @@ from {{ cookiecutter.project_slug }}.apps.accounts.services.login import LoginSe
 
 
 class LoginView(GenericAPIView):
-
     permission_classes = [IsNotAuthenticated]
     serializer_class = LoginSerializer
 
@@ -25,7 +23,6 @@ class LoginView(GenericAPIView):
 
 
 class LogoutView(GenericAPIView):
-
     permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})

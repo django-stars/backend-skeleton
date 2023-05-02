@@ -1,10 +1,10 @@
 import uuid
 
+import pytest
+
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
-
-import pytest
 
 from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import (
     InvalidPasswordError,
@@ -73,7 +73,7 @@ def test_reset_password_signature_failure(mocker, settings, exception):
     new_password = "new_password_1234"  # nosec
     reset_password_signature = "reset_password_signature"  # nosec
     mocker.patch("django.core.signing.TimestampSigner.unsign", side_effect=exception("Some message"))
-    settings.{{ cookiecutter.project_slug | upper() }}_RESET_PASSWORD_EXPIRATION_DELTA = 42
+    settings.{{ cookiecutter.project_slug }}_RESET_PASSWORD_EXPIRATION_DELTA = 42
     mocked_change_password = mocker.patch(f"{PASSWORD_SERVICE_PATH}.change_password")
 
     with pytest.raises(InvalidResetPasswordSignatureError):

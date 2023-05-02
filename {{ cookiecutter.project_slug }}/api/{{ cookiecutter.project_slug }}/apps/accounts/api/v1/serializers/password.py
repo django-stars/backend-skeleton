@@ -1,16 +1,11 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import (
-    InvalidPasswordError,
-    InvalidResetPasswordSignatureError,
-    WrongPasswordError,
-)
+from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError, InvalidResetPasswordSignatureError, WrongPasswordError
 from {{ cookiecutter.project_slug }}.apps.accounts.services.password import PasswordService
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-
     old_password = serializers.CharField(max_length=128, write_only=True, style={"input_type": "password"})
     new_password = serializers.CharField(max_length=128, write_only=True, style={"input_type": "password"})
 
@@ -45,7 +40,6 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 class ConfirmResetPasswordSerializer(serializers.Serializer):
-
     password = serializers.CharField(max_length=128, write_only=True, style={"input_type": "password"})
     signature = serializers.CharField(max_length=71, write_only=True)
 
@@ -76,7 +70,6 @@ class ConfirmResetPasswordSerializer(serializers.Serializer):
 
 
 class ResetPasswordSerializer(serializers.Serializer):
-
     email = serializers.EmailField(max_length=128, write_only=True)
 
     def __init__(self, *args, **kwargs):

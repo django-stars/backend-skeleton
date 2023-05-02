@@ -1,8 +1,7 @@
-from rest_framework import status
-from rest_framework.generics import GenericAPIView
-
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.generics import GenericAPIView
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.registration import RegistrationSerializer
 from {{ cookiecutter.project_slug }}.apps.accounts.services.login import LoginService

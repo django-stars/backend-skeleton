@@ -1,9 +1,9 @@
-from django.urls import reverse
+import pytest
 
 from rest_framework import status
 from rest_framework.response import Response
 
-import pytest
+from django.urls import reverse
 
 from {{ cookiecutter.project_slug }}.apps.accounts.models import UserAccount
 

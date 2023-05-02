@@ -17,7 +17,6 @@ class CoreManager(models.Manager.from_queryset(CoreQuerySet)):  # pylint: disabl
 
 
 class CoreModel(models.Model):
-
     uuid = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name=_("created"))
     updated = models.DateTimeField(auto_now=True, verbose_name=_("updated"))

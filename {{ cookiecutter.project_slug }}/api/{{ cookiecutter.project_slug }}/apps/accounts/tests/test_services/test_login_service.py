@@ -1,9 +1,9 @@
-from django.test.client import RequestFactory
-from django.urls import reverse
+import pytest
 
 from rest_framework import status
 
-import pytest
+from django.test.client import RequestFactory
+from django.urls import reverse
 
 from {{ cookiecutter.project_slug }}.apps.accounts.services.login import LoginService
 
