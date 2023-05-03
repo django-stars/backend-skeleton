@@ -71,6 +71,6 @@ if not settings.DEBUG:
 
     class ServerErrorTestView(View):
         def dispatch(self, request, *args, **kwargs):
-            assert False, "Server error test: response with 500 HTTP status code"
+            assert False, "Server error test: response with 500 HTTP status code"  # noqa: S101
 
     urlpatterns += [path(f"{PLATFORM_PREFIX}/500-error-test/", ServerErrorTestView.as_view())]

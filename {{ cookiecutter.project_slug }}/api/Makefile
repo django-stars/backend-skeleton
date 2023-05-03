@@ -8,16 +8,13 @@ check-migrations:
 
 check:
 	black . --check
-	isort . --check
-	pylint {{ cookiecutter.project_slug }}
-	bandit -r . -c pyproject.toml
-	pylama .
+	ruff check .
 	safety check
 	make check-migrations
 
 check-fix:
 	black .
-	isort .
+	ruff check --fix-only --show-fixes --statistics .
 
 pip-compile:
 	pip-compile --upgrade --allow-unsafe --generate-hashes -o ./requirements-build.txt ./requirements-build.in

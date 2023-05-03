@@ -5,7 +5,11 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
 from django.utils.translation import gettext
 
-from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError, InvalidResetPasswordSignatureError, WrongPasswordError
+from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import (
+    InvalidPasswordError,
+    InvalidResetPasswordSignatureError,
+    WrongPasswordError,
+)
 from {{ cookiecutter.project_slug }}.apps.accounts.models import UserAccount
 
 

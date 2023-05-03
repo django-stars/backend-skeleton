@@ -1,4 +1,5 @@
-version: '3.7'
+version: '3.8'
+name: '{{ cookiecutter.project_slug }}'
 services:
   database:
     environment:

@@ -19,7 +19,7 @@ api-pip-sync:
 	cd api/ && make pip-sync
 
 compose-up:
-	cd docker/ &&docker-compose --file docker-compose-local.yml up
+	cd docker/ && docker compose -f docker-compose-local.yml up
 
 compose-down:
-	cd docker/ &&docker-compose --file docker-compose-local.yml down
+	cd docker/ && docker compose -f docker-compose-local.yml down

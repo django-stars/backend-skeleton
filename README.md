@@ -8,13 +8,11 @@
 * [Celery](http://www.celeryproject.org/) configuration.
 * [Django REST Framework](https://www.django-rest-framework.org/) configuration + Swagger with [drf-yasg](https://drf-yasg.readthedocs.io/).
 * Typical user CRUD APIs.
-* Routine tasks configuration with [fabric](http://www.fabfile.org/) & [invoke](https://www.pyinvoke.org/).
 * Simple [docker-compose](https://docs.docker.com/compose/) configuration for local development (incl. [Postgres](https://www.postgresql.org/), [Redis](https://redis.io/) & [MailHog](https://github.com/mailhog/MailHog) for testing emails).
 * Requirements management with [pip-tools](https://pypi.org/project/pip-tools/).
 * [pytest](https://docs.pytest.org/) configuration.
 * Code formatting with [Black](https://black.readthedocs.io/).
-* Imports sorting with [isort](https://isort.readthedocs.io/).
-* Checking code with [bandit](https://bandit.readthedocs.io/), [mccabe](https://pypi.org/project/mccabe/), [pycodestyle](http://pycodestyle.pycqa.org/), [pyflakes](https://pypi.org/project/pyflakes/), [pylint](https://www.pylint.org/) and [radon](https://radon.readthedocs.io/).
+* Checking code with [Ruff](https://beta.ruff.rs/docs/) - which includes _flake8_, _isort_, _bandit_, _pylint_ etc.
 * [Pre-commit](https://pre-commit.com/) hook for running test & linters on each commit.
 * [CircleCI](https://circleci.com/) configuration for running tests & linters on each pull request.
 * Integration with [Sentry](https://sentry.io/).
@@ -49,25 +47,25 @@ Answer the questions in wizard.
 Install tools required to build a dependencies list:
 
 ```bash
-pip install -U fabric invoke pip pip-tools
+pip install -U pip pip-tools
 ```
 
 Compile dependencies list:
 
 ```bash
-fab pip.compile
+make api-pip-compile
 ```
 
 Install dependencies:
 
 ```bash
-fab pip.sync
+make api-pip-sync
 ```
 
 Run backing services:
 
 ```bash
-fab compose.up -d
+make compose-up
 ```
 
 Copy `.env` file from example file and set your settings:
