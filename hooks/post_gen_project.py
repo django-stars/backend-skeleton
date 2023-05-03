@@ -49,7 +49,6 @@ class GenerateRequirementsInFileHook(AbstractHook):
             "pytest-django",
             "pytest-mock",
             "pytest",
-            "radon",
             "safety==2.3.4",  # use `packaging<22.0,>=21.0` which is not compatible with other packages.
         )
 
