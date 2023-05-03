@@ -28,7 +28,7 @@ repos:
     rev: 23.3.0
     hooks:
       - id: black
-        args: [ "--config", "./api/pyproject.toml", . ]
+        args: ["--config", "./api/pyproject.toml", . ]
         pass_filenames: false
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: 'v0.0.264'

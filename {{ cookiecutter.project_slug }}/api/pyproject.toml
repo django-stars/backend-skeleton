@@ -4,7 +4,7 @@ python_files = ["tests.py", "test_*.py", "*_test.py"]
 
 [tool.black]
 line-length = 120
-target-version = ['py310']
+target-version = ["py{{ cookiecutter.python_version.lower()|replace('.', '') }}",]
 exclude = '''
 /(
     \.eggs
