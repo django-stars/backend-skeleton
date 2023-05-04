@@ -33,7 +33,6 @@ def test_get_dev_packages(mocker):
     assert packages == [
         "Pygments==<mocked>",
         "Werkzeug==<mocked>",
-        "bandit==<mocked>",
         "black==<mocked>",
         "coverage[toml]==<mocked>",
         "django-debug-toolbar==<mocked>",
@@ -41,19 +40,14 @@ def test_get_dev_packages(mocker):
         "docker-compose==<mocked>",
         "ipdb==<mocked>",
         "ipython==<mocked>",
-        "isort==<mocked>",
         "model-bakery==<mocked>",
         "pip-tools==<mocked>",
         "pre-commit==<mocked>",
-        "pylama[toml]==<mocked>",
-        "pylint-celery==<mocked>",
-        "pylint-django==<mocked>",
-        "pylint==<mocked>",
         "pytest-cov==<mocked>",
         "pytest-django==<mocked>",
         "pytest-mock==<mocked>",
         "pytest==<mocked>",
-        "radon==<mocked>",
+        "ruff==<mocked>",
         "safety==2.3.4==<mocked>",
     ]
 

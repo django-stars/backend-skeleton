@@ -35,6 +35,12 @@ Update `pip` & `setuptools`, and install `pip-tools`:
 pip install -U pip pip-tools setuptools
 ```
 
+Compile dependencies list:
+
+```bash
+make api-pip-compile
+```
+
 Install Python requirements:
 
 ```bash

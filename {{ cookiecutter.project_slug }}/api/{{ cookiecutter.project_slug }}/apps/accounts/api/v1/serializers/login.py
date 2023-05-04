@@ -20,7 +20,7 @@ class LoginSerializer(serializers.Serializer):
         raise ValidationError(gettext("Incorrect email or password."))
 
     def create(self, validated_data):
-        assert False, "Do not use update directly"  # nosec
+        assert False, "Do not use update directly"  # noqa: S101
 
     def update(self, instance, validated_data):
-        assert False, "Do not use update directly"  # nosec
+        assert False, "Do not use update directly"  # noqa: S101

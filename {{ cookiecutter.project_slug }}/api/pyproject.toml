@@ -4,7 +4,7 @@ python_files = ["tests.py", "test_*.py", "*_test.py"]
 
 [tool.black]
 line-length = 120
-target-version = ['py310']
+target-version = ["py{{ cookiecutter.python_version.lower()|replace('.', '') }}",]
 exclude = '''
 /(
     \.eggs
@@ -22,53 +22,65 @@ exclude = '''
 )/
 '''
 
-[tool.bandit]
-skips = ['B101',]
+[tool.ruff]
+# Enable pycodestyle (`E`), Pyflakes (`F`), Isort (`I`), Bandit (`S`) and flake8 Django (`DJ`) codes.
+select = ["E", "F", "I", "S", "DJ"]
+ignore = []
 
-[tool.isort]
-profile = 'black'
-line_length=120
-lines_between_types = 1
-lines_after_imports = 2
-known_first_party='{{ cookiecutter.project_slug }}'
-known_django = ['django']
-sections= ['FUTURE', 'STDLIB', 'THIRDPARTY', 'DJANGO', 'FIRSTPARTY', 'LOCALFOLDER']
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+unfixable = []
 
-[tool.pylint.main]
-ignore = ['tests', 'fixtures']
-load-plugins = ['pylint_django', 'pylint_celery']
-django-settings-module = '{{ cookiecutter.project_slug }}.settings'
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
 
-[tool.pylint.format]
-max-line-length = 120
+# Same as Black.
+line-length = 120
 
-[tool.pylint.'messages control']
-disable = ['missing-docstring', 'invalid-name', 'fixme']
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+target-version = "py{{ cookiecutter.python_version.lower()|replace('.', '') }}"
 
-[tool.pylint.design]
-max-parents = 13
+[tool.ruff.mccabe]
+# Unlike Flake8, default to a complexity level of 10.
+max-complexity = 10
 
-[tool.pylint.typecheck]
-generated-members = 'REQUEST,acl_users,aq_parent,"[a-zA-Z]+_set{1,2}",save,delete'
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+"conftest*" = ["F403"]
+"test_*.py" = ["S"]
+"tests.py" = ["S"]
+"*_test.py" = ["S"]
 
-[tool.pylint.similarities]
-min-similarity-lines = 4
-ignore-comments = true
-ignore-docstrings = true
-ignore-imports = true
+[tool.ruff.isort]
+lines-between-types = 1
+lines-after-imports = 2
+known-first-party=['{{ cookiecutter.project_slug }}']
+section-order= ['future', 'standard-library', 'third-party', 'django', 'first-party', 'local-folder']
 
-[tool.pylama]
-format = "pycodestyle"
-skip = "*/.tox/*,*/.env/*,*/migrations/*,splinter-tests/*,*/tests/*"
-linters = "pycodestyle,pyflakes,mccabe,radon"
-
-[tool.pylama.linter.pycodestyle]
-max_line_length = 120
-
-[[tool.pylama.files]]
-path = "*/__init__.py"
-ignore = "W0401,W0611"
-select = "R"
+[tool.ruff.isort.sections]
+"django" = ["django"]
 
 [tool.coverage.run]
 omit = [

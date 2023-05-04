@@ -1,7 +1,11 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError, InvalidResetPasswordSignatureError, WrongPasswordError
+from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import (
+    InvalidPasswordError,
+    InvalidResetPasswordSignatureError,
+    WrongPasswordError,
+)
 from {{ cookiecutter.project_slug }}.apps.accounts.services.password import PasswordService
 
 
@@ -30,10 +34,10 @@ class ChangePasswordSerializer(serializers.Serializer):
         return new_password
 
     def create(self, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
     def update(self, instance, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
     def save(self, **kwargs):
         self.password_service.change_password(self.user, self.validated_data["new_password"])
@@ -63,10 +67,10 @@ class ConfirmResetPasswordSerializer(serializers.Serializer):
             raise ValidationError({"signature": e.message}) from e
 
     def create(self, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
     def update(self, instance, validated_data):
-        assert False, "Do not use update directly"
+        assert False, "Do not use update directly"  # noqa: S101
 
 
 class ResetPasswordSerializer(serializers.Serializer):
@@ -79,9 +83,3 @@ class ResetPasswordSerializer(serializers.Serializer):
     def save(self, **kwargs):
         email = self.validated_data["email"]
         self.password_service.send_reset_password_link(email)
-
-    def create(self, validated_data):
-        assert False, "Do not use update directly"
-
-    def update(self, instance, validated_data):
-        assert False, "Do not use update directly"

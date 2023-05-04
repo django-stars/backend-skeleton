@@ -34,27 +34,21 @@ class GenerateRequirementsInFileHook(AbstractHook):
         self._dev_requirements_with_versions_need_to_be_pinned = (
             "Pygments",
             "Werkzeug",
-            "bandit",
             "black",
+            "ruff",
             "coverage[toml]",
             "django-debug-toolbar",
             "django-extensions",
             "docker-compose",
             "ipdb",
             "ipython",
-            "isort",
             "model-bakery",
             "pip-tools",
             "pre-commit",
-            "pylama[toml]",
-            "pylint",
-            "pylint-celery",
-            "pylint-django",
             "pytest-cov",
             "pytest-django",
             "pytest-mock",
             "pytest",
-            "radon",
             "safety==2.3.4",  # use `packaging<22.0,>=21.0` which is not compatible with other packages.
         )
 
