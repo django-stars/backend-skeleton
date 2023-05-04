@@ -1,8 +1,20 @@
 version: '3.8'
 name: '{{ cookiecutter.project_slug }}'
 services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/images/api/Dockerfile
+      target: local
+    environment:
+      SECRET_KEY: secret-key
+      DATABASE_URL: postgis://{{ cookiecutter.project_slug }}:{{ cookiecutter.database_password }}@database:5432/{{ cookiecutter.project_slug }}_db
+    command: ["make", "run"]
+    ports:
+      - ${LOCAL_IP:-127.0.0.1}:${API_LOCAL_PORT:-8000}:8000
   database:
     environment:
+      POSTGRES_USER: {{ cookiecutter.project_slug }}
       POSTGRES_DB: {{ cookiecutter.project_slug }}_db
       POSTGRES_PASSWORD: {{ cookiecutter.database_password }}
     image: postgres:{{ cookiecutter.postgresql_version }}
