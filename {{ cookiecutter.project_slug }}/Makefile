@@ -12,11 +12,14 @@ api-check:
 api-check-fix:
 	cd api/ && make check-fix
 
-api-pip-compile:
-	cd api/ && make pip-compile
+api-poetry-install:
+	cd api/ && make poetry-install
 
-api-pip-sync:
-	cd api/ && make pip-sync
+api-poetry-lock:
+	cd api/ && make poetry-lock
+
+api-run:
+	cd api/ && make run
 
 compose-up:
 	cd docker/ && docker compose -f docker-compose-local.yml up

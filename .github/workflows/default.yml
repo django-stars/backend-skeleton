@@ -54,15 +54,12 @@ jobs:
         run: |
           source ./venv/bin/activate
           inv test.hooks
+      - name: Poetry
+        uses: abatilo/actions-poetry@v2
       - name: Run tests on building project
         run: |
           source ./venv/bin/activate
           cookiecutter --no-input --overwrite-if-exists --output-dir build .
-          python3 -m venv build/.env
-          source build/.env/bin/activate
           cd build/awesome
-          pip install -U pip
-          pip install pip-tools
-          make api-pip-compile
-          make api-pip-sync
+          make api-poetry-install
           make api-test

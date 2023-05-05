@@ -1,3 +1,42 @@
+[build-system]
+requires = ["poetry-core", "setuptools", "pip"]
+
+[tool.poetry]
+name = "{{ cookiecutter.project_name }}"
+version = "0.1.0"
+description = ""
+authors = []
+packages = [{include = "{{ cookiecutter.project_slug }}"}]
+
+[tool.poetry.dependencies]
+python = "^{{ cookiecutter.python_version.lower() }}"
+Celery = "*"
+Django = "*"
+django-environ = "*"
+django-filter = "*"
+djangorestframework = "*"
+drf-yasg = "*"
+gunicorn = "*"
+psycopg = { version = "*", extras = ["binary", "pool"] }
+redis = "*"
+sentry-sdk = "*"
+
+[tool.poetry.group.dev.dependencies]
+Pygments = "*"
+bandit = "*"
+black = "*"
+ruff = "*"
+coverage = { version = "*", extras = ["toml"] }
+django-debug-toolbar = "*"
+django-extensions = "*"
+ipdb = "*"
+ipython = "*"
+model-bakery = "*"
+pytest-django = "*"
+pytest-mock = "*"
+pytest = "*"
+safety = "*"
+
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "{{ cookiecutter.project_slug }}.settings"
 python_files = ["tests.py", "test_*.py", "*_test.py"]

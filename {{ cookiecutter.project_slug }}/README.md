@@ -21,30 +21,13 @@
 
 ### First run: ###
 
-Install Python {{ cookiecutter.python_version }} & setup virtual environment. We recommend to use [pyenv](https://github.com/pyenv/pyenv) & [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv):
+### Prerequisites
+Installed [poetry](https://python-poetry.org/docs/#installation) and [docker](https://docs.docker.com/engine/install/)
+
+Install python dependencies with poetry:
 
 ```bash
-pyenv install {{ cookiecutter.python_version }}
-pyenv virtualenv {{ cookiecutter.python_version }} {{ cookiecutter.project_slug }}
-pyenv activate {{ cookiecutter.project_slug }}
-```
-
-Update `pip` & `setuptools`, and install `pip-tools`:
-
-```bash
-pip install -U pip pip-tools setuptools
-```
-
-Compile dependencies list:
-
-```bash
-make api-pip-compile
-```
-
-Install Python requirements:
-
-```bash
-make api-pip-sync
+make api-poetry-install
 ```
 
 Copy initial settings for Django project:
@@ -71,15 +54,9 @@ Run backing services (require Docker):
 make compose-up
 ```
 
-Run migrations:
-
-```bash
-./api/manage.py migrate
-```
-
 Run Django server:
 
 ```bash
-./api/manage.py runserver_plus 0.0.0.0:8000
+make api-run
 ```
 
