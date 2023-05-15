@@ -1,24 +1,33 @@
 .ONESHELL:
 
+install:
+	poetry install --with dev --no-root
+
+lock:
+	poetry lock
+
+poetry-shell:
+	poetry shell
+
 test:
-	pytest --no-migrations
+	poetry run pytest --no-migrations
 
 check-migrations:
-	python manage.py makemigrations --check --dry-run
+	poetry run python manage.py makemigrations --check --dry-run
+
+migrate:
+	poetry run python manage.py migrate
 
 check:
-	black . --check
-	ruff check .
-	safety check
-	make check-migrations
+	poetry run black . --check
+	poetry run ruff check .
+	poetry run safety check
+	poetry run make check-migrations
 
 check-fix:
-	black .
-	ruff check --fix-only --show-fixes --statistics .
+	poetry run black .
+	poetry run ruff check --fix-only --show-fixes --statistics .
 
-pip-compile:
-	pip-compile --upgrade --allow-unsafe --generate-hashes -o ./requirements-build.txt ./requirements-build.in
-	pip-compile --upgrade --allow-unsafe --generate-hashes -o ./requirements-dev.txt ./requirements-dev.in
+run:migrate
+	poetry run python manage.py runserver_plus 0.0.0.0:8000
 
-pip-sync:
-	pip-sync ./requirements-dev.txt
