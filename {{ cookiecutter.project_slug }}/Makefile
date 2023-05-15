@@ -15,9 +15,6 @@ api-check:
 api-check-fix:
 	cd docker/ && docker compose run --rm api make check-fix
 
-api-install:
-	cd docker/ && docker compose run --rm api make install
-
 api-lock:
 	cd docker/ && docker compose run --rm api make lock
 
