@@ -31,7 +31,7 @@ repos:
         args: ["--config", "./api/pyproject.toml", . ]
         pass_filenames: false
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: 'v0.0.264'
+    rev: v0.0.265
     hooks:
       - id: ruff
         args: ['--fix', '--exit-non-zero-on-fix']
@@ -42,11 +42,12 @@ repos:
         entry: safety
         args: [check]
         files: ./api/requirements-build.txt
-  - repo: local
-    hooks:
-      - id: migrations-check
-        language: system
-        name: Check for uncreated migrations.
-        entry: sh -c "make api-check-migrations"
-        files: models/*.*\.py$
-        stages: [commit]
+# TODO: Run this hook from docker container.
+#  - repo: local
+#    hooks:
+#      - id: migrations-check
+#        language: system
+#        name: Check for uncreated migrations.
+#        entry: sh -c "make api-check-migrations"
+#        files: models/*.*\.py$
+#        stages: [commit]

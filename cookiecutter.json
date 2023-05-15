@@ -1,10 +1,16 @@
 {
-  "project_name": "awesome",
-  "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
-  "env_prefix": "{{ cookiecutter.project_slug | upper() }}_",
-  "domain_name": "example.com",
-  "python_version": "3.10",
-  "database_password": "awesome_password_1",
-  "postgresql_version": "15.0",
-  "redis_version": "7.0"
+    "project_name": "awesome",
+    "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
+    "domain_name": "example.com",
+    "python_version": "3.10",
+    "postgresql_version": "15.0",
+    "redis_version": "7.0",
+    "__env_prefix": "{{ cookiecutter.project_slug | upper() }}_",
+    "__docker_service_prefix": "{{ cookiecutter.project_name.lower()|replace(' ', '-')|replace('.', '_')|trim() }}",
+    "__db_name": "{{ cookiecutter.project_slug | lower() }}_db",
+    "__db_user": "{{ cookiecutter.project_slug | lower() }}_user",
+    "__db_password": "{{ cookiecutter.project_slug | lower() }}_password",
+    "__minio_access_key": "minioadmin",
+    "__minio_secret_key": "minioadmin",
+    "__minio_bucket_name": "storage"
 }

@@ -4,14 +4,14 @@ from .environment import env
 
 
 {{ cookiecutter.project_slug | upper() }}_FEATURES = env.list(
-    "{{ cookiecutter.env_prefix }}FEATURES",
+    "{{ cookiecutter.__env_prefix }}FEATURES",
     default=[],
 )
 
 # Reset password link lifetime interval (in seconds). By default: 1 hour.
 {{ cookiecutter.project_slug | upper() }}_RESET_PASSWORD_EXPIRATION_DELTA = timedelta(
     seconds=env.int(
-        "{{ cookiecutter.env_prefix }}RESET_PASSWORD_EXPIRATION_DELTA",
+        "{{ cookiecutter.__env_prefix }}RESET_PASSWORD_EXPIRATION_DELTA",
         default=3600,
     ),
 )

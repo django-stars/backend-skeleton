@@ -1,28 +1,31 @@
 .ONESHELL:
 
+api-bash:
+	cd docker/ && docker compose run --rm api bash
+
 api-test:
-	cd api/ && make test
+	cd docker/ && docker compose run --rm api make test
 
 api-check-migrations:
-	cd api/ && make check-migrations
+	cd docker/ && docker compose run --rm api make check-migrations
 
 api-check:
-	cd api/ && make check
+	cd docker/ && docker compose run --rm api make check
 
 api-check-fix:
-	cd api/ && make check-fix
+	cd docker/ && docker compose run --rm api make check-fix
 
-api-poetry-install:
-	cd api/ && make poetry-install
+api-install:
+	cd docker/ && docker compose run --rm api make install
 
-api-poetry-lock:
-	cd api/ && make poetry-lock
-
-api-run:
-	cd api/ && make run
+api-lock:
+	cd docker/ && docker compose run --rm api make lock
 
 compose-up:
-	cd docker/ && docker compose -f docker-compose-local.yml up
+	cd docker/ && docker compose up
 
 compose-down:
-	cd docker/ && docker compose -f docker-compose-local.yml down
+	cd docker/ && docker compose down
+
+compose-build:
+	cd docker/ && docker compose build

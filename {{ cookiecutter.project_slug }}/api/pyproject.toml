@@ -20,6 +20,8 @@ gunicorn = "*"
 psycopg = { version = "*", extras = ["binary", "pool"] }
 redis = "*"
 sentry-sdk = "*"
+django-storages = "*"
+boto3 = "^1.26"
 
 [tool.poetry.group.dev.dependencies]
 Pygments = "*"
@@ -29,6 +31,7 @@ ruff = "*"
 coverage = { version = "*", extras = ["toml"] }
 django-debug-toolbar = "*"
 django-extensions = "*"
+Werkzeug = "*"
 ipdb = "*"
 ipython = "*"
 model-bakery = "*"
