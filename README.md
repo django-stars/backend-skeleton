@@ -35,7 +35,7 @@ Answer the questions in wizard.
 Step into directory of your project to install python dependencies with [poetry](https://python-poetry.org/docs/basic-usage/#installing-dependencies):
 
 ```bash
-make api-poetry-install
+make api-install
 ```
 
 Run backing services:

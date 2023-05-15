@@ -1,9 +1,9 @@
 .ONESHELL:
 
-poetry-install:
+install:
 	poetry install --with dev --no-root
 
-poetry-lock:
+lock:
 	poetry lock
 
 poetry-shell:

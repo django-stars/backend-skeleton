@@ -27,7 +27,7 @@ Installed [poetry](https://python-poetry.org/docs/#installation) and [docker](ht
 Install python dependencies with poetry:
 
 ```bash
-make api-poetry-install
+make api-install
 ```
 
 Copy initial settings for Django project:

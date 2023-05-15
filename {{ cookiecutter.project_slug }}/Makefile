@@ -12,11 +12,11 @@ api-check:
 api-check-fix:
 	cd api/ && make check-fix
 
-api-poetry-install:
-	cd api/ && make poetry-install
+api-install:
+	cd api/ && make install
 
-api-poetry-lock:
-	cd api/ && make poetry-lock
+api-lock:
+	cd api/ && make lock
 
 api-run:
 	cd api/ && make run
