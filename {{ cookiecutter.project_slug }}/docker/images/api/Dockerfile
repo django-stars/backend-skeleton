@@ -16,6 +16,8 @@ RUN pip install --no-cache -U pip setuptools \
     && curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="${PATH}:/root/.local/bin"
 
+# `./api/poetry.lock` is optional to install dependency, see https://python-poetry.org/docs/basic-usage/#installing-without-poetrylock,
+# so ./api/poetry.loc[k] is workaround do not fail when `./api/poetry.lock` does not exist.
 COPY ./api/pyproject.toml ./api/poetry.loc[k] /opt/api/
 
 WORKDIR /opt/api/

@@ -77,11 +77,11 @@ upload `api` static and media files.
 
 
 ## Extra services that can be useful
-We didn't add them to compose file, do not overload compose file, but you can add them if you need.
+We didn't add these services by default, do not overload compose file.
 
 #### pgadmin
 The `pgadmin` service is an instance of the pgAdmin - PostgreSQL database management tool with nice UI that allow you to
-sirf database, tables, run queries, etc. 
+check database, tables, run queries, etc. 
 
 ```yaml
 services:
