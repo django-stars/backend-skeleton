@@ -41,11 +41,11 @@ services:
       POSTGRES_USER: {{ cookiecutter.__db_user }}
       POSTGRES_DB: {{ cookiecutter.__db_name }}
       POSTGRES_PASSWORD: {{ cookiecutter.__db_password }}
-    image: postgres:{{ cookiecutter.postgresql_version }}
+    image: postgres:{{ cookiecutter.postgresql_version }}-alpine
     volumes:
       - pg_data:/var/lib/postgresql/data:rw
   redis-db:
-    image: redis:{{ cookiecutter.redis_version }}
+    image: redis:{{ cookiecutter.redis_version }}-alpine
     volumes:
       - redis_data:/data:rw
   mailpit:

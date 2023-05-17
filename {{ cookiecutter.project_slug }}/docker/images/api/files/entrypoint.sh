@@ -15,7 +15,8 @@ start = time.time()
 
 while True:
     try:
-        psycopg.connect(conninfo="${{ '{' }}{{ cookiecutter.__env_prefix }}DATABASE_URL}")
+        con = psycopg.connect(conninfo="${{ '{' }}{{ cookiecutter.__env_prefix }}DATABASE_URL}")
+        con.close()
         break
     except psycopg.OperationalError as error:
         sys.stderr.write("Waiting for PostgreSQL to become available...\n")
