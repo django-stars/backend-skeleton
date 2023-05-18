@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     # Third-party apps
     "django_extensions",
     "django_filters",
-    "drf_yasg",
+    "drf_spectacular",
     "rest_framework",
     # First-party apps
     "{{ cookiecutter.project_slug }}.apps.common",

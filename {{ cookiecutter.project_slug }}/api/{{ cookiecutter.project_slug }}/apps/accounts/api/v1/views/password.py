@@ -1,5 +1,4 @@
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -16,7 +15,9 @@ class ChangePasswordAPIView(CreateAPIView):
     serializer_class = ChangePasswordSerializer
     permission_classes = (IsAuthenticated,)
 
-    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
+    @extend_schema(
+        summary="Change password", tags=["Accounts"], responses={status.HTTP_204_NO_CONTENT: OpenApiResponse()}
+    )
     def post(self, request, *args, **kwargs):  # pragma: no cover
         super().post(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -25,7 +26,9 @@ class ChangePasswordAPIView(CreateAPIView):
 class ResetPasswordAPIView(CreateAPIView):
     serializer_class = ResetPasswordSerializer
 
-    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
+    @extend_schema(
+        summary="Reset password", tags=["Accounts"], responses={status.HTTP_204_NO_CONTENT: OpenApiResponse()}
+    )
     def post(self, request, *args, **kwargs):  # pragma: no cover
         super().post(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -34,7 +37,9 @@ class ResetPasswordAPIView(CreateAPIView):
 class ConfirmResetPasswordAPIView(CreateAPIView):
     serializer_class = ConfirmResetPasswordSerializer
 
-    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
+    @extend_schema(
+        summary="Confirm reset password", tags=["Accounts"], responses={status.HTTP_204_NO_CONTENT: OpenApiResponse()}
+    )
     def post(self, request, *args, **kwargs):  # pragma: no cover
         super().post(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)

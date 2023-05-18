@@ -15,7 +15,7 @@ Django = "*"
 django-environ = "*"
 django-filter = "*"
 djangorestframework = "*"
-drf-yasg = "*"
+drf-spectacular = "*"
 gunicorn = "*"
 psycopg = { version = "*", extras = ["binary", "pool"] }
 redis = "*"

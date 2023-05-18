@@ -10,5 +10,6 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": env.tuple(
         "{{ cookiecutter.__env_prefix }}DEFAULT_RENDERER_CLASSES", default=("rest_framework.renderers.JSONRenderer",)
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "PAGE_SIZE": 100,
 }
