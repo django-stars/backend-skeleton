@@ -10,37 +10,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      AWESOME_SECRET_KEY: test-secret-key
-      AWESOME_EMAIL_BACKEND: django.core.mail.backends.dummy.EmailBackend
-      AWESOME_USE_SENTRY: off
-      AWESOME_DEBUG: off
-      AWESOME_DATABASE_URL: postgresql://postgres:awesome_password@postgres/awesome_test_db
-      AWESOME_CELERY_BROKER: redis://redis:6379/1
-      AWESOME_CELERY_TASK_ALWAYS_EAGER: on
-    container:
-      image: python:3.10
-    defaults:
-      run:
-        shell: bash
-    services:
-      redis:
-        image: redis:7.0
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      postgres:
-        image: postgres:15.0
-        env:
-          POSTGRES_DB: awesome_test_db
-          POSTGRES_PASSWORD: awesome_password
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -54,12 +23,10 @@ jobs:
         run: |
           source ./venv/bin/activate
           inv test.hooks
-      - name: Poetry
-        uses: abatilo/actions-poetry@v2
       - name: Run tests on building project
         run: |
           source ./venv/bin/activate
           cookiecutter --no-input --overwrite-if-exists --output-dir build .
           cd build/awesome
-          make api-install
+          cp ./api/.env.example ./api/.env
           make api-test
