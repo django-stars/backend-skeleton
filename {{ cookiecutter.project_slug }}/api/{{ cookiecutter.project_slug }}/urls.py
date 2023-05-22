@@ -21,35 +21,18 @@ urlpatterns = [
 
 # enable Swagger
 if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
-    from drf_yasg import openapi
-    from drf_yasg.views import get_schema_view
-    from rest_framework import permissions
-
-    api_v1_schema_view = get_schema_view(
-        openapi.Info(
-            title="{{ cookiecutter.project_name }}",
-            default_version="v1",
-            description="{{ cookiecutter.project_name }} API v1 description",
-        ),
-        public=True,
-        permission_classes=[permissions.AllowAny],
-        patterns=api_v1_urlpatterns,
-    )
+    from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
     swagger_urlpatterns = [
-        re_path(
-            f"{PLATFORM_PREFIX}/{DOCS_PREFIX}/v1/" + r"swagger(?P<format>\.json|\.yaml)$",
-            api_v1_schema_view.without_ui(cache_timeout=0),
-            name="v1-schema-json",
-        ),
+        path(f"{PLATFORM_PREFIX}/{DOCS_PREFIX}/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
         path(
             f"{PLATFORM_PREFIX}/{DOCS_PREFIX}/v1/swagger/",
-            api_v1_schema_view.with_ui("swagger", cache_timeout=0),
+            SpectacularSwaggerView.as_view(url_name="schema"),
             name="v1-schema-swagger-ui",
         ),
         path(
             f"{PLATFORM_PREFIX}/{DOCS_PREFIX}/v1/redoc/",
-            api_v1_schema_view.with_ui("redoc", cache_timeout=0),
+            SpectacularRedocView.as_view(url_name="schema"),
             name="v1-schema-redoc",
         ),
     ]

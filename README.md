@@ -9,7 +9,7 @@ Fast start achieved by using docker and docker compose.
 
 * Settings via environment variables with [django-environ](https://django-environ.readthedocs.io/).
 * [Celery](http://www.celeryproject.org/) configuration.
-* [Django REST Framework](https://www.django-rest-framework.org/) configuration + Swagger with [drf-yasg](https://drf-yasg.readthedocs.io/).
+* [Django REST Framework](https://www.django-rest-framework.org/) configuration + Swagger with [drf-spectacular](https://drf-spectacular.readthedocs.io/.
 * Typical user CRUD APIs.
 * Docker support using [docker-compose](https://docs.docker.com/compose/) configuration for local development (incl. [Postgres](https://www.postgresql.org/), [Redis](https://redis.io/) & [MailPit](https://github.com/axllent/mailpit) for testing emails).
 * Requirements management with [poetry](https://python-poetry.org/).

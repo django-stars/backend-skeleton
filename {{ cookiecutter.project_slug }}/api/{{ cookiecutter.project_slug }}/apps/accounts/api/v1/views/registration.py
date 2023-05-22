@@ -1,5 +1,4 @@
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 
@@ -10,7 +9,9 @@ from {{ cookiecutter.project_slug }}.apps.accounts.services.login import LoginSe
 class RegistrationAPIView(GenericAPIView):
     serializer_class = RegistrationSerializer
 
-    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
+    @extend_schema(
+        summary="Registration", tags=["Accounts"], responses={status.HTTP_204_NO_CONTENT: OpenApiResponse()}
+    )
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

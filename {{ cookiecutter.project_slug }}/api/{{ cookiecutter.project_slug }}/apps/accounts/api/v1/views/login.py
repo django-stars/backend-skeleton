@@ -1,5 +1,4 @@
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -13,7 +12,7 @@ class LoginView(GenericAPIView):
     permission_classes = [IsNotAuthenticated]
     serializer_class = LoginSerializer
 
-    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
+    @extend_schema(summary="Login", tags=["Accounts"], responses={status.HTTP_204_NO_CONTENT: OpenApiResponse()})
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -25,7 +24,7 @@ class LoginView(GenericAPIView):
 class LogoutView(GenericAPIView):
     permission_classes = [IsAuthenticated]
 
-    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: openapi.Response("")})
+    @extend_schema(summary="Log out", tags=["Accounts"], responses={status.HTTP_204_NO_CONTENT: OpenApiResponse()})
     def post(self, request):
         response = LoginService.logout(request)
         return response
