@@ -1,4 +1,3 @@
-version: '3.9'
 name: '{{ cookiecutter.project_slug }}'
 
 # Configurations shared between api service, celery and celery beat.
