@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiResponse
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -17,7 +17,7 @@ from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.user_profi
     patch=extend_schema(
         summary="Update me",
         tags=["Accounts"],
-    )
+    ),
 )
 class UserProfileAPIView(RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer

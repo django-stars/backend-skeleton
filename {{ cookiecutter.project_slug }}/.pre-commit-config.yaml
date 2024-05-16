@@ -24,12 +24,6 @@ repos:
       - id: codespell
 
   # API
-  - repo: https://github.com/psf/black
-    rev: 23.3.0
-    hooks:
-      - id: black
-        args: ["--config", "./api/pyproject.toml", . ]
-        pass_filenames: false
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.0.265
     hooks:

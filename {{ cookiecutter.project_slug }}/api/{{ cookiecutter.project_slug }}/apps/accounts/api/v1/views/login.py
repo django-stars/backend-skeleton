@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema, OpenApiResponse
+from drf_spectacular.utils import OpenApiResponse, extend_schema
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated

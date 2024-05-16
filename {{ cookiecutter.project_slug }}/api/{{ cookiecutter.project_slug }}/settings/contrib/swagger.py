@@ -1,4 +1,3 @@
-from ..environment import env
 
 
 SPECTACULAR_SETTINGS = {

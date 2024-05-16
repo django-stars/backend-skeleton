@@ -19,13 +19,13 @@ collectstatic:
 	python manage.py collectstatic --noinput
 
 check:
-	black . --check \
+	ruff format . --check \
 	&& ruff check . \
 	&& safety check \
 	&& make check-migrations \
 
 check-fix:
-	black .
+	ruff format .
 	ruff check --fix-only --show-fixes --statistics .
 
 run:migrate collectstatic
