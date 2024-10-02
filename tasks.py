@@ -29,7 +29,7 @@ def compose_down(ctx, volumes=False):
 
 @task()
 def pip_compile(ctx):
-    command = "pip-compile --upgrade --generate-hashes -o ./requirements.txt ./requirements.in"
+    command = "pip-compile --upgrade --generate-hashes --allow-unsafe -o ./requirements.txt ./requirements.in"
     ctx.run(command, pty=True)
 
 
