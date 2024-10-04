@@ -57,8 +57,8 @@ services:
      - ${LOCAL_IP:-127.0.0.1}:${MINIO_LOCAL_PORT:-9000}:9000
      - ${LOCAL_IP:-127.0.0.1}:${MINIO_CONSOLE_LOCAL_PORT:-9001}:9001
     environment:
-      MINIO_ACCESS_KEY: {{ cookiecutter.__minio_access_key }}
-      MINIO_SECRET_KEY: {{ cookiecutter.__minio_secret_key }}
+      MINIO_ROOT_USER: {{ cookiecutter.__minio_access_key }}
+      MINIO_ROOT_PASSWORD: {{ cookiecutter.__minio_secret_key }}
     volumes:
      - minio-data:/data
     command: [ "server", "--console-address", ":9001", "/data" ]
@@ -68,7 +68,7 @@ services:
       - minio
     entrypoint: >
      /bin/sh -c "
-     /usr/bin/mc alias set myminio http://minio:9000 {{ cookiecutter.__minio_access_key }} {{ cookiecutter.__minio_secret_key }};
+     until (/usr/bin/mc alias set myminio http://minio:9000 {{ cookiecutter.__minio_access_key }} {{ cookiecutter.__minio_secret_key }}) do echo '...waiting...' && sleep 1; done;
      /usr/bin/mc mb --ignore-existing myminio/{{ cookiecutter.__minio_bucket_name }};
      /usr/bin/mc anonymous set download myminio/{{ cookiecutter.__minio_bucket_name }};
      exit 0;
