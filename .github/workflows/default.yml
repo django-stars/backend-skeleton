@@ -34,12 +34,12 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-      # install dependencies if cache does not exist
+      # Install dependencies if cache does not exist
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
       # Run tests on skeleton code;
-      # There are nothing to test yet, unless we add some hooks, just check that it runs
+      # NOTE: there are nothing to test yet, unless we add some hooks, just check that it runs
       - name: Run tests on hooks
         run: poetry run inv test.hooks
       # Build a project from skeleton with a default name - awesome, and run tests on it

@@ -1,8 +1,0 @@
-cookiecutter==2.6.0
-coverage==7.6.1
-docker-compose==1.29.2
-invoke==2.2.0
-pytest==8.3.3
-pytest-cov==5.0.0
-pytest-mock==3.14.0
-pyyaml!=6.0.0,!=5.4.0,!=5.4.1  # pyyaml is broken with cython 3

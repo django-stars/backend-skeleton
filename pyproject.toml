@@ -2,7 +2,7 @@
 name = "backend-skeleton"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["DS <r@djangostars.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -16,3 +16,7 @@ invoke = "^2.2.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
