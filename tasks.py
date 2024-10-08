@@ -8,3 +8,4 @@ def test_hooks(ctx):
 
 test_collection = Collection("test")
 test_collection.add_task(test_hooks, name="hooks")
+namespace = Collection(test_collection)
