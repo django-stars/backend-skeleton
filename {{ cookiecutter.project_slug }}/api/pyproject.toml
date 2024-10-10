@@ -1,12 +1,5 @@
-[build-system]
-requires = ["poetry-core", "setuptools", "pip"]
-
 [tool.poetry]
-name = "{{ cookiecutter.project_name }}"
-version = "0.1.0"
-description = ""
-authors = []
-packages = [{include = "{{ cookiecutter.project_slug }}"}]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^{{ cookiecutter.python_version.lower() }}"
