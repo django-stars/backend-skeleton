@@ -13,24 +13,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Python 3.12.5
+      - name: Set up Python
+        id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12.5
-      - name: Install Python dependencies
+          python-version: 3.13
+      - name: Install & configure poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          virtualenvs-path: .venv
+          installer-parallel: true
+      - name: Load cached venv if exists
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install dependencies if cache doesn't exist
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction
+      # NOTE: there are nothing to test yet, unless we add some hooks, just check that it runs
+      - name: Run tests on skeleton code
+        run: poetry run inv test.hooks
+      - name: Build default project from skeleton and run tests
         run: |
-          python3 -m venv venv
-          source ./venv/bin/activate
-          pip install -U pip
-          pip install -r ./requirements.txt
-      - name: Run tests on hooks
-        run: |
-          source ./venv/bin/activate
-          inv test.hooks
-      - name: Run tests on building project
-        run: |
-          source ./venv/bin/activate
-          cookiecutter --no-input --overwrite-if-exists --output-dir build .
+          poetry run cookiecutter --no-input --overwrite-if-exists --output-dir build .
           cd build/awesome
           cp ./api/.env.example ./api/.env
           make api-test
