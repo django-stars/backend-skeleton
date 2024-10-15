@@ -3,8 +3,8 @@
 To run additional checks before making commit we use [Pre-commit](https://pre-commit.com/) hooks.
 
 
-Since the `api` is running inside docker container we don't have a pre-commit as a dependency there, so you need to 
-install `pre-commit` package [manually](https://pre-commit.com/#install).
+Since the `api` is running inside docker container and we don't have a pre-commit as a dependency there, you need to 
+install `pre-commit` package [locally](https://pre-commit.com/#install).
 
 > [!NOTE]  
 > The `safety` hook also [requires](https://github.com/Lucas-C/pre-commit-hooks-safety?tab=readme-ov-file#supported-files) `poetry` to be in your `PATH`.
