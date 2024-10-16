@@ -9,6 +9,9 @@ api-test:
 api-check-migrations:
 	cd docker/ && docker compose run --rm api make check-migrations
 
+api-migrate:
+	cd docker/ && docker compose run --rm api make migrate
+
 api-check:
 	cd docker/ && docker compose run --rm api make check
 

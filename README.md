@@ -48,3 +48,9 @@ Run application:
 ```bash
 make compose-up
 ```
+
+We are using docker for running the app, so you don't have to keep your python env locally. 
+But we also use pre-commit hooks, and the `safety` hook requires `poetry` to be in your `PATH`.
+
+> [!TIP]
+> Ensure the poetry installed with the same python version as in `pyproject.toml`
