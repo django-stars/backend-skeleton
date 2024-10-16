@@ -3,7 +3,7 @@ default_language_version:
 repos:
   # General
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
         args: ['--maxkb=10000']
@@ -19,29 +19,22 @@ repos:
       - id: pretty-format-json
         args: ['--autofix', '--indent 2', ]
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.4
+    rev: v2.3.0
     hooks:
       - id: codespell
+        args: [ "--toml=api/pyproject.toml" ]
+        additional_dependencies:
+          - tomli
 
   # API
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.265
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
     hooks:
       - id: ruff
-        args: ['--fix', '--exit-non-zero-on-fix']
+        args: [ '--fix', '--exit-non-zero-on-fix' ]
+      - id: ruff-format
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-    rev: v1.3.1
+    rev: v1.3.3
     hooks:
       - id: python-safety-dependencies-check
-        entry: safety
-        args: [check]
-        files: ./api/requirements-build.txt
-# TODO: Run this hook from docker container.
-#  - repo: local
-#    hooks:
-#      - id: migrations-check
-#        language: system
-#        name: Check for uncreated migrations.
-#        entry: sh -c "make api-check-migrations"
-#        files: models/*.*\.py$
-#        stages: [commit]
+        files: pyproject.toml

@@ -125,3 +125,6 @@ exclude_lines =[
 ]
 show_missing = true
 
+[tool.codespell]
+skip = "*.lock"
+ignore-words = "codespell-ignore-words.txt"

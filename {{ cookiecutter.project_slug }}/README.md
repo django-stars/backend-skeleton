@@ -56,3 +56,7 @@ minimal setup.
 If you need python environment, to run some commands, just use `make api-bash`, and you will be in the container with
 all dependencies installed.
 
+> [!NOTE]  
+> To ensure your code follow the standards etc. we strongly recommend to use `pre-commit` locally, that means you need 
+> to have it installed manually, see [pre-commit hook docs](docs/pre_commit_hook.md) for more details.
+
