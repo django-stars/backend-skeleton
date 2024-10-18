@@ -43,3 +43,5 @@ if "LOG_SQL" in {{ cookiecutter.project_slug | upper() }}_FEATURES:  # pragma: n
             "django.db.backends.schema": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
         },
     }
+
+ADMIN_URL = env.str("{{ cookiecutter.__env_prefix }}DJANGO_ADMIN_URL", default="admin/")

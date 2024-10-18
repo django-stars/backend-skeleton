@@ -1,4 +1,3 @@
-from ..django import TIME_ZONE as DJANGO_TIME_ZONE
 from ..environment import env
 
 
@@ -7,6 +6,6 @@ CELERY_BROKER_URL = env.str("{{ cookiecutter.__env_prefix }}CELERY_BROKER", defa
 
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE = DJANGO_TIME_ZONE
+CELERY_TIMEZONE = env.str("{{ cookiecutter.__env_prefix }}TIME_ZONE", default="UTC")
 
 CELERYBEAT_SCHEDULE = {}
