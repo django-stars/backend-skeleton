@@ -45,7 +45,7 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 class ConfirmResetPasswordSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=128, write_only=True, style={"input_type": "password"})
-    signature = serializers.CharField(max_length=71, write_only=True)
+    signature = serializers.CharField(max_length=128, write_only=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
