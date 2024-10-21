@@ -32,7 +32,8 @@ cp ./api/.env.example ./api/.env
 ```
 > [!IMPORTANT]  
 > It is highly advised to use custom admin location instead of default `admin/`. 
-> To do that you need set `{{ cookiecutter.__env_prefix }}DJANGO_ADMIN_URL` environment variable in  `./api/.env` file.
+> To do that you need set `{{ cookiecutter.__env_prefix }}DJANGO_ADMIN_URL` environment variable in  `./api/.env` file
+> with custom value.
 
 ### Run application with required services
 
