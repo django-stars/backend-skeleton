@@ -14,9 +14,7 @@ from {{ cookiecutter.project_slug }}.fixtures.api_client import CustomAPIClient
 def test_registration_api_success(unauthorized_api_client: CustomAPIClient, mocker: MockerFixture) -> None:
     assert not UserAccount.objects.exists()
     mocked_response = Response(status=status.HTTP_204_NO_CONTENT)
-    mocked_login = mocker.patch(
-        "{{ cookiecutter.project_slug }}.apps.accounts.services.login.LoginService.login", return_value=mocked_response
-    )
+    mocked_login = mocker.patch("{{ cookiecutter.project_slug }}.apps.accounts.services.login.LoginService.login", return_value=mocked_response)
 
     data = {
         "email": "jane@example.com",
