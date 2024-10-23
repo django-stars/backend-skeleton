@@ -1,0 +1,8 @@
+name: Backend Skeleton Scheduled Check
+on:
+  schedule:
+    - cron:  '0 14 * * MON'
+
+jobs:
+  run-checks:
+    uses: django-stars/backend-skeleton/.github/workflows/test.yml@improve-github-workflow
