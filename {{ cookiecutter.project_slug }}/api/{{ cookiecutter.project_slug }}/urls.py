@@ -15,7 +15,7 @@ api_v1_urlpatterns = [
 ]
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
     *api_v1_urlpatterns,
 ]
 
