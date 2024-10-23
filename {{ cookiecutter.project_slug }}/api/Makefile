@@ -28,7 +28,7 @@ check-fix:
 	ruff format .
 	ruff check --fix-only --show-fixes --statistics .
 
-run:migrate collectstatic
+run: migrate collectstatic
 	python manage.py runserver_plus 0.0.0.0:8000 --nostatic
 
 celery-worker-run:
