@@ -1,9 +1,11 @@
-from ..environment import env
+from {{ cookiecutter.project_slug }}.settings.environment import env
 
 
 REST_FRAMEWORK = {
     "COERCE_DECIMAL_TO_STRING": False,
-    "DEFAULT_AUTHENTICATION_CLASSES": ("{{ cookiecutter.project_slug }}.apps.accounts.api.authentication.CustomSessionAuthentication",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "{{ cookiecutter.project_slug }}.apps.accounts.api.authentication.CustomSessionAuthentication",
+    ),
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),

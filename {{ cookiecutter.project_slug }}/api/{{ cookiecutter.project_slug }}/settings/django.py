@@ -1,12 +1,12 @@
 from pathlib import Path
 
-from .environment import env
+from {{ cookiecutter.project_slug }}.settings.environment import env
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-def rel(*path):
+def rel(*path: str) -> Path:
     return BASE_DIR.joinpath(*path)
 
 
@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     # First-party apps
     "{{ cookiecutter.project_slug }}.apps.common",
     "{{ cookiecutter.project_slug }}.apps.accounts",
-] + env.list("{{ cookiecutter.__env_prefix }}DEV_INSTALLED_APPS", default=[])
+    *env.list("{{ cookiecutter.__env_prefix }}DEV_INSTALLED_APPS", default=[]),
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -45,7 +46,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-] + env.list("{{ cookiecutter.__env_prefix }}DEV_MIDDLEWARE", default=[])
+    *env.list("{{ cookiecutter.__env_prefix }}DEV_MIDDLEWARE", default=[]),
+]
 
 ROOT_URLCONF = "{{ cookiecutter.project_slug }}.urls"
 

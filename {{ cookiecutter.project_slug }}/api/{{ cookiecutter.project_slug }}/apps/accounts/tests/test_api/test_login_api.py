@@ -1,5 +1,6 @@
 import pytest
 
+from pytest_mock import MockerFixture
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -7,12 +8,17 @@ from rest_framework.response import Response
 from django.urls import reverse
 from django.utils.translation import gettext
 
+from {{ cookiecutter.project_slug }}.fixtures.api_client import ApiClientMaker, CustomAPIClient
+from {{ cookiecutter.project_slug }}.fixtures.user_account import UserAccountMaker
+
 
 LOGIN_SERIALIZER_PATH = "{{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.login.LoginSerializer"
 
 
 @pytest.mark.django_db
-def test_login_api_success(user_account, unauthorized_api_client, mocker):
+def test_login_api_success(
+    user_account: UserAccountMaker, unauthorized_api_client: CustomAPIClient, mocker: MockerFixture
+) -> None:
     user = user_account()
     mocked_validate = mocker.patch(f"{LOGIN_SERIALIZER_PATH}.validate", return_value={"user": user})
     mocked_response = Response(status=status.HTTP_204_NO_CONTENT)
@@ -30,7 +36,7 @@ def test_login_api_success(user_account, unauthorized_api_client, mocker):
 
 
 @pytest.mark.django_db
-def test_login_api_wrong_credentials_failure(user_account, unauthorized_api_client, mocker):
+def test_login_api_wrong_credentials_failure(unauthorized_api_client: CustomAPIClient, mocker: MockerFixture) -> None:
     mocked_validate = mocker.patch(
         f"{LOGIN_SERIALIZER_PATH}.validate", side_effect=[ValidationError(gettext("Incorrect email or password."))]
     )
@@ -46,7 +52,9 @@ def test_login_api_wrong_credentials_failure(user_account, unauthorized_api_clie
 
 
 @pytest.mark.django_db
-def test_login_api_already_logged_in_failure(user_account, api_client, mocker):
+def test_login_api_already_logged_in_failure(
+    user_account: UserAccountMaker, api_client: ApiClientMaker, mocker: MockerFixture
+) -> None:
     user = user_account()
     client = api_client(auth_user=user)
     mocked_validate = mocker.patch(f"{LOGIN_SERIALIZER_PATH}.validate")

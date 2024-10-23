@@ -1,13 +1,15 @@
-# pylint: skip-file
-
 import json
+
+from collections.abc import Callable
+from typing import Any
 
 import pytest
 
+from rest_framework.response import Response
 from rest_framework.test import APIClient
 
-
-__all__ = ["api_client", "unauthorized_api_client"]
+from {{ cookiecutter.project_slug }}.apps.accounts.models import UserAccount
+from {{ cookiecutter.project_slug }}.fixtures.user_account import UserAccountMaker
 
 
 class _CustomAPIClient(APIClient):
@@ -20,39 +22,79 @@ class _CustomAPIClient(APIClient):
         `data should` properly encoded to JSON.
     """
 
-    def post(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
-        if isinstance(data, (dict, list)):
+    def post(
+        self,
+        path: str,
+        data: Any = None,  # noqa: ANN401
+        format: str | None = None,  # noqa: A002
+        content_type: str = "application/json",
+        *,
+        follow: bool = False,
+        **extra,  # noqa: ANN003
+    ) -> Response:
+        if isinstance(data, dict | list):
             data = json.dumps(data)
         response = super().post(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
         return response
 
-    def put(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
-        if isinstance(data, (dict, list)):
+    def put(
+        self,
+        path: str,
+        data: Any = None,  # noqa: ANN401
+        format: str | None = None,  # noqa: A002
+        content_type: str = "application/json",
+        *,
+        follow: bool = False,
+        **extra,  # noqa: ANN003
+    ) -> Response:
+        if isinstance(data, dict | list):
             data = json.dumps(data)
         response = super().put(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
         return response
 
-    def patch(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
-        if isinstance(data, (dict, list)):
+    def patch(
+        self,
+        path: str,
+        data: Any = None,  # noqa: ANN401
+        format: str | None = None,  # noqa: A002
+        content_type: str = "application/json",
+        *,
+        follow: bool = False,
+        **extra,  # noqa: ANN003
+    ) -> Response:
+        if isinstance(data, dict | list):
             data = json.dumps(data)
         response = super().patch(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
         return response
 
-    def delete(self, path, data=None, format=None, content_type="application/json", follow=False, **extra):
-        if isinstance(data, (dict, list)):
+    def delete(
+        self,
+        path: str,
+        data: Any = None,  # noqa: ANN401
+        format: str | None = None,  # noqa: A002
+        content_type: str = "application/json",
+        *,
+        follow: bool = False,
+        **extra,  # noqa: ANN003
+    ) -> Response:
+        if isinstance(data, dict | list):
             data = json.dumps(data)
         response = super().delete(path, data=data, format=format, content_type=content_type, follow=follow, **extra)
         return response
 
 
-@pytest.fixture()
-def unauthorized_api_client():
+type CustomAPIClient = _CustomAPIClient
+type ApiClientMaker = Callable[..., CustomAPIClient]
+
+
+@pytest.fixture
+def unauthorized_api_client() -> CustomAPIClient:
     return _CustomAPIClient()
 
 
-@pytest.fixture()
-def api_client(user_account):
-    def _api_client(auth_user=None):
+@pytest.fixture
+def api_client(user_account: UserAccountMaker) -> ApiClientMaker:
+    def _api_client(auth_user: UserAccount | None) -> CustomAPIClient:
         if auth_user is None:
             auth_user = user_account()
         client = _CustomAPIClient()

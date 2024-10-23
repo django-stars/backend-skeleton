@@ -1,19 +1,21 @@
 import pytest
 
+from pytest_mock import MockerFixture
 from rest_framework.exceptions import ValidationError
 
 from django.test import RequestFactory
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.password import ChangePasswordSerializer
 from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import InvalidPasswordError, WrongPasswordError
+from {{ cookiecutter.project_slug }}.fixtures.user_account import UserAccountMaker
 
 
 OLD_PASSWORD = "OLD_PASSWORD"  # nosec
 NEW_PASSWORD = "NEW_PASSWORD"  # nosec
 
 
-@pytest.fixture()
-def change_password_serializer_request(user_account):
+@pytest.fixture
+def change_password_serializer_request(user_account: UserAccountMaker) -> RequestFactory:
     user = user_account()
     user.set_password(OLD_PASSWORD)
     user.save(update_fields=("password",))
@@ -23,7 +25,9 @@ def change_password_serializer_request(user_account):
 
 
 @pytest.mark.django_db
-def test_validate_old_password_success(change_password_serializer_request, mocker):
+def test_validate_old_password_success(
+    change_password_serializer_request: RequestFactory, mocker: MockerFixture
+) -> None:
     serializer = ChangePasswordSerializer(context={"request": change_password_serializer_request})
     mocked_check_password = mocker.patch.object(serializer.password_service, "check_password")
 
@@ -34,7 +38,9 @@ def test_validate_old_password_success(change_password_serializer_request, mocke
 
 
 @pytest.mark.django_db
-def test_validate_new_password_success(change_password_serializer_request, mocker):
+def test_validate_new_password_success(
+    change_password_serializer_request: RequestFactory, mocker: MockerFixture
+) -> None:
     serializer = ChangePasswordSerializer(context={"request": change_password_serializer_request})
     mocked_validate_password = mocker.patch.object(serializer.password_service, "validate_password")
 
@@ -45,7 +51,9 @@ def test_validate_new_password_success(change_password_serializer_request, mocke
 
 
 @pytest.mark.django_db
-def test_validate_old_password_failure(change_password_serializer_request, mocker):
+def test_validate_old_password_failure(
+    change_password_serializer_request: RequestFactory, mocker: MockerFixture
+) -> None:
     serializer = ChangePasswordSerializer(context={"request": change_password_serializer_request})
     mocked_check_password = mocker.patch.object(
         serializer.password_service,
@@ -61,7 +69,9 @@ def test_validate_old_password_failure(change_password_serializer_request, mocke
 
 
 @pytest.mark.django_db
-def test_validate_new_password_failure(change_password_serializer_request, mocker):
+def test_validate_new_password_failure(
+    change_password_serializer_request: RequestFactory, mocker: MockerFixture
+) -> None:
     serializer = ChangePasswordSerializer(context={"request": change_password_serializer_request})
     mocked_validate_password = mocker.patch.object(
         serializer.password_service,
@@ -77,7 +87,7 @@ def test_validate_new_password_failure(change_password_serializer_request, mocke
 
 
 @pytest.mark.django_db
-def test_save(user_account, mocker):
+def test_save(mocker: MockerFixture) -> None:
     serializer = ChangePasswordSerializer(
         data={"old_password": OLD_PASSWORD, "new_password": NEW_PASSWORD},
         context={"request": change_password_serializer_request},

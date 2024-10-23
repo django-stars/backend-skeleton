@@ -2,7 +2,7 @@ import sentry_sdk
 
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from ..environment import env
+from {{ cookiecutter.project_slug }}.settings.environment import env
 
 
 USE_SENTRY = env.bool("{{ cookiecutter.__env_prefix }}USE_SENTRY", default=True)

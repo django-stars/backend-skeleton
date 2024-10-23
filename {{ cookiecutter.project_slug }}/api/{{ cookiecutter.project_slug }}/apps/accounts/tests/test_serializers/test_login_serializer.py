@@ -3,10 +3,11 @@ import pytest
 from rest_framework.exceptions import ValidationError
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.login import LoginSerializer
+from {{ cookiecutter.project_slug }}.fixtures.user_account import UserAccountMaker
 
 
 @pytest.mark.django_db
-def test_login_serializer_validate_success(user_account):
+def test_login_serializer_validate_success(user_account: UserAccountMaker) -> None:
     email = "jane@example.com"
     password = "super_secret_password"  # nosec
     user = user_account(email=email)
@@ -19,7 +20,7 @@ def test_login_serializer_validate_success(user_account):
 
 
 @pytest.mark.django_db
-def test_login_serializer_validate_failure(user_account):
+def test_login_serializer_validate_failure(user_account: UserAccountMaker) -> None:
     email = "jane@example.com"
     password = "super_secret_password"  # nosec
     user = user_account(email=email)

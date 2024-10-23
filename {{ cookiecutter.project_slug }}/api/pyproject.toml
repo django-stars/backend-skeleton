@@ -37,13 +37,8 @@ DJANGO_SETTINGS_MODULE = "{{ cookiecutter.project_slug }}.settings"
 python_files = ["tests.py", "test_*.py", "*_test.py"]
 
 [tool.ruff]
-# Enable pycodestyle (`E`), Pyflakes (`F`), Isort (`I`), Bandit (`S`) and flake8 Django (`DJ`) codes.
-lint.select = ["E", "F", "I", "S", "DJ"]
-lint.ignore = []
-
-# Allow autofix for all enabled rules (when `--fix`) is provided.
-lint.fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
-lint.unfixable = []
+line-length = 120
+target-version = "py{{ cookiecutter.python_version.lower().replace('.', '') }}"
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -69,28 +64,32 @@ exclude = [
     "venv",
 ]
 
-line-length = 120
-
-# Allow unused variables when underscore-prefixed.
-lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-target-version = "py{{ cookiecutter.python_version.lower()|replace('.', '') }}"
-
-[tool.ruff.lint.mccabe]
-# Unlike Flake8, default to a complexity level of 10.
-max-complexity = 10
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    # Docstrings
+    "D",
+    # Assert statement
+    "S101",
+    # Unnecessary-assign before return
+    "RET504",
+    # Random for non cryptographically secure
+    "S311",
+    # Formatter related rules...
+    "COM812", "ISC001",
+]
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401", "F403"]
-"conftest*" = ["F403"]
 "test_*.py" = ["S"]
 "tests.py" = ["S"]
 "*_test.py" = ["S"]
+"*/migrations/*" = ["RUF012"]
 
 [tool.ruff.lint.isort]
 lines-between-types = 1
 lines-after-imports = 2
-known-first-party=['{{ cookiecutter.project_slug }}']
-section-order= ['future', 'standard-library', 'third-party', 'django', 'first-party', 'local-folder']
+known-first-party=["{{ cookiecutter.project_slug }}"]
+section-order= ["future", "standard-library", "third-party", "django", "first-party", "local-folder"]
 
 [tool.ruff.lint.isort.sections]
 "django" = ["django"]
