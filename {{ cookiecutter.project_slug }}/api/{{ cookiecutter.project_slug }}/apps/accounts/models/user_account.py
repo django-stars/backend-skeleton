@@ -1,3 +1,5 @@
+from typing import ClassVar, cast
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
@@ -8,9 +10,10 @@ from {{ cookiecutter.project_slug }}.apps.common.models import CoreModel
 
 
 class UserManager(core_models.CoreManager, BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email: str, password: str | None = None) -> "UserAccount":
         if not email:
-            raise ValueError("Users must give an email address")
+            message = "Users must give an email address"
+            raise ValueError(message)
 
         user = self.model(email=email)
         user.set_password(password)
@@ -18,7 +21,7 @@ class UserManager(core_models.CoreManager, BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email: str, password: str) -> "UserAccount":
         user = self.create_user(email, password)
         user.is_staff = True
         user.is_superuser = True
@@ -48,13 +51,13 @@ class UserAccount(PermissionsMixin, CoreModel, AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS: ClassVar[list[str]] = []
 
     class Meta:
         ordering = ("first_name", "last_name")
 
-    def __str__(self):
-        return self.email
+    def __str__(self) -> str:
+        return cast(str, self.email)
 
     def get_short_name(self) -> str:
         return str(self.email)
@@ -67,7 +70,7 @@ class UserAccount(PermissionsMixin, CoreModel, AbstractBaseUser):
         return full_name
 
     @property
-    def notification_salutation(self):
+    def notification_salutation(self) -> str:
         if self.first_name and self.last_name:
             salutation = f"{self.first_name} {self.last_name}"
         else:

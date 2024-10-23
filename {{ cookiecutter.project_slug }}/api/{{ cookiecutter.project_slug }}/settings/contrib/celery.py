@@ -1,5 +1,5 @@
-from ..django import TIME_ZONE as DJANGO_TIME_ZONE
-from ..environment import env
+from {{ cookiecutter.project_slug }}.settings.django import TIME_ZONE as DJANGO_TIME_ZONE
+from {{ cookiecutter.project_slug }}.settings.environment import env
 
 
 CELERY_TASK_ALWAYS_EAGER = env.bool("{{ cookiecutter.__env_prefix }}CELERY_TASK_ALWAYS_EAGER", default=False)

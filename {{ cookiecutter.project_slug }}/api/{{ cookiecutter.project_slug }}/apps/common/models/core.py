@@ -5,10 +5,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CoreQuerySet(models.QuerySet):
-    def active(self):
+    def active(self) -> models.QuerySet:
         return self.filter(is_active=True)
 
-    def inactive(self):
+    def inactive(self) -> models.QuerySet:
         return self.filter(is_active=False)
 
 
@@ -27,18 +27,18 @@ class CoreModel(models.Model):
     class Meta:
         abstract = True
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.pk)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<{self.__class__.__name__} {self.pk}>"
 
-    def activate(self):
+    def activate(self) -> None:
         if not self.is_active:
             self.is_active = True
             self.save(update_fields=["is_active", "updated"] if not self._state.adding else None)
 
-    def deactivate(self):
+    def deactivate(self) -> None:
         if self.is_active:
             self.is_active = False
             self.save(update_fields=["is_active", "updated"] if not self._state.adding else None)

@@ -4,9 +4,12 @@ from rest_framework import status
 
 from django.urls import reverse
 
+from {{ cookiecutter.project_slug }}.fixtures.api_client import ApiClientMaker
+from {{ cookiecutter.project_slug }}.fixtures.user_account import UserAccountMaker
+
 
 @pytest.mark.django_db
-def test_user_profile_api_get_success(user_account, api_client):
+def test_user_profile_api_get_success(user_account: UserAccountMaker, api_client: ApiClientMaker) -> None:
     email = "john@example.com"
     first_name = "John"
     last_name = "Doe"
@@ -20,7 +23,7 @@ def test_user_profile_api_get_success(user_account, api_client):
 
 
 @pytest.mark.django_db
-def test_user_profile_api_update_success(user_account, api_client):
+def test_user_profile_api_update_success(user_account: UserAccountMaker, api_client: ApiClientMaker) -> None:
     email = "john@example.com"
     old_first_name = "John"
     old_last_name = "Doe"

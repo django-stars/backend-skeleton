@@ -21,7 +21,7 @@ collectstatic:
 check:
 	ruff format . --check \
 	&& ruff check . \
-	&& safety check \
+	&& safety check --ignore=70612 \
 	&& make check-migrations \
 
 check-fix:

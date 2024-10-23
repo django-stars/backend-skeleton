@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from .environment import env
+from {{ cookiecutter.project_slug }}.settings.environment import env
 
 
 {{ cookiecutter.project_slug | upper() }}_FEATURES = env.list(

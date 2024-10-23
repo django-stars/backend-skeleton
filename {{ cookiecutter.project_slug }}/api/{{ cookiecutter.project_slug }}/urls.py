@@ -20,7 +20,7 @@ urlpatterns = [
 ]
 
 # enable Swagger
-if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
+if "SWAGGER" in settings.{{ cookiecutter.__env_prefix }}FEATURES:
     from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
     swagger_urlpatterns = [
@@ -51,7 +51,8 @@ if not settings.DEBUG:
     from django.views.generic.base import View  # pylint: disable=ungrouped-imports
 
     class ServerErrorTestView(View):
-        def dispatch(self, request, *args, **kwargs):
-            assert False, "Server error test: response with 500 HTTP status code"  # noqa: S101
+        def dispatch(self, *_args, **_kwargs) -> None:  # noqa: ANN002 ANN003
+            message = "Server error test: response with 500 HTTP status code"
+            raise AssertionError(message)
 
     urlpatterns += [path(f"{PLATFORM_PREFIX}/500-error-test/", ServerErrorTestView.as_view())]

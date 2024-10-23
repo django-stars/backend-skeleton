@@ -43,3 +43,7 @@ jobs:
           cd build/awesome
           cp ./api/.env.example ./api/.env
           make api-test
+      - name: Ruff, Safety, migrations checks for the default project code
+        run: |
+          cd build/awesome
+          make api-check

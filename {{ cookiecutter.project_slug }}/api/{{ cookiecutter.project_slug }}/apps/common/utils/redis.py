@@ -2,11 +2,13 @@ import functools
 
 import redis
 
+from redis import Redis
+
 from django.conf import settings
 
 
 @functools.lru_cache(maxsize=128)
-def redis_client(redis_connection_url=settings.REDIS_URL):
+def redis_client(redis_connection_url: str = settings.REDIS_URL) -> Redis:
     """
     Redis client wrapped into LRU cache.
     Example:

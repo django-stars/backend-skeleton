@@ -18,23 +18,23 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = UserAccount
         fields = ("email", "first_name", "last_name", "password")
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002 ANN003
         super().__init__(*args, **kwargs)
         self.password_service = PasswordService()
 
-    def validate_email(self, email):
+    def validate_email(self, email: str) -> str:
         if UserAccount.objects.filter(email=email).exists():
             raise ValidationError(gettext("Could not create account with this email."))
         return super().validate(email)
 
-    def validate_password(self, new_password):
+    def validate_password(self, new_password: str) -> str:
         try:
             self.password_service.validate_password(new_password)
         except InvalidPasswordError as e:
             raise serializers.ValidationError(e.messages) from e
         return new_password
 
-    def save(self, **kwargs):
+    def save(self, **kwargs) -> UserAccount:  # noqa: ANN003
         self.instance = super().save(**kwargs)
         raw_password = self.validated_data.get("password")
         self.instance.set_password(raw_password)

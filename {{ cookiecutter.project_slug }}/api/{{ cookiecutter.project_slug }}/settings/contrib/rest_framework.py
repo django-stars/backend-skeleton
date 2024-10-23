@@ -1,4 +1,4 @@
-from ..environment import env
+from {{ cookiecutter.project_slug }}.settings.environment import env
 
 
 REST_FRAMEWORK = {

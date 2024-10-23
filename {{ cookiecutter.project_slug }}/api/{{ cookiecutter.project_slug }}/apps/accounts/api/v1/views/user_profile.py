@@ -3,6 +3,7 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.user_profile import UserProfileSerializer
+from {{ cookiecutter.project_slug }}.apps.accounts.models import UserAccount
 
 
 @extend_schema_view(
@@ -21,7 +22,7 @@ from {{ cookiecutter.project_slug }}.apps.accounts.api.v1.serializers.user_profi
 )
 class UserProfileAPIView(RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
 
-    def get_object(self):
+    def get_object(self) -> UserAccount:
         return self.request.user

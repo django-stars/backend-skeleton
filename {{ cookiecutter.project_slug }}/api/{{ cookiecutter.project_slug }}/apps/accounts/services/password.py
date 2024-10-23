@@ -25,7 +25,7 @@ class PasswordService:
             raise WrongPasswordError(gettext("Incorrect password."))
 
     @staticmethod
-    def validate_password(password, user=None) -> None:
+    def validate_password(password: str, user: UserAccount = None) -> None:
         try:
             password_validation.validate_password(password, user=user)
         except DjangoValidationError as e:
@@ -52,7 +52,7 @@ class PasswordService:
     def reset_password(cls, signature: str, new_password: str) -> None:
         signer = TimestampSigner()
         try:
-            user_pk = signer.unsign(signature, max_age=settings.{{ cookiecutter.project_slug | upper() }}_RESET_PASSWORD_EXPIRATION_DELTA)
+            user_pk = signer.unsign(signature, max_age=settings.{{ cookiecutter.__env_prefix }}RESET_PASSWORD_EXPIRATION_DELTA)
             user = UserAccount.objects.active().get(pk=user_pk)
         except (SignatureExpired, BadSignature, UserAccount.DoesNotExist) as e:
             raise InvalidResetPasswordSignatureError(gettext("Invalid confirmation code or user does not exist")) from e
@@ -60,8 +60,10 @@ class PasswordService:
         cls.change_password(user, new_password)
 
     @staticmethod
-    def _send_notification(user_pk: str, context: dict):
-        # send_notification.delay(user_pk, "user-reset-password", context)  # TODO: Implement notification sending
+    def _send_notification(user_pk: str, context: dict) -> None:
+        # TODO @bulya: Implement notification sending  # noqa: FIX002
+        # DI-2715
+        # send_notification.delay(user_pk, "user-reset-password", context)  # noqa: ERA001
         pass
 
     @staticmethod
