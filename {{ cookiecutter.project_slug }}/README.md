@@ -15,9 +15,9 @@
 
 ## API documentation
 
-* ReDoc web UI: [https://{{ cookiecutter.domain_name }}/_platform/docs/v1/redoc/](https://{{ cookiecutter.domain_name }}/_platform/docs/v1/redoc/)
-* Swagger web UI: [https://{{ cookiecutter.domain_name }}/_platform/docs/v1/swagger/](https://{{ cookiecutter.domain_name }}/_platform/docs/v1/swagger/)
-* Schema YAML: [https://{{ cookiecutter.domain_name }}/_platform/docs/v1/schema/](https://{{ cookiecutter.domain_name }}/_platform/docs/v1/schema/)
+* ReDoc web UI: [https://{{ cookiecutter.domain_name }}/_/docs/v1/redoc/](https://{{ cookiecutter.domain_name }}/_/docs/v1/redoc/)
+* Swagger web UI: [https://{{ cookiecutter.domain_name }}/_/docs/v1/swagger/](https://{{ cookiecutter.domain_name }}/_/docs/v1/swagger/)
+* Schema YAML: [https://{{ cookiecutter.domain_name }}/_/docs/v1/schema/](https://{{ cookiecutter.domain_name }}/_/docs/v1/schema/)
 
 ## First run
 Application is running in docker containers. 
