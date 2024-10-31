@@ -11,6 +11,7 @@ from {{ cookiecutter.project_slug }}.apps.accounts.exceptions import (
     WrongPasswordError,
 )
 from {{ cookiecutter.project_slug }}.apps.accounts.models import UserAccount
+from {{ cookiecutter.project_slug }}.apps.accounts.tasks import send_notification
 
 
 class PasswordService:
@@ -46,7 +47,7 @@ class PasswordService:
                 "domain_name": domain_name,
                 "reset_password_link": reset_password_link,
             }
-            cls._send_notification(user.pk, context)
+            cls._send_notification(user.email, context)
 
     @classmethod
     def reset_password(cls, signature: str, new_password: str) -> None:
@@ -60,9 +61,8 @@ class PasswordService:
         cls.change_password(user, new_password)
 
     @staticmethod
-    def _send_notification(user_pk: str, context: dict):
-        # send_notification.delay(user_pk, "user-reset-password", context)  # TODO: Implement notification sending
-        pass
+    def _send_notification(user_email: str, context: dict):
+        send_notification.delay(user_email, "user-reset-password", context)
 
     @staticmethod
     def _generate_reset_password_signature(user: UserAccount) -> str:
