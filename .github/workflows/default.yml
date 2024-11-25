@@ -15,4 +15,4 @@ concurrency:
 
 jobs:
   run-checks:
-    uses: django-stars/backend-skeleton/.github/workflows/test.yml@improve-github-workflow
+    uses: django-stars/backend-skeleton/.github/workflows/test.yml@main
