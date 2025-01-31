@@ -1,6 +1,6 @@
 from ..environment import env
 
-
+# HACK: the issue description - https://github.com/jschneier/django-storages/issues/1361#issuecomment-2579883175
 AWS_S3_ACCESS_KEY_ID = env.str("AWS_S3_ACCESS_KEY_ID")
 AWS_S3_SECRET_ACCESS_KEY = env.str("AWS_S3_SECRET_ACCESS_KEY")
 AWS_S3_ENDPOINT_URL = env.str("{{ cookiecutter.__env_prefix }}DEFAULT_FILE_STORAGE_ENDPOINT_URL")
