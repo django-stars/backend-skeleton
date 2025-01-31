@@ -1,7 +1,7 @@
 .ONESHELL:
 
 install:
-	poetry install --with dev --no-root
+	poetry install --with dev
 
 lock:
 	poetry lock
@@ -19,16 +19,16 @@ collectstatic:
 	python manage.py collectstatic --noinput
 
 check:
-	black . --check \
+	ruff format . --check \
 	&& ruff check . \
 	&& safety check \
 	&& make check-migrations \
 
 check-fix:
-	black .
+	ruff format .
 	ruff check --fix-only --show-fixes --statistics .
 
-run:migrate collectstatic
+run: migrate collectstatic
 	python manage.py runserver_plus 0.0.0.0:8000 --nostatic
 
 celery-worker-run:

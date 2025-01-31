@@ -110,7 +110,6 @@ USE_TZ = True
 
 LOCALE_PATHS = [rel("..", "..", "api", "locale")]
 
-
 EMAIL_BACKEND = env.str(
     "{{ cookiecutter.__env_prefix }}EMAIL_BACKEND",
     default="django.core.mail.backends.smtp.EmailBackend",

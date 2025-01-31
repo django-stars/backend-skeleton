@@ -1,12 +1,5 @@
-[build-system]
-requires = ["poetry-core", "setuptools", "pip"]
-
 [tool.poetry]
-name = "{{ cookiecutter.project_name }}"
-version = "0.1.0"
-description = ""
-authors = []
-packages = [{include = "{{ cookiecutter.project_slug }}"}]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^{{ cookiecutter.python_version.lower() }}"
@@ -26,7 +19,6 @@ boto3 = "^1.26"
 [tool.poetry.group.dev.dependencies]
 Pygments = "*"
 bandit = "*"
-black = "*"
 ruff = "*"
 coverage = { version = "*", extras = ["toml"] }
 django-debug-toolbar = "*"
@@ -44,34 +36,14 @@ safety = "*"
 DJANGO_SETTINGS_MODULE = "{{ cookiecutter.project_slug }}.settings"
 python_files = ["tests.py", "test_*.py", "*_test.py"]
 
-[tool.black]
-line-length = 120
-target-version = ["py{{ cookiecutter.python_version.lower()|replace('.', '') }}",]
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.env
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-  | node_modules
-)/
-'''
-
 [tool.ruff]
 # Enable pycodestyle (`E`), Pyflakes (`F`), Isort (`I`), Bandit (`S`) and flake8 Django (`DJ`) codes.
-select = ["E", "F", "I", "S", "DJ"]
-ignore = []
+lint.select = ["E", "F", "I", "S", "DJ"]
+lint.ignore = []
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
-unfixable = []
+lint.fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+lint.unfixable = []
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -97,31 +69,30 @@ exclude = [
     "venv",
 ]
 
-# Same as Black.
 line-length = 120
 
 # Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 target-version = "py{{ cookiecutter.python_version.lower()|replace('.', '') }}"
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
 "conftest*" = ["F403"]
 "test_*.py" = ["S"]
 "tests.py" = ["S"]
 "*_test.py" = ["S"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 lines-between-types = 1
 lines-after-imports = 2
 known-first-party=['{{ cookiecutter.project_slug }}']
 section-order= ['future', 'standard-library', 'third-party', 'django', 'first-party', 'local-folder']
 
-[tool.ruff.isort.sections]
+[tool.ruff.lint.isort.sections]
 "django" = ["django"]
 
 [tool.coverage.run]
@@ -154,3 +125,6 @@ exclude_lines =[
 ]
 show_missing = true
 
+[tool.codespell]
+skip = "*.lock"
+ignore-words = "codespell-ignore-words.txt"

@@ -1,4 +1,4 @@
-FROM python:{{ cookiecutter.python_version.lower()}}-slim as base
+FROM python:{{ cookiecutter.python_version.lower()}}-slim AS base
 
 ENV PYTHONUNBUFFERED 1
 
@@ -31,12 +31,12 @@ RUN chmod +x /opt/docker/entrypoint.sh
 ENTRYPOINT ["/opt/docker/entrypoint.sh"]
 
 
-FROM base as local
+FROM base AS local
 
 RUN poetry install --no-root --no-cache --no-ansi --no-interaction --with dev \
     && poetry cache clear pypi --all
 
 
-FROM base as live
+FROM base AS live
 
 COPY ./api /opt/api

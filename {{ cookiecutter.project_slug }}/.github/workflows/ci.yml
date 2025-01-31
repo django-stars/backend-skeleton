@@ -1,0 +1,53 @@
+name: CI
+on: [push]
+
+concurrency:
+  group: ${{ '{{' }} github.workflow {{ '}}' }}-${{ '{{' }} github.ref {{ '}}' }}
+  cancel-in-progress: true
+
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "{{ cookiecutter.python_version.lower() }}"
+
+      # We need `poetry` to run safety pre-commit hook
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.1
+
+  # Tests & migrations checks
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          cp ./api/.env.example ./api/.env
+
+      - name: Build the Stack
+        run: make compose-build
+
+      - name: Check missing DB migrations
+        run: make api-check-migrations
+
+      - name: Run DB Migrations
+        run: make api-migrate
+
+      - name: Run `api` Tests
+        run: make api-test
+
+      - name: Tear down the Stack
+        run: make compose-down
