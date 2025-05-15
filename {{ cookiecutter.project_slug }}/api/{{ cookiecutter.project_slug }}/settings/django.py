@@ -135,7 +135,6 @@ if STATICFILES_STORAGE_BACKEND == "storages.backends.s3boto3.S3StaticStorage":
         "endpoint_url": env.str("{{ cookiecutter.__env_prefix }}DEFAULT_FILE_STORAGE_ENDPOINT_URL"),
         "custom_domain": env.str("{{ cookiecutter.__env_prefix }}DEFAULT_FILE_STORAGE_CUSTOM_DOMAIN"),
         "url_protocol": env.str("{{ cookiecutter.__env_prefix }}DEFAULT_FILE_STORAGE_URL_PROTOCOL", default="https:"),
-
         "location": env.str("{{ cookiecutter.__env_prefix }}STATICFILES_STORAGE_LOCATION", default="s"),
         "file_overwrite": env.bool("{{ cookiecutter.__env_prefix }}STATICFILES_STORAGE_FILE_OVERWRITE", default=True),
     }
@@ -149,7 +148,7 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": STATICFILES_STORAGE_BACKEND,
         "OPTIONS": STATICFILES_STORAGE_OPTIONS,
-    }
+    },
 }
 
 EMAIL_BACKEND = env.str(

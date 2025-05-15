@@ -2,11 +2,18 @@
 
 To run additional checks before making commit we use [Pre-commit](https://pre-commit.com/) hooks.
 
-`pre-commit` package is installed with backend requirements, so there is no need of [manual installation](https://pre-commit.com/#install).
-But you need to generate the actual git pre-commit hook. It should be done only once:
+
+Since the `api` is running inside docker container and we don't have a pre-commit as a dependency there, you need to 
+install `pre-commit` package [locally](https://pre-commit.com/#install).
+
+> [!NOTE]  
+> The `safety` hook also [requires](https://github.com/Lucas-C/pre-commit-hooks-safety?tab=readme-ov-file#supported-files) `poetry` to be in your `PATH`.
+> Ensure the poetry [installed](https://python-poetry.org/docs/#installation) with the same python version as in `pyproject.toml`
+
+You need to generate the actual git pre-commit hook. It should be done only once:
 
 ```bash
-pre-commit install
+pre-commit install --install-hooks
 ```
 
 To run pre-commit hooks manually:

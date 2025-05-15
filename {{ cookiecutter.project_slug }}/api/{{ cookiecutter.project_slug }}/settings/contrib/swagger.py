@@ -1,6 +1,3 @@
-from ..environment import env
-
-
 SPECTACULAR_SETTINGS = {
     "TITLE": "{{ cookiecutter.project_name }} API",
     "VERSION": "0.1.0",
