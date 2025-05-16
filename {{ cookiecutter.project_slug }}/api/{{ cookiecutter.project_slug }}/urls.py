@@ -3,7 +3,9 @@ from django.contrib import admin
 from django.urls import include, path
 
 
-PLATFORM_PREFIX = "_platform"
+# All urls that is not intended for regular users should be hidden behind this prefix to ease
+# routing configuration and avoid collisions with "useful" urls
+TECHNICAL_PREFIX = "_"
 API_PREFIX = "api"
 DOCS_PREFIX = "docs"
 
@@ -24,14 +26,14 @@ if "SWAGGER" in settings.{{ cookiecutter.project_slug | upper() }}_FEATURES:
     from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
     swagger_urlpatterns = [
-        path(f"{PLATFORM_PREFIX}/{DOCS_PREFIX}/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
+        path(f"{TECHNICAL_PREFIX}/{DOCS_PREFIX}/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
         path(
-            f"{PLATFORM_PREFIX}/{DOCS_PREFIX}/v1/swagger/",
+            f"{TECHNICAL_PREFIX}/{DOCS_PREFIX}/v1/swagger/",
             SpectacularSwaggerView.as_view(url_name="schema"),
             name="v1-schema-swagger-ui",
         ),
         path(
-            f"{PLATFORM_PREFIX}/{DOCS_PREFIX}/v1/redoc/",
+            f"{TECHNICAL_PREFIX}/{DOCS_PREFIX}/v1/redoc/",
             SpectacularRedocView.as_view(url_name="schema"),
             name="v1-schema-redoc",
         ),
@@ -54,4 +56,4 @@ if not settings.DEBUG:
         def dispatch(self, request, *args, **kwargs):
             assert False, "Server error test: response with 500 HTTP status code"  # noqa: S101
 
-    urlpatterns += [path(f"{PLATFORM_PREFIX}/500-error-test/", ServerErrorTestView.as_view())]
+    urlpatterns += [path(f"{TECHNICAL_PREFIX}/500-error-test/", ServerErrorTestView.as_view())]
