@@ -18,9 +18,8 @@ jobs:
         with:
           python-version: "{{ cookiecutter.python_version.lower() }}"
 
-      # We need `poetry` to run safety pre-commit hook
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1

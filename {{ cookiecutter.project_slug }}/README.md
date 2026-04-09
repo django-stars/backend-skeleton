@@ -46,10 +46,10 @@ Your application will be available at [http://localhost:8000](http://localhost:8
 #### How it works
 - `make compose-up` will run docker-compose with [all services](docker/docker.md)
   - if images is missed it will build them
-  - if there is no `poetry.lock` file present, Poetry simply resolves all dependencies listed in your 
+  - if there is no `uv.lock` file present, uv resolves all dependencies listed in your 
     `api/pyproject.toml` file and downloads the latest version of their files. 
     But in any case it's good practice to lock your dependencies and share the lock file with your team, 
-    to do that run `make api-lock` command, and commit `poetry.lock` file to the repository.
+    to do that run `make api-lock` command, and commit `uv.lock` file to the repository.
 - it will use `api/.env` file to set environment variables for `api` and `celery` services. Check `env_file` section in [docker-compose.yml](docker/docker-compose.yml)
 
 Any changes in docker files or python dependency will require to rebuild images, to do that run `make compose-build` command.

@@ -1,10 +1,10 @@
 .ONESHELL:
 
 install:
-	poetry install --with dev
+	uv sync
 
 lock:
-	poetry lock
+	uv lock
 
 test:
 	pytest --no-migrations
@@ -21,10 +21,9 @@ collectstatic:
 check:
 	ruff format . --check \
 	&& ruff check . \
-	&& safety check \
 	&& make check-migrations \
 
-check-fix:
+format:
 	ruff format .
 	ruff check --fix-only --show-fixes --statistics .
 

@@ -2,7 +2,7 @@
     "project_name": "awesome",
     "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
     "domain_name": "example.com",
-    "python_version": "3.12",
+    "python_version": "3.13",
     "postgresql_version": "16.3",
     "redis_version": "7.2",
     "__env_prefix": "{{ cookiecutter.project_slug | upper() }}_",
